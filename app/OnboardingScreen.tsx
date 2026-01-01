@@ -1,16 +1,17 @@
 import { useUser } from "@/store/useUser";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 const OnboardingScreen = () => {
   const username = useUser((s) => s.username);
   const setUsername = useUser((s) => s.setUsername);
   const isDisabled: boolean = username?.trim().length === 0 || !username;
 
-  function handleGetStarted() {
+  async function handleGetStarted() {
     setUsername(username?.trim() || "");
+    await AsyncStorage.setItem("username", username?.trim() || "");
     router.replace("/(tabs)/HomeScreen");
   }
 
