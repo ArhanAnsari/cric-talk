@@ -1,19 +1,14 @@
-import { useUser } from "@/store/useUser";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router } from "expo-router";
 import React from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 const OnboardingScreen = () => {
-  const username = useUser((s) => s.username);
-  const setUsername = useUser((s) => s.setUsername);
-  const isDisabled: boolean = username?.trim().length === 0 || !username;
-
-  async function handleGetStarted() {
-    setUsername(username?.trim() || "");
-    await AsyncStorage.setItem("username", username?.trim() || "");
-    router.replace("/(tabs)/HomeScreen");
-  }
+  const [email, setEmail] = React.useState<string>("");
+  const [password, setPassword] = React.useState<string>("");
+  const isDisabled: boolean =
+    email?.trim().length === 0 ||
+    !email ||
+    password.trim().length === 0 ||
+    !password;
 
   return (
     <View className="flex-1 bg-white">
@@ -32,16 +27,31 @@ const OnboardingScreen = () => {
       </View>
 
       <SafeAreaView>
-        {/* USERNAME INPUT */}
+        {/* EMAIL INPUT */}
         <View className="px-6">
           <Text className="text-slate-900 text-xl font-semibold">
-            What is your name?
+            What is your email?
           </Text>
 
           <TextInput
-            value={username || ""}
-            onChangeText={setUsername}
-            placeholder="Enter your username"
+            value={email || ""}
+            onChangeText={setEmail}
+            placeholder="Enter your email"
+            className="border border-orange-500 rounded-md p-2 mt-2 h-12 pl-4"
+          />
+        </View>
+
+        {/* PASSWORD INPUT */}
+        <View className="px-6 mt-4">
+          <Text className="text-slate-900 text-xl font-semibold">
+            What is your password?
+          </Text>
+
+          <TextInput
+            value={password || ""}
+            onChangeText={setPassword}
+            secureTextEntry
+            placeholder="Enter your password"
             className="border border-orange-500 rounded-md p-2 mt-2 h-12 pl-4"
           />
         </View>
@@ -52,7 +62,6 @@ const OnboardingScreen = () => {
             isDisabled ? "bg-slate-200" : "bg-orange-500"
           } px-4 py-3 rounded-md transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85`}
           disabled={isDisabled}
-          onPress={handleGetStarted}
         >
           <Text
             className={`${
