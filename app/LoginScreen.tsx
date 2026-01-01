@@ -1,9 +1,11 @@
-import React from "react";
+import { Octicons } from "@expo/vector-icons";
+import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 const OnboardingScreen = () => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
+  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
   const isDisabled: boolean =
     email?.trim().length === 0 ||
     !email ||
@@ -47,13 +49,23 @@ const OnboardingScreen = () => {
             What is your password?
           </Text>
 
-          <TextInput
-            value={password || ""}
-            onChangeText={setPassword}
-            secureTextEntry
-            placeholder="Enter your password"
-            className="border border-orange-500 rounded-md p-2 mt-2 h-12 pl-4"
-          />
+          <View className="relative">
+            <TextInput
+              value={password || ""}
+              onChangeText={setPassword}
+              secureTextEntry={isPasswordHidden}
+              placeholder="Enter your password"
+              className="border border-orange-500 rounded-md p-2 mt-2 h-12 pl-4"
+            />
+
+            <Octicons
+              name={isPasswordHidden ? "eye-closed" : "eye"}
+              size={24}
+              color="#0f172b"
+              style={{ position: "absolute", right: 10, top: 16 }}
+              onPress={() => setIsPasswordHidden(!isPasswordHidden)}
+            />
+          </View>
         </View>
 
         {/* GET STARTED BUTTON */}
