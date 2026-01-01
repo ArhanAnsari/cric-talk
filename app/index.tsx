@@ -20,7 +20,7 @@ export default function Index() {
   }, [setUsername]);
 
   if (isLoading) return null;
-  if (!username) return <Redirect href="/OnboardingScreen" />;
+  if (!username) return <Redirect href="/LoginScreen" />;
 
   return <Redirect href="/(tabs)/HomeScreen" />;
 }
