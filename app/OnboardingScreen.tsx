@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import { useUser } from "@/store/useUser";
+import { router } from "expo-router";
+import React from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const OnboardingScreen = () => {
-  const [username, setUsername] = useState<string | null>(null);
+  const username = useUser((s) => s.username);
+  const setUsername = useUser((s) => s.setUsername);
   const isDisabled: boolean = username?.trim().length === 0 || !username;
+
+  function handleGetStarted() {
+    setUsername(username?.trim() || "");
+    router.replace("/(tabs)/HomeScreen");
+  }
 
   return (
     <View className="flex-1 bg-white">
@@ -43,6 +51,7 @@ const OnboardingScreen = () => {
             isDisabled ? "bg-slate-200" : "bg-orange-500"
           } px-4 py-3 rounded-md transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85`}
           disabled={isDisabled}
+          onPress={handleGetStarted}
         >
           <Text
             className={`${
