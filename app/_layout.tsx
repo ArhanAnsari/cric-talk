@@ -11,6 +11,7 @@ export default function RootLayout() {
   );
 
   const setUsername = useUser((s) => s.setUsername);
+  const setEmail = useUser((s) => s.setEmail);
   const setFavTeam = useUser((s) => s.setFavTeam);
 
   useEffect(() => {
@@ -25,6 +26,7 @@ export default function RootLayout() {
         if (!userData) return;
         setUsername(userData.name);
         setFavTeam(userData.prefs.favTeam || "None");
+        setEmail(userData.email);
         console.log("User data fetched in layout:", userData);
       } catch (error) {}
     }
