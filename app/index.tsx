@@ -1,26 +1,29 @@
-import { useUser } from "@/store/useUser";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { account } from "@/libs/appwrite";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
+import { Models } from "react-native-appwrite";
 
 export default function Index() {
-  const username = useUser((s) => s.username);
-  const setUsername = useUser((s) => s.setUsername);
+  const [user, setUser] = useState<Models.User<Models.Preferences> | null>(
+    null
+  );
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // get user info
   useEffect(() => {
     async function fetchUser() {
-      const storedUsername = await AsyncStorage.getItem("username");
-      setUsername(storedUsername || "");
+      const user = await account.get();
+
+      if (!user) return;
+      setUser(user);
       setIsLoading(false);
     }
 
     fetchUser();
-  }, [setUsername]);
+  }, [user]);
 
   if (isLoading) return null;
-  if (!username) return <Redirect href="/LoginScreen" />;
+  if (!user) return <Redirect href="/LoginScreen" />;
 
   return <Redirect href="/(tabs)/HomeScreen" />;
 }
