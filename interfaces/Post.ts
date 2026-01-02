@@ -7,7 +7,7 @@ type CommentType = {
   createdAt: string;
 };
 
-export interface Post extends Models.Transaction {
+export interface Post extends Models.Row {
   content: string;
   image?: string[];
   authorId: string;

@@ -1,3 +1,4 @@
+import { Post } from "@/interfaces/Post";
 import { tablesDB } from "@/libs/appwrite";
 import { ID, Query } from "react-native-appwrite";
 
@@ -7,7 +8,7 @@ const POSTS_TABLES_ID = process.env.EXPO_PUBLIC_APPWRITE_POSTS_TABLE_ID!;
 
 export async function fetchPosts() {
   try {
-    return await tablesDB.listRows({
+    return await tablesDB.listRows<Post>({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: POSTS_TABLES_ID,
       queries: [
@@ -32,7 +33,7 @@ export async function createPost({
   authorId: string;
 }) {
   try {
-    return await tablesDB.createRow({
+    return await tablesDB.createRow<Post>({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: POSTS_TABLES_ID,
       rowId: ID.unique(),
