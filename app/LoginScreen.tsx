@@ -3,7 +3,8 @@ import { router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-const OnboardingScreen = () => {
+
+const LoginScreen = () => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
@@ -99,4 +100,4 @@ const OnboardingScreen = () => {
   );
 };
 
-export default OnboardingScreen;
+export default LoginScreen;
