@@ -3,8 +3,7 @@ import { router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-const LoginScreen = () => {
+const SignupScreen = () => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
@@ -82,17 +81,17 @@ const LoginScreen = () => {
               isDisabled ? "text-slate-500" : "text-white"
             } font-medium text-lg text-center`}
           >
-            Login
+            Get Started
           </Text>
         </Pressable>
 
-        {/* SIGNUP LINK */}
+        {/* LOGIN LINK */}
         <View className="flex-row items-center mx-auto mt-2 gap-2">
           <Text className="text-lg font-medium text-slate-900">
-            Don't have an account?
+            Already have an account?
           </Text>
-          <Pressable onPress={() => router.replace("/SignupScreen")}>
-            <Text className="text-lg text-orange-500 font-medium">Signup</Text>
+          <Pressable onPress={() => router.replace("/LoginScreen")}>
+            <Text className="text-lg text-orange-500 font-medium">Login</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -100,4 +99,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default SignupScreen;
