@@ -3,7 +3,15 @@ import { account } from "@/libs/appwrite";
 import { createPost, fetchPosts } from "@/services/posts.service";
 import { Ionicons, Octicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
-import { Alert, Modal, Pressable, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  Modal,
+  Pressable,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const HomeScreen = () => {
@@ -97,49 +105,80 @@ const HomeScreen = () => {
 
         {/* POSTS */}
         <View className="mt-6">
-          <View>
-            {/* USER INFO */}
-            <View className="flex-row items-center gap-2">
-              <Pressable className="w-10 h-10 bg-gray-200 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
-                <Text className="text-slate-900 font-medium text-lg capitalize">
-                  s
-                </Text>
-              </Pressable>
+          <FlatList
+            data={posts}
+            keyExtractor={(item) => item.$id}
+            contentContainerStyle={{ paddingBottom: 200 }}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <View className="mb-4">
+                {/* USER INFO */}
+                <View className="flex-row items-center gap-2">
+                  <Pressable className="w-10 h-10 bg-gray-200 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
+                    <Text className="text-slate-900 font-medium text-lg capitalize">
+                      {item.authorId[0]}
+                    </Text>
+                  </Pressable>
 
-              <Text className="text-slate-900 font-medium text-lg">Slice</Text>
+                  <Text className="text-slate-900 font-medium text-lg">
+                    {item.authorId}
+                  </Text>
 
-              <Text className="text-sm">· 10hr ago</Text>
-            </View>
+                  <Text className="text-sm">
+                    ·{" "}
+                    {Math.floor(
+                      (Date.now() - new Date(item.$createdAt).getTime()) /
+                        1000 /
+                        60 /
+                        60
+                    )}
+                    hr ago
+                  </Text>
+                </View>
 
-            {/* POST CONTENT */}
-            <View className="mt-2">
-              <Text className="leading-6 text-slate-800">
-                Exicting match between India and Australia today! Are you all
-                exicted too? #India #Australia #INDIAvsAUS
-              </Text>
-            </View>
+                {/* POST CONTENT */}
+                <View className="mt-2">
+                  <Text className="leading-6 text-slate-800">
+                    {item.content}
+                  </Text>
+                </View>
 
-            {/* POST IMAGE */}
-            <Pressable className="w-full aspect-video bg-gray-300 rounded-lg mt-4" />
+                {/* POST IMAGE */}
+                {item.image?.length !== 0 && (
+                  <Pressable className="w-full aspect-video bg-gray-300 rounded-lg mt-4" />
+                )}
 
-            {/* POST ACTIONS */}
-            <View className="flex-row items-center justify-between mt-4">
-              <Pressable className="flex-row items-center gap-2">
-                <Octicons name="heart-fill" size={18} color="red" />
-                <Text>1 Like</Text>
-              </Pressable>
+                {/* POST ACTIONS */}
+                <View className="flex-row items-center justify-between mt-4">
+                  <Pressable className="flex-row items-center gap-2">
+                    <Octicons name="heart-fill" size={18} color="red" />
+                    <Text>
+                      {item.likes} Like{item.likes === 1 ? "" : "s"}
+                    </Text>
+                  </Pressable>
 
-              <Pressable className="flex-row items-center gap-2">
-                <Octicons name="comment-discussion" size={18} color="black" />
-                <Text>1 Comment</Text>
-              </Pressable>
+                  <Pressable className="flex-row items-center gap-2">
+                    <Octicons
+                      name="comment-discussion"
+                      size={18}
+                      color="black"
+                    />
+                    <Text>
+                      {item.comments.length} Comment
+                      {item.comments.length === 1 ? "" : "s"}
+                    </Text>
+                  </Pressable>
 
-              <Pressable className="flex-row items-center gap-2">
-                <Octicons name="eye" size={18} color="black" />
-                <Text>10 Views</Text>
-              </Pressable>
-            </View>
-          </View>
+                  <Pressable className="flex-row items-center gap-2">
+                    <Octicons name="eye" size={18} color="black" />
+                    <Text>
+                      {item.views} View{item.views === 1 ? "" : "s"}
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+            )}
+          />
         </View>
       </View>
 
