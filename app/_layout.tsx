@@ -27,7 +27,10 @@ export default function RootLayout() {
         setUsername(userData.name);
         setFavTeam(userData.prefs.favTeam || "None");
         setEmail(userData.email);
-      } catch (error) {}
+      } catch (error) {
+        console.log("Error fetching user:", error);
+        throw error;
+      }
     }
     fetchUser();
 
