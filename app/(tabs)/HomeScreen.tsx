@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const HomeScreen = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const [content, setContent] = useState<string>("");
 
@@ -97,12 +97,15 @@ const HomeScreen = () => {
       </View>
 
       {/* CREATE POST BUTTON */}
-      <Pressable className="w-16 h-16 bg-orange-500 rounded-full items-center justify-center absolute bottom-6 right-6 shadow-md elevation-xs">
+      <Pressable
+        className="w-16 h-16 bg-orange-500 rounded-full items-center justify-center absolute bottom-6 right-6 shadow-md elevation-xs"
+        onPress={() => setIsVisible(true)}
+      >
         <Octicons name="plus" size={24} color="white" />
       </Pressable>
 
       {/* CREATE POST MODAL */}
-      <Modal visible={true} transparent animationType="slide">
+      <Modal visible={isVisible} transparent animationType="slide">
         <View className="flex-1 bg-white">
           <SafeAreaView className="flex-1">
             {/* MODAL HEADER */}
