@@ -1,3 +1,4 @@
+import { loginUserWithEmailAndPassword } from "@/services/auth.service";
 import { Octicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
@@ -13,6 +14,15 @@ const LoginScreen = () => {
     !email ||
     password.trim().length === 0 ||
     !password;
+
+  async function handleLogin() {
+    try {
+      await loginUserWithEmailAndPassword(email, password);
+      router.replace("/(tabs)/HomeScreen");
+    } catch (error) {
+      alert("Login failed. Please try again.");
+    }
+  }
 
   return (
     <View className="flex-1 bg-white">
@@ -76,6 +86,7 @@ const LoginScreen = () => {
             isDisabled ? "bg-slate-200" : "bg-orange-500"
           } px-4 py-3 rounded-md transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85`}
           disabled={isDisabled}
+          onPress={handleLogin}
         >
           <Text
             className={`${
