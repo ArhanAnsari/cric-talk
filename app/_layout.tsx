@@ -27,7 +27,6 @@ export default function RootLayout() {
         setUsername(userData.name);
         setFavTeam(userData.prefs.favTeam || "None");
         setEmail(userData.email);
-        console.log("User data fetched in layout:", userData);
       } catch (error) {}
     }
     fetchUser();
