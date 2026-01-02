@@ -1,5 +1,6 @@
+import { Post } from "@/interfaces/Post";
 import { account } from "@/libs/appwrite";
-import { createPost } from "@/services/posts.service";
+import { createPost, fetchPosts } from "@/services/posts.service";
 import { Ionicons, Octicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { Alert, Modal, Pressable, Text, TextInput, View } from "react-native";
@@ -12,6 +13,7 @@ const HomeScreen = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const [content, setContent] = useState<string>("");
+  const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     let mounted = true;
@@ -22,6 +24,13 @@ const HomeScreen = () => {
       setUserId(user.$id);
     }
     fetchUserId();
+
+    async function fetchAllPosts() {
+      if (!mounted) return;
+      const data = await fetchPosts();
+      setPosts(data.rows);
+    }
+    fetchAllPosts();
 
     return () => {
       mounted = false;
