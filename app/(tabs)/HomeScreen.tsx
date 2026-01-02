@@ -111,7 +111,7 @@ const HomeScreen = () => {
             contentContainerStyle={{ paddingBottom: 200 }}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
-              <View className="mb-4">
+              <View className="mb-4 border-b border-gray-200 pb-4">
                 {/* USER INFO */}
                 <View className="flex-row items-center gap-2">
                   <Pressable className="w-10 h-10 bg-gray-200 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
