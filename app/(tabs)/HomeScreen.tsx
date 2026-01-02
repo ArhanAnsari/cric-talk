@@ -1,13 +1,51 @@
+import { account } from "@/libs/appwrite";
+import { createPost } from "@/services/posts.service";
 import { Ionicons, Octicons } from "@expo/vector-icons";
-import React, { useState } from "react";
-import { Modal, Pressable, Text, TextInput, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, Modal, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const HomeScreen = () => {
+  const [userId, setUserId] = useState<string>("");
+
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const [content, setContent] = useState<string>("");
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function fetchUserId() {
+      if (!mounted) return;
+      const user = await account.get();
+      setUserId(user.$id);
+    }
+    fetchUserId();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  async function handleCreatePost() {
+    Alert.alert("Creating Post", "Are you sure you want to create this post?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Create",
+        onPress: async () => {
+          try {
+            await createPost({ content, authorId: userId });
+            setIsVisible(false);
+            setContent("");
+            alert("Post created succesfully!");
+          } catch (error) {
+            alert("Error creating post. Please try again.");
+          }
+        },
+      },
+    ]);
+  }
 
   return (
     <View className="flex-1 bg-white">
@@ -117,7 +155,7 @@ const HomeScreen = () => {
                 onPress={() => setIsVisible(false)}
               />
 
-              <Pressable>
+              <Pressable onPress={handleCreatePost}>
                 <Text className="text-orange-500 font-semibold">
                   Create Post
                 </Text>
