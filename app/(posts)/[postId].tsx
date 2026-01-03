@@ -1,15 +1,54 @@
+import { account } from "@/libs/appwrite";
+import { updatePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { Octicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const PostDetails = () => {
   const { postId } = useLocalSearchParams();
 
+  const [userId, setUserId] = useState<string>("");
+
   const posts = usePosts((s) => s.posts);
   const post = posts.find((post) => post.$id === postId);
+
+  const updatePostState = usePosts((s) => s.updatePost);
+
+  useEffect(() => {
+    async function fetchUserId() {
+      const user = await account.get();
+      setUserId(user.$id);
+    }
+    fetchUserId();
+  }, []);
+
+  async function handleLikePost() {
+    if (!post) return;
+    const prevPost = { ...post, likedBy: [...post.likedBy] };
+
+    const isLiked = post?.likedBy.includes(userId);
+    const updatedPostData = {
+      likes: isLiked ? post?.likes - 1 : post?.likes + 1,
+      likedBy: isLiked
+        ? post.likedBy.filter((id) => id !== userId)
+        : [...post.likedBy, userId],
+    };
+
+    try {
+      updatePostState({
+        $id: post.$id,
+        ...updatedPostData,
+      });
+
+      await updatePost(post.$id, updatedPostData);
+    } catch (error) {
+      alert("Error liking post. Please try again");
+      updatePostState(prevPost);
+    }
+  }
 
   return (
     <View className="flex-1 bg-white">
