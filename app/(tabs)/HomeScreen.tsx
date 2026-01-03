@@ -3,6 +3,7 @@ import { account } from "@/libs/appwrite";
 import { createPost, fetchPosts, updatePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { Ionicons, Octicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { ViewToken } from "react-native";
 import {
@@ -175,7 +176,10 @@ const HomeScreen = () => {
             onViewableItemsChanged={onViewableItemsChanged}
             viewabilityConfig={{ itemVisiblePercentThreshold: 60 }}
             renderItem={({ item }) => (
-              <View className="mb-4 border-b border-gray-200 pb-4">
+              <Pressable
+                className="mb-4 border-b border-gray-200 pb-4"
+                onPress={() => router.push(`/(posts)/${item.$id}`)}
+              >
                 {/* USER INFO */}
                 <View className="flex-row items-center gap-2">
                   <Pressable className="w-10 h-10 bg-gray-200 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
@@ -259,7 +263,7 @@ const HomeScreen = () => {
                     </Text>
                   </Pressable>
                 </View>
-              </View>
+              </Pressable>
             )}
           />
         </View>
