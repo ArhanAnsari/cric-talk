@@ -74,19 +74,26 @@ const HomeScreen = () => {
   }
 
   async function handleLikePost(postId: string) {
-    try {
-      const post = posts.find((p) => p.$id === postId);
-      if (!post) return;
+    const post = posts.find((p) => p.$id === postId);
+    if (!post) return;
 
+    try {
+      updatePostState({
+        $id: postId,
+        likes: post.likedBy.includes(userId) ? post.likes - 1 : post.likes + 1,
+        likedBy: post.likedBy.includes(userId)
+          ? post.likedBy.filter((id) => id !== userId)
+          : [...post.likedBy, userId],
+      });
       const updatedPost = await updatePost(postId, {
         likes: post.likedBy.includes(userId) ? post.likes - 1 : post.likes + 1,
         likedBy: post.likedBy.includes(userId)
           ? post.likedBy.filter((id) => id !== userId)
           : [...post.likedBy, userId],
       });
-      updatePostState(updatedPost);
     } catch (error) {
       alert("Error liking post. Please try again.");
+      updatePostState(post);
     }
   }
 
@@ -180,7 +187,23 @@ const HomeScreen = () => {
                     className="flex-row items-center gap-2"
                     onPress={() => handleLikePost(item.$id)}
                   >
-                    <Octicons name="heart-fill" size={18} color="red" />
+                    <Octicons
+                      name={
+                        posts
+                          .find((p) => p.$id === item.$id)
+                          ?.likedBy.includes(userId)
+                          ? "heart-fill"
+                          : "heart"
+                      }
+                      size={18}
+                      color={
+                        posts
+                          .find((p) => p.$id === item.$id)
+                          ?.likedBy.includes(userId)
+                          ? "red"
+                          : "gray"
+                      }
+                    />
                     <Text>
                       {item.likes} Like{item.likes === 1 ? "" : "s"}
                     </Text>
