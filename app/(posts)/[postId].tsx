@@ -1,3 +1,4 @@
+import { usePosts } from "@/store/usePosts";
 import { Octicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
@@ -6,6 +7,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const PostDetails = () => {
   const { postId } = useLocalSearchParams();
+
+  const posts = usePosts((s) => s.posts);
+  const post = posts.find((post) => post.$id === postId);
 
   return (
     <View className="flex-1 bg-white">
