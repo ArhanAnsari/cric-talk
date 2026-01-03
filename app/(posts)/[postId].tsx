@@ -1,6 +1,6 @@
 import { usePosts } from "@/store/usePosts";
 import { Octicons } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,7 +17,12 @@ const PostDetails = () => {
       <View className="w-full h-30 bg-orange-500">
         <SafeAreaView>
           <View className="px-6 flex-row items-center w-full">
-            <Octicons name="arrow-left" size={24} color="white" />
+            <Octicons
+              name="arrow-left"
+              size={24}
+              color="white"
+              onPress={() => router.back()}
+            />
 
             <Text className="text-white font-semibold text-xl text-center flex-1">
               CricTalk
