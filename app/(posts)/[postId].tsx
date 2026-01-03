@@ -113,8 +113,12 @@ const PostDetails = () => {
 
             {/* POST ACTIONS */}
             <View className="mt-4 flex-row items-center justify-between">
-              <Pressable className="flex-row gap-2">
-                <Octicons name="heart-fill" size={18} color="red" />
+              <Pressable className="flex-row gap-2" onPress={handleLikePost}>
+                <Octicons
+                  name={post?.likedBy.includes(userId) ? "heart-fill" : "heart"}
+                  size={18}
+                  color={post?.likedBy.includes(userId) ? "red" : "gray"}
+                />
                 <Text>
                   {post?.likes} Like{post?.likes === 1 ? "" : "s"}
                 </Text>
