@@ -1,3 +1,4 @@
+import { Post } from "@/interfaces/Post";
 import { account } from "@/libs/appwrite";
 import { createPost, fetchPosts } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
@@ -24,6 +25,7 @@ const HomeScreen = () => {
 
   const posts = usePosts((s) => s.posts);
   const setPosts = usePosts((s) => s.setPosts);
+  const addPost = usePosts((s) => s.addPost);
 
   useEffect(() => {
     let mounted = true;
@@ -54,7 +56,11 @@ const HomeScreen = () => {
         text: "Create",
         onPress: async () => {
           try {
-            await createPost({ content, authorId: userId });
+            const newPost: Post = await createPost({
+              content,
+              authorId: userId,
+            });
+            addPost(newPost);
             setIsVisible(false);
             setContent("");
             alert("Post created succesfully!");
