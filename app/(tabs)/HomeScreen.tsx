@@ -1,6 +1,6 @@
 import { Post } from "@/interfaces/Post";
 import { account } from "@/libs/appwrite";
-import { createPost, fetchPosts } from "@/services/posts.service";
+import { createPost, fetchPosts, updatePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { Ionicons, Octicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
@@ -70,6 +70,22 @@ const HomeScreen = () => {
         },
       },
     ]);
+  }
+
+  async function handleLikePost(postId: string) {
+    try {
+      const post = posts.find((p) => p.$id === postId);
+      if (!post) return;
+
+      updatePost(postId, {
+        likes: post.likedBy.includes(userId) ? post.likes - 1 : post.likes + 1,
+        likedBy: post.likedBy.includes(userId)
+          ? post.likedBy.filter((id) => id !== userId)
+          : [...post.likedBy, userId],
+      });
+    } catch (error) {
+      alert("Error liking post. Please try again.");
+    }
   }
 
   return (
@@ -158,7 +174,10 @@ const HomeScreen = () => {
 
                 {/* POST ACTIONS */}
                 <View className="flex-row items-center justify-between mt-4">
-                  <Pressable className="flex-row items-center gap-2">
+                  <Pressable
+                    className="flex-row items-center gap-2"
+                    onPress={() => handleLikePost(item.$id)}
+                  >
                     <Octicons name="heart-fill" size={18} color="red" />
                     <Text>
                       {item.likes} Like{item.likes === 1 ? "" : "s"}
