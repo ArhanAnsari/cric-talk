@@ -1,6 +1,6 @@
-import { Post } from "@/interfaces/Post";
 import { account } from "@/libs/appwrite";
 import { createPost, fetchPosts } from "@/services/posts.service";
+import { usePosts } from "@/store/usePosts";
 import { Ionicons, Octicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import {
@@ -21,7 +21,9 @@ const HomeScreen = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const [content, setContent] = useState<string>("");
-  const [posts, setPosts] = useState<Post[]>([]);
+
+  const posts = usePosts((s) => s.posts);
+  const setPosts = usePosts((s) => s.setPosts);
 
   useEffect(() => {
     let mounted = true;
