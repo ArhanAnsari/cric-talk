@@ -3,7 +3,8 @@ import { account } from "@/libs/appwrite";
 import { createPost, fetchPosts, updatePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { Ionicons, Octicons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import type { ViewToken } from "react-native";
 import {
   Alert,
   FlatList,
@@ -41,6 +42,20 @@ const HomeScreen = () => {
       views: post.views + 1,
     });
   }
+
+  const viewedPostsRef = useRef<Set<string>>(new Set());
+  const onViewableItemsChanged = useCallback(
+    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+      viewableItems.forEach(({ item, isViewable }) => {
+        if (!isViewable) return;
+        if (viewedPostsRef.current.has(item.$id)) return;
+
+        viewedPostsRef.current.add(item.$id);
+        increamentView(item.$id);
+      });
+    },
+    [posts]
+  );
 
   useEffect(() => {
     let mounted = true;
@@ -157,6 +172,8 @@ const HomeScreen = () => {
             keyExtractor={(item) => item.$id}
             contentContainerStyle={{ paddingBottom: 200 }}
             showsVerticalScrollIndicator={false}
+            onViewableItemsChanged={onViewableItemsChanged}
+            viewabilityConfig={{ itemVisiblePercentThreshold: 60 }}
             renderItem={({ item }) => (
               <View className="mb-4 border-b border-gray-200 pb-4">
                 {/* USER INFO */}
