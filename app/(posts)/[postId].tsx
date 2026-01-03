@@ -36,44 +36,59 @@ const PostDetails = () => {
               {/* AUTHOR PROFILE IMAGE */}
               <Pressable className="bg-gray-300 h-10 w-10 items-center justify-center rounded-full">
                 <Text className="text-lg font-semibold capitalize text-slate-950">
-                  s
+                  {post?.authorId[0]}
                 </Text>
               </Pressable>
 
               {/* AUTHOR NAME */}
-              <Text className="text-lg font-medium text-slate-900">Swapna</Text>
+              <Text className="text-lg font-medium text-slate-900">
+                {post?.authorId}
+              </Text>
 
               {/* PUBLISH DATE */}
               <Text className="text-sm text-slate-600 ml-auto">
-                3 Jan 2025, 08:20 AM
+                {new Date(post?.$createdAt || "").toLocaleDateString("en-IN", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                })}
               </Text>
             </View>
 
             {/* POST CONTENT */}
             <View className="mt-4">
-              <Text className="leading-6 text-slate-800">
-                This will contain the post content for the clicked post.
-              </Text>
+              <Text className="leading-6 text-slate-800">{post?.content}</Text>
             </View>
 
             {/* IMAGE PLACEHOLDER */}
-            <View className="w-full aspect-video bg-gray-300 rounded-lg my-4" />
+            {post?.image?.length !== 0 && (
+              <View className="w-full aspect-video bg-gray-300 rounded-lg my-4" />
+            )}
 
             {/* POST ACTIONS */}
             <View className="mt-4 flex-row items-center justify-between">
               <Pressable className="flex-row gap-2">
                 <Octicons name="heart-fill" size={18} color="red" />
-                <Text>0 Likes</Text>
+                <Text>
+                  {post?.likes} Like{post?.likes === 1 ? "" : "s"}
+                </Text>
               </Pressable>
 
               <Pressable className="flex-row gap-2">
                 <Octicons name="comment-discussion" size={18} color="black" />
-                <Text>0 Comments</Text>
+                <Text>
+                  {post?.comments.length} Comment
+                  {post?.comments.length === 1 ? "" : "s"}
+                </Text>
               </Pressable>
 
               <Pressable className="flex-row gap-2">
                 <Octicons name="eye" size={18} color="black" />
-                <Text>0 Views</Text>
+                <Text>
+                  {post?.views} View{post?.views === 1 ? "" : "s"}
+                </Text>
               </Pressable>
             </View>
           </View>
