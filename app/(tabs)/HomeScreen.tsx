@@ -28,6 +28,20 @@ const HomeScreen = () => {
   const addPost = usePosts((s) => s.addPost);
   const updatePostState = usePosts((s) => s.updatePost);
 
+  async function increamentView(postId: string) {
+    const post = posts.find((post) => post.$id === postId);
+    if (!post) return;
+
+    updatePostState({
+      $id: postId,
+      views: post.views + 1,
+    });
+
+    await updatePost(postId, {
+      views: post.views + 1,
+    });
+  }
+
   useEffect(() => {
     let mounted = true;
 
