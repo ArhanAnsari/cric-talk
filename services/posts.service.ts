@@ -53,3 +53,17 @@ export async function createPost({
     throw error;
   }
 }
+
+export async function updatePost(id: string, postData: Partial<Post>) {
+  try {
+    return await tablesDB.updateRow({
+      databaseId: CRIC_TALK_DATABASE_ID,
+      tableId: POSTS_TABLES_ID,
+      rowId: id,
+      data: postData,
+    });
+  } catch (error) {
+    console.log(`Error while updating post ${error}`);
+    throw error;
+  }
+}
