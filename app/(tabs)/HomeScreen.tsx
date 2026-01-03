@@ -26,6 +26,7 @@ const HomeScreen = () => {
   const posts = usePosts((s) => s.posts);
   const setPosts = usePosts((s) => s.setPosts);
   const addPost = usePosts((s) => s.addPost);
+  const updatePostState = usePosts((s) => s.updatePost);
 
   useEffect(() => {
     let mounted = true;
@@ -77,12 +78,13 @@ const HomeScreen = () => {
       const post = posts.find((p) => p.$id === postId);
       if (!post) return;
 
-      updatePost(postId, {
+      const updatedPost = await updatePost(postId, {
         likes: post.likedBy.includes(userId) ? post.likes - 1 : post.likes + 1,
         likedBy: post.likedBy.includes(userId)
           ? post.likedBy.filter((id) => id !== userId)
           : [...post.likedBy, userId],
       });
+      updatePostState(updatedPost);
     } catch (error) {
       alert("Error liking post. Please try again.");
     }
