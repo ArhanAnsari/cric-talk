@@ -77,20 +77,20 @@ const HomeScreen = () => {
     const post = posts.find((p) => p.$id === postId);
     if (!post) return;
 
+    const isLiked = post.likedBy.includes(userId);
+    const updatedPostData = {
+      likes: isLiked ? post.likes - 1 : post.likes + 1,
+      likedBy: isLiked
+        ? post.likedBy.filter((id) => id !== userId)
+        : [...post.likedBy, userId],
+    };
+
     try {
       updatePostState({
         $id: postId,
-        likes: post.likedBy.includes(userId) ? post.likes - 1 : post.likes + 1,
-        likedBy: post.likedBy.includes(userId)
-          ? post.likedBy.filter((id) => id !== userId)
-          : [...post.likedBy, userId],
+        ...updatedPostData,
       });
-      const updatedPost = await updatePost(postId, {
-        likes: post.likedBy.includes(userId) ? post.likes - 1 : post.likes + 1,
-        likedBy: post.likedBy.includes(userId)
-          ? post.likedBy.filter((id) => id !== userId)
-          : [...post.likedBy, userId],
-      });
+      const updatedPost = await updatePost(postId, updatedPostData);
     } catch (error) {
       alert("Error liking post. Please try again.");
       updatePostState(post);
