@@ -197,7 +197,10 @@ const PostDetails = () => {
                       size={18}
                       color="black"
                     />
-                    <Text>0 Comments</Text>
+                    <Text>
+                      {commentList.length} Comment
+                      {commentList.length === 1 ? "" : "s"}
+                    </Text>
                   </Pressable>
 
                   <Pressable className="flex-row gap-2">
