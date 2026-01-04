@@ -1,11 +1,13 @@
 import { Models } from "react-native-appwrite";
 
-type CommentType = {
+export interface CommentType extends Models.Row {
   id: string;
-  content: string;
+  postId: string;
   authorId: string;
+  content: string;
+  isEdited: boolean;
   createdAt: string;
-};
+}
 
 export interface Post extends Models.Row {
   content: string;
@@ -17,6 +19,4 @@ export interface Post extends Models.Row {
 
   views: number;
   viewedBy: string[];
-
-  comments: CommentType[];
 }
