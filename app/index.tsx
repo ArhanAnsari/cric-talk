@@ -12,15 +12,18 @@ export default function Index() {
   // get user info
   useEffect(() => {
     async function fetchUser() {
-      const user = await account.get();
-
-      if (!user) return;
-      setUser(user);
-      setIsLoading(false);
+      try {
+        const user = await account.get();
+        setUser(user);
+      } catch {
+        setUser(null);
+      } finally {
+        setIsLoading(false);
+      }
     }
 
     fetchUser();
-  }, [user]);
+  }, []);
 
   if (isLoading) return null;
   if (!user) return <Redirect href="/LoginScreen" />;
