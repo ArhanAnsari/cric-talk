@@ -1,5 +1,6 @@
+import { CommentType } from "@/interfaces/Post";
 import { account } from "@/libs/appwrite";
-import { addComment } from "@/services/comments.service";
+import { addComment, fetchComments } from "@/services/comments.service";
 import { updatePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { Ionicons, Octicons } from "@expo/vector-icons";
@@ -25,6 +26,7 @@ const PostDetails = () => {
 
   const updatePostState = usePosts((s) => s.updatePost);
 
+  const [commentList, setCommentList] = useState<CommentType[]>([]);
   const [comment, setComment] = useState<string>("");
 
   useEffect(() => {
@@ -33,6 +35,26 @@ const PostDetails = () => {
       setUserId(user.$id);
     }
     fetchUserId();
+  }, []);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadComments() {
+      if (!mounted) return;
+
+      try {
+        const data = await fetchComments(postId as string);
+        setCommentList(data.rows as any);
+      } catch (error) {
+        alert("Error loading comments. Please try again");
+      }
+    }
+    loadComments();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   async function handleLikePost() {
