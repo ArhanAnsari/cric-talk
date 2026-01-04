@@ -1,4 +1,5 @@
 import { account } from "@/libs/appwrite";
+import { addComment } from "@/services/comments.service";
 import { updatePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { Ionicons, Octicons } from "@expo/vector-icons";
@@ -56,6 +57,20 @@ const PostDetails = () => {
     } catch (error) {
       alert("Error liking post. Please try again");
       updatePostState(prevPost);
+    }
+  }
+
+  async function handleAddComment() {
+    if (comment.trim().length === 0) {
+      alert("Comment cannot be empty");
+      return;
+    }
+
+    try {
+      await addComment(postId as string, userId, comment);
+      setComment("");
+    } catch (error) {
+      alert("Error adding comment. Please try again");
     }
   }
 
@@ -159,10 +174,7 @@ const PostDetails = () => {
                       size={18}
                       color="black"
                     />
-                    <Text>
-                      {post?.comments.length} Comment
-                      {post?.comments.length === 1 ? "" : "s"}
-                    </Text>
+                    <Text>0 Comments</Text>
                   </Pressable>
 
                   <Pressable className="flex-row gap-2">
@@ -228,7 +240,10 @@ const PostDetails = () => {
           />
 
           {/* COMMENT ADD BUTTON */}
-          <Pressable className="h-12 w-12 bg-orange-500 rounded-lg items-center justify-center">
+          <Pressable
+            className="h-12 w-12 bg-orange-500 rounded-lg items-center justify-center"
+            onPress={handleAddComment}
+          >
             <Ionicons name="send-outline" size={18} color="white" />
           </Pressable>
         </View>
