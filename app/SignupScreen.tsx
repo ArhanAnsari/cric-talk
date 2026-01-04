@@ -1,3 +1,4 @@
+import { showToast } from "@/libs/showToast";
 import {
   createUserWithEmailAndPassword,
   loginUserWithEmailAndPassword,
@@ -23,7 +24,11 @@ const SignupScreen = () => {
       await loginUserWithEmailAndPassword(email, password);
       router.replace("/(tabs)/HomeScreen");
     } catch (error) {
-      alert("Signup failed. Please try again.");
+      showToast({
+        type: "error",
+        text1: "Signup Failed",
+        text2: "Please try again later.",
+      });
     }
   }
 

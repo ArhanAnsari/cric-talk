@@ -1,3 +1,4 @@
+import { showToast } from "@/libs/showToast";
 import { loginUserWithEmailAndPassword } from "@/services/auth.service";
 import { Octicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -20,7 +21,11 @@ const LoginScreen = () => {
       await loginUserWithEmailAndPassword(email, password);
       router.replace("/(tabs)/HomeScreen");
     } catch (error) {
-      alert("Login failed. Please try again.");
+      showToast({
+        type: "error",
+        text1: "Login Failed",
+        text2: "Please try again later.",
+      });
     }
   }
 
