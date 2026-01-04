@@ -1,7 +1,7 @@
-import { CommentType } from "@/interfaces/Post";
 import { account } from "@/libs/appwrite";
 import { addComment, fetchComments } from "@/services/comments.service";
 import { updatePost } from "@/services/posts.service";
+import { useComments } from "@/store/useComments";
 import { usePosts } from "@/store/usePosts";
 import { Ionicons, Octicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
@@ -27,7 +27,10 @@ const PostDetails = () => {
 
   const updatePostState = usePosts((s) => s.updatePost);
 
-  const [commentList, setCommentList] = useState<CommentType[]>([]);
+  const commentList = useComments((s) => s.commentList);
+  const setCommentList = useComments((s) => s.setComments);
+  const addCommentState = useComments((s) => s.addComment);
+
   const [comment, setComment] = useState<string>("");
 
   useEffect(() => {
@@ -90,7 +93,9 @@ const PostDetails = () => {
     }
 
     try {
-      await addComment(postId as string, userId, comment);
+      const newComment = await addComment(postId as string, userId, comment);
+
+      addCommentState(newComment);
 
       await updatePost(postId as string, {
         commentCount: (post?.commentCount || 0) + 1,
