@@ -241,7 +241,7 @@ const PostDetails = () => {
                     <View className="border-b border-gray-300 pb-4 mt-4">
                       {/* AUTHOR INFO */}
                       <View className="flex-row items-center gap-2">
-                        {/* AUTHOR PROFILE IMAGE */}
+                        {/* AUTHOR PROFILE IMAGE + DELETE */}
                         <Pressable className="bg-gray-300 h-10 w-10 items-center justify-center rounded-full">
                           <Text className="text-lg font-semibold capitalize text-slate-950">
                             {item.authorId[0]}
@@ -252,6 +252,14 @@ const PostDetails = () => {
                         <Text className="text-lg font-medium text-slate-900">
                           {item.authorId}
                         </Text>
+
+                        <Pressable className="ml-auto">
+                          <Ionicons
+                            name="trash-outline"
+                            size={18}
+                            color="gray"
+                          />
+                        </Pressable>
                       </View>
 
                       {/* COMMENT CONTENT */}
