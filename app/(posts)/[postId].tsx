@@ -308,16 +308,18 @@ const PostDetails = () => {
                           {item.authorId}
                         </Text>
 
-                        <Pressable
-                          className="ml-auto"
-                          onPress={() => handleDeleteComment(item.$id)}
-                        >
-                          <Ionicons
-                            name="trash-outline"
-                            size={18}
-                            color="gray"
-                          />
-                        </Pressable>
+                        {item.authorId === userId && (
+                          <Pressable
+                            className="ml-auto"
+                            onPress={() => handleDeleteComment(item.$id)}
+                          >
+                            <Ionicons
+                              name="trash-outline"
+                              size={18}
+                              color="gray"
+                            />
+                          </Pressable>
+                        )}
                       </View>
 
                       {/* COMMENT CONTENT */}
