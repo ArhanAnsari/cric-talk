@@ -251,8 +251,8 @@ const HomeScreen = () => {
                       color="black"
                     />
                     <Text>
-                      {item.comments.length} Comment
-                      {item.comments.length === 1 ? "" : "s"}
+                      {item.commentCount} Comment
+                      {item.commentCount === 1 ? "" : "s"}
                     </Text>
                   </Pressable>
 
