@@ -7,6 +7,7 @@ import { Ionicons, Octicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
+  FlatList,
   KeyboardAvoidingView,
   Pressable,
   ScrollView,
@@ -215,35 +216,50 @@ const PostDetails = () => {
                 </Text>
 
                 {/* COMMENT LIST */}
-                <View className="border-b border-gray-300 pb-4 mt-4">
-                  {/* AUTHOR INFO + PUBLISH DATE */}
-                  <View className="flex-row items-center gap-2">
-                    {/* AUTHOR PROFILE IMAGE */}
-                    <Pressable className="bg-gray-300 h-10 w-10 items-center justify-center rounded-full">
-                      <Text className="text-lg font-semibold capitalize text-slate-950">
-                        i
-                      </Text>
-                    </Pressable>
+                <FlatList
+                  data={commentList}
+                  keyExtractor={(item) => item.id}
+                  contentContainerStyle={{ paddingBottom: 20 }}
+                  renderItem={({ item }) => (
+                    <View className="border-b border-gray-300 pb-4 mt-4">
+                      {/* AUTHOR INFO + PUBLISH DATE */}
+                      <View className="flex-row items-center gap-2">
+                        {/* AUTHOR PROFILE IMAGE */}
+                        <Pressable className="bg-gray-300 h-10 w-10 items-center justify-center rounded-full">
+                          <Text className="text-lg font-semibold capitalize text-slate-950">
+                            {item.authorId[0]}
+                          </Text>
+                        </Pressable>
 
-                    {/* AUTHOR NAME */}
-                    <Text className="text-lg font-medium text-slate-900">
-                      Ishan
-                    </Text>
+                        {/* AUTHOR NAME */}
+                        <Text className="text-lg font-medium text-slate-900">
+                          {item.authorId}
+                        </Text>
 
-                    {/* PUBLISH DATE */}
-                    <Text className="text-sm text-slate-600 ml-auto">
-                      3 Jan 2025, 08:25 AM
-                    </Text>
-                  </View>
+                        {/* PUBLISH DATE */}
+                        <Text className="text-sm text-slate-600 ml-auto">
+                          {new Date(item.$createdAt).toLocaleDateString(
+                            "en-IN",
+                            {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                              hour: "numeric",
+                              minute: "numeric",
+                            }
+                          )}
+                        </Text>
+                      </View>
 
-                  {/* COMMENT CONTENT */}
-                  <View className="mt-4">
-                    <Text className="leading-6 text-slate-800">
-                      This will contain the comment content for the clicked
-                      post.
-                    </Text>
-                  </View>
-                </View>
+                      {/* COMMENT CONTENT */}
+                      <View className="mt-4">
+                        <Text className="leading-6 text-slate-800">
+                          {item.content}
+                        </Text>
+                      </View>
+                    </View>
+                  )}
+                />
               </View>
             </View>
           </SafeAreaView>
