@@ -1,0 +1,19 @@
+import { tablesDB } from "@/libs/appwrite";
+import { Query } from "react-native-appwrite";
+
+const CRIC_TALK_DATABASE_ID =
+  process.env.EXPO_PUBLIC_APPWRITE_CRIC_TALK_DATABASE_ID!;
+const ROOMS_TABLE_ID = process.env.EXPO_PUBLIC_APPWRITE_COMMENTS_TABLE_ID!;
+
+export async function fetchRooms() {
+  try {
+    return await tablesDB.listRows({
+      databaseId: CRIC_TALK_DATABASE_ID,
+      tableId: ROOMS_TABLE_ID,
+      queries: [Query.orderDesc("startTime"), Query.limit(20)],
+    });
+  } catch (error) {
+    console.log(`Error while fetching rhe rooms ${error}`);
+    throw error;
+  }
+}
