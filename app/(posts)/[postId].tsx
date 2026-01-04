@@ -218,7 +218,7 @@ const PostDetails = () => {
                 {/* COMMENT LIST */}
                 <FlatList
                   data={commentList}
-                  keyExtractor={(item) => item.id}
+                  keyExtractor={(item) => item.$id}
                   contentContainerStyle={{ paddingBottom: 20 }}
                   renderItem={({ item }) => (
                     <View className="border-b border-gray-300 pb-4 mt-4">

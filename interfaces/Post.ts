@@ -1,12 +1,10 @@
 import { Models } from "react-native-appwrite";
 
 export interface CommentType extends Models.Row {
-  id: string;
   postId: string;
   authorId: string;
   content: string;
   isEdited: boolean;
-  createdAt: string;
 }
 
 export interface Post extends Models.Row {
