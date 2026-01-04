@@ -239,7 +239,7 @@ const PostDetails = () => {
                   contentContainerStyle={{ paddingBottom: 20 }}
                   renderItem={({ item }) => (
                     <View className="border-b border-gray-300 pb-4 mt-4">
-                      {/* AUTHOR INFO + PUBLISH DATE */}
+                      {/* AUTHOR INFO */}
                       <View className="flex-row items-center gap-2">
                         {/* AUTHOR PROFILE IMAGE */}
                         <Pressable className="bg-gray-300 h-10 w-10 items-center justify-center rounded-full">
@@ -252,20 +252,6 @@ const PostDetails = () => {
                         <Text className="text-lg font-medium text-slate-900">
                           {item.authorId}
                         </Text>
-
-                        {/* PUBLISH DATE */}
-                        <Text className="text-sm text-slate-600 ml-auto">
-                          {new Date(item.$createdAt).toLocaleDateString(
-                            "en-IN",
-                            {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                              hour: "numeric",
-                              minute: "numeric",
-                            }
-                          )}
-                        </Text>
                       </View>
 
                       {/* COMMENT CONTENT */}
@@ -274,6 +260,17 @@ const PostDetails = () => {
                           {item.content}
                         </Text>
                       </View>
+
+                      {/* PUBLISH DATE */}
+                      <Text className="text-sm text-slate-600 ml-auto">
+                        {new Date(item.$createdAt).toLocaleDateString("en-IN", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                          hour: "numeric",
+                          minute: "numeric",
+                        })}
+                      </Text>
                     </View>
                   )}
                 />
