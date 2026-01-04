@@ -24,6 +24,8 @@ const PostDetails = () => {
 
   const updatePostState = usePosts((s) => s.updatePost);
 
+  const [comment, setComment] = useState<string>("");
+
   useEffect(() => {
     async function fetchUserId() {
       const user = await account.get();
@@ -219,6 +221,8 @@ const PostDetails = () => {
         <View className="px-6 flex-row items-center ">
           {/* COMMENT INPUT */}
           <TextInput
+            value={comment}
+            onChangeText={setComment}
             placeholder="Comment"
             className="border border-gray-300 rounded-lg pl-4 h-12 flex-1 mr-4"
           />
