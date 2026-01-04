@@ -3,6 +3,7 @@ import { useUser } from "@/store/useUser";
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { Models } from "react-native-appwrite";
+import Toast from "react-native-toast-message";
 import "../global.css";
 
 export default function RootLayout() {
@@ -39,5 +40,11 @@ export default function RootLayout() {
     };
   }, []);
 
-  return <Stack screenOptions={{ headerShown: false }}></Stack>;
+  return (
+    <>
+      <Stack screenOptions={{ headerShown: false }}></Stack>
+
+      <Toast />
+    </>
+  );
 }
