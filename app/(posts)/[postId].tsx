@@ -1,4 +1,5 @@
 import { account } from "@/libs/appwrite";
+import { showToast } from "@/libs/showToast";
 import {
   addComment,
   deleteComment,
@@ -57,7 +58,11 @@ const PostDetails = () => {
         const data = await fetchComments(postId as string);
         setCommentList(data.rows);
       } catch (error) {
-        alert("Error loading comments. Please try again");
+        showToast({
+          type: "error",
+          text1: "Error",
+          text2: "Could not load comments. Please try again later.",
+        });
       }
     }
     loadComments();
@@ -87,14 +92,21 @@ const PostDetails = () => {
 
       await updatePost(post.$id, updatedPostData);
     } catch (error) {
-      alert("Error liking post. Please try again");
+      showToast({
+        type: "error",
+        text1: "Error",
+        text2: "Could not like. Please try again later.",
+      });
       updatePostState(prevPost);
     }
   }
 
   async function handleAddComment() {
     if (comment.trim().length === 0) {
-      alert("Comment cannot be empty");
+      showToast({
+        type: "error",
+        text1: "Comment cannot be empty.",
+      });
       return;
     }
 
@@ -113,7 +125,11 @@ const PostDetails = () => {
 
       setComment("");
     } catch (error) {
-      alert("Error adding comment. Please try again");
+      showToast({
+        type: "error",
+        text1: "Error",
+        text2: "Could not add comment. Please try again later.",
+      });
     }
   }
 
@@ -139,7 +155,11 @@ const PostDetails = () => {
               commentCount: (post?.commentCount || 0) - 1,
             });
           } catch (error) {
-            alert("Error deleting comment. Please try again");
+            showToast({
+              type: "error",
+              text1: "Error",
+              text2: "Could not delete comment. Please try again later.",
+            });
           }
         },
       },

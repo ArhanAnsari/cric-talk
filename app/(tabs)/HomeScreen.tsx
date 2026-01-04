@@ -1,5 +1,6 @@
 import { Post } from "@/interfaces/Post";
 import { account } from "@/libs/appwrite";
+import { showToast } from "@/libs/showToast";
 import { createPost, fetchPosts, updatePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { Ionicons, Octicons } from "@expo/vector-icons";
@@ -94,9 +95,18 @@ const HomeScreen = () => {
             addPost(newPost);
             setIsVisible(false);
             setContent("");
-            alert("Post created succesfully!");
+
+            showToast({
+              type: "success",
+              text1: "Post Created",
+              text2: "Your post has been created successfully.",
+            });
           } catch (error) {
-            alert("Error creating post. Please try again.");
+            showToast({
+              type: "error",
+              text1: "Error",
+              text2: "Could not create post. Please try again later.",
+            });
           }
         },
       },
@@ -122,7 +132,11 @@ const HomeScreen = () => {
       });
       const updatedPost = await updatePost(postId, updatedPostData);
     } catch (error) {
-      alert("Error liking post. Please try again.");
+      showToast({
+        type: "error",
+        text1: "Error",
+        text2: "Could not like. Please try again later.",
+      });
       updatePostState(post);
     }
   }
