@@ -1,3 +1,4 @@
+import { CommentType } from "@/interfaces/Post";
 import { tablesDB } from "@/libs/appwrite";
 import { ID, Query } from "react-native-appwrite";
 
@@ -7,7 +8,7 @@ const COMMENTS_TABLE_ID = process.env.EXPO_PUBLIC_APPWRITE_COMMENTS_TABLE_ID!;
 
 export async function fetchComments(postId: string) {
   try {
-    return await tablesDB.listRows({
+    return await tablesDB.listRows<CommentType>({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: COMMENTS_TABLE_ID,
       queries: [Query.equal("postId", postId), Query.orderDesc("$createdAt")],
@@ -24,7 +25,7 @@ export async function addComment(
   content: string
 ) {
   try {
-    return await tablesDB.createRow({
+    return await tablesDB.createRow<CommentType>({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: COMMENTS_TABLE_ID,
       rowId: ID.unique(),

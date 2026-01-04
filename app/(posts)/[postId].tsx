@@ -46,7 +46,7 @@ const PostDetails = () => {
 
       try {
         const data = await fetchComments(postId as string);
-        setCommentList(data.rows as any);
+        setCommentList(data.rows);
       } catch (error) {
         alert("Error loading comments. Please try again");
       }
