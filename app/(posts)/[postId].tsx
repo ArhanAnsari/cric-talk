@@ -91,6 +91,15 @@ const PostDetails = () => {
 
     try {
       await addComment(postId as string, userId, comment);
+
+      await updatePost(postId as string, {
+        commentCount: (post?.commentCount || 0) + 1,
+      });
+      updatePostState({
+        $id: postId as string,
+        commentCount: (post?.commentCount || 0) + 1,
+      });
+
       setComment("");
     } catch (error) {
       alert("Error adding comment. Please try again");

@@ -17,4 +17,6 @@ export interface Post extends Models.Row {
 
   views: number;
   viewedBy: string[];
+
+  commentCount: number;
 }
