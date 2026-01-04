@@ -45,7 +45,7 @@ export async function createPost({
         likedBy: [],
         views: 0,
         viewedBy: [],
-        comments: [],
+        commentCount: 0,
       },
     });
   } catch (error) {
