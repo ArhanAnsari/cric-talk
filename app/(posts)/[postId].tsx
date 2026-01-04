@@ -1,5 +1,9 @@
 import { account } from "@/libs/appwrite";
-import { addComment, fetchComments } from "@/services/comments.service";
+import {
+  addComment,
+  deleteComment,
+  fetchComments,
+} from "@/services/comments.service";
 import { updatePost } from "@/services/posts.service";
 import { useComments } from "@/store/useComments";
 import { usePosts } from "@/store/usePosts";
@@ -7,6 +11,7 @@ import { Ionicons, Octicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
+  Alert,
   FlatList,
   KeyboardAvoidingView,
   Pressable,
@@ -30,6 +35,7 @@ const PostDetails = () => {
   const commentList = useComments((s) => s.commentList);
   const setCommentList = useComments((s) => s.setComments);
   const addCommentState = useComments((s) => s.addComment);
+  const deleteCommentState = useComments((s) => s.deleteComment);
 
   const [comment, setComment] = useState<string>("");
 
@@ -109,6 +115,35 @@ const PostDetails = () => {
     } catch (error) {
       alert("Error adding comment. Please try again");
     }
+  }
+
+  async function handleDeleteComment(commentId: string) {
+    Alert.alert("Are you sure?", "Do you want to delete this comment?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await deleteComment(commentId);
+            deleteCommentState(commentId);
+
+            await updatePost(postId as string, {
+              commentCount: (post?.commentCount || 0) - 1,
+            });
+            updatePostState({
+              $id: postId as string,
+              commentCount: (post?.commentCount || 0) - 1,
+            });
+          } catch (error) {
+            alert("Error deleting comment. Please try again");
+          }
+        },
+      },
+    ]);
   }
 
   return (
@@ -253,7 +288,10 @@ const PostDetails = () => {
                           {item.authorId}
                         </Text>
 
-                        <Pressable className="ml-auto">
+                        <Pressable
+                          className="ml-auto"
+                          onPress={() => handleDeleteComment(item.$id)}
+                        >
                           <Ionicons
                             name="trash-outline"
                             size={18}
