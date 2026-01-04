@@ -1,10 +1,10 @@
 import { account } from "@/libs/appwrite";
 import { updatePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
-import { Octicons } from "@expo/vector-icons";
+import { Ionicons, Octicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const PostDetails = () => {
@@ -192,6 +192,22 @@ const PostDetails = () => {
           </View>
         </SafeAreaView>
       </ScrollView>
+
+      {/* COMMENT INPUT BOX */}
+      <SafeAreaView>
+        <View className="px-6 flex-row items-center">
+          {/* COMMENT INPUT */}
+          <TextInput
+            placeholder="Comment"
+            className="border border-gray-300 rounded-lg pl-4 h-12 flex-1 mr-4"
+          />
+
+          {/* COMMENT ADD BUTTON */}
+          <Pressable className="h-12 w-12 bg-orange-500 rounded-lg items-center justify-center">
+            <Ionicons name="send-outline" size={18} color="white" />
+          </Pressable>
+        </View>
+      </SafeAreaView>
     </View>
   );
 };
