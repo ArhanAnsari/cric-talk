@@ -19,14 +19,21 @@ export async function fetchRooms() {
   }
 }
 
-export async function createRoom(
-  teams: string[],
-  status: "upcoming" | "live" | "finished",
-  startTime: string,
-  matchType: "ODI" | "TEST" | "T20",
-  isLocked: boolean,
-  endTime?: string
-) {
+export async function createRoom({
+  teams,
+  status,
+  startTime,
+  matchType,
+  isLocked,
+  endTime,
+}: {
+  teams: string[];
+  status: "upcoming" | "live" | "finished";
+  startTime: string;
+  matchType: "ODI" | "TEST" | "T20";
+  isLocked: boolean;
+  endTime?: string;
+}) {
   try {
     return await tablesDB.createRow<Room>({
       databaseId: CRIC_TALK_DATABASE_ID,
