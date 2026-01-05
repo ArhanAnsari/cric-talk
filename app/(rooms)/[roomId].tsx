@@ -1,4 +1,7 @@
 import { Room } from "@/interfaces/Room";
+import { account } from "@/libs/appwrite";
+import { showToast } from "@/libs/showToast";
+import { createRoomMessage } from "@/services/roomMessage.service";
 import { fetchRooms } from "@/services/rooms.service";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
@@ -15,6 +18,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const RoomDiscussion = () => {
   const { roomId } = useLocalSearchParams();
 
+  const [userId, setUserId] = useState<string>("");
+
   const [room, setRoom] = React.useState<Room | null>(null);
 
   const [messageContent, setMessageContent] = useState<string>("");
@@ -29,12 +34,44 @@ const RoomDiscussion = () => {
       const roomDetails = data.rows.find((room) => room.$id === roomId);
       setRoom(roomDetails || null);
     }
+
+    async function fetchUserId() {
+      try {
+        const user = await account.get();
+        setUserId(user.$id);
+      } catch (error) {
+        showToast({
+          type: "error",
+          text1: "Error fetching user details",
+          text2: "Please try again later.",
+        });
+      }
+    }
+
     loadRoomDetails();
+    fetchUserId();
 
     return () => {
       mounted = false;
     };
   }, []);
+
+  async function handleCreateRoomMessage() {
+    try {
+      await createRoomMessage({
+        roomId: roomId as string,
+        authorId: userId,
+        content: messageContent,
+      });
+      setMessageContent("");
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error sending message",
+        text2: "Please try again later.",
+      });
+    }
+  }
 
   return (
     <KeyboardAvoidingView className="flex-1 bg-white" behavior="padding">
@@ -142,7 +179,10 @@ const RoomDiscussion = () => {
           />
 
           {/* MESSAGE ADD BUTTON */}
-          <Pressable className="h-12 w-12 bg-orange-500 rounded-lg items-center justify-center">
+          <Pressable
+            className="h-12 w-12 bg-orange-500 rounded-lg items-center justify-center"
+            onPress={handleCreateRoomMessage}
+          >
             <Ionicons name="send-outline" size={18} color="white" />
           </Pressable>
         </View>
