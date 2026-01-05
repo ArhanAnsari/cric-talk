@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, Octicons } from "@expo/vector-icons";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -58,6 +58,11 @@ const RoomsScreen = () => {
           </Pressable>
         </View>
       </SafeAreaView>
+
+      {/* CREATE ROOM BUTTON */}
+      <Pressable className="w-16 h-16 bg-orange-500 rounded-full items-center justify-center absolute bottom-6 right-6 shadow-md elevation-xs">
+        <Octicons name="plus" size={24} color="white" />
+      </Pressable>
     </View>
   );
 };
