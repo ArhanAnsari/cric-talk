@@ -1,3 +1,5 @@
+import { showToast } from "@/libs/showToast";
+import { createRoom } from "@/services/rooms.service";
 import React, { useState } from "react";
 import {
   Modal,
@@ -73,7 +75,57 @@ const CreateRoomModal = ({
       return;
     }
 
-    onClose();
+    if (createPostType === "roomSettings") {
+      handleCreateRoom();
+    }
+  }
+
+  async function handleCreateRoom() {
+    if (!startDate || !endDate) return;
+
+    const now = new Date();
+    let status: "upcoming" | "live" | "finished";
+
+    if (startDate > now) {
+      status = "upcoming";
+    } else if (startDate < now && endDate > now) {
+      status = "live";
+    } else {
+      status = "finished";
+      setIsLocked(true);
+    }
+
+    try {
+      await createRoom({
+        teams: [team1.trim(), team2.trim()],
+        status,
+        startTime: startDate.toISOString(),
+        endTime: endDate.toISOString(),
+        matchType,
+        isLocked,
+      });
+
+      onClose();
+      setCreatePostType("teamInfo");
+      setTeam1("");
+      setTeam2("");
+      setStartDate(null);
+      setEndDate(null);
+      setMatchType("ODI");
+      setIsLocked(false);
+
+      showToast({
+        type: "success",
+        text1: "Room Created",
+        text2: "The room has been created successfully.",
+      });
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Room Creation Failed",
+        text2: "Please try again later.",
+      });
+    }
   }
 
   return (
