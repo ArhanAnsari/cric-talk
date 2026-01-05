@@ -6,6 +6,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const RoomsScreen = () => {
   const [isVisible, setIsVisible] = useState(true);
 
+  const [createPostType, setCreatePostType] = useState<
+    "teamInfo" | "matchInfo" | "roomSettings"
+  >("teamInfo");
+
   return (
     <View className="flex-1 bg-white">
       {/* HEADER */}
@@ -84,25 +88,30 @@ const RoomsScreen = () => {
               Create Room
             </Text>
 
-            <View className="mt-4 gap-2">
-              <Text className="text-600 font-medium">Team 1</Text>
-              <TextInput
-                placeholder="Enter team name"
-                className="border border-gray-300 rounded-lg pl-4"
-              />
-            </View>
+            {/* FORM CONTENT */}
+            {createPostType === "teamInfo" && (
+              <>
+                <View className="mt-4 gap-2">
+                  <Text className="text-600 font-medium">Team 1</Text>
+                  <TextInput
+                    placeholder="Enter team name"
+                    className="border border-gray-300 rounded-lg pl-4"
+                  />
+                </View>
 
-            <View className="mt-4 gap-2">
-              <Text className="text-600 font-medium">Team 2</Text>
-              <TextInput
-                placeholder="Enter team name"
-                className="border border-gray-300 rounded-lg pl-4"
-              />
-            </View>
+                <View className="mt-4 gap-2">
+                  <Text className="text-600 font-medium">Team 2</Text>
+                  <TextInput
+                    placeholder="Enter team name"
+                    className="border border-gray-300 rounded-lg pl-4"
+                  />
+                </View>
+              </>
+            )}
 
             <Pressable className="bg-orange-500 px-6 py-3 rounded-lg mt-6 transition-all duration-300 active:opacity-85 active:scale-[0.98]">
               <Text className="text-center text-white font-semibold text-lg">
-                Create Room
+                {createPostType !== "roomSettings" ? "Next" : "Create Room"}
               </Text>
             </Pressable>
           </View>
