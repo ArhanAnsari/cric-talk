@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
+  FlatList,
   KeyboardAvoidingView,
   Pressable,
   Text,
@@ -157,31 +158,35 @@ const RoomDiscussion = () => {
             </View>
 
             {/* DISCUSSION AREA */}
-            <View className="mt-6">
-              {/* DISCUSSION MESSAGE CARD */}
-              <View className="flex-row gap-2 bg-slate-200 px-3 py-4 rounded-lg items-baseline">
-                {/* AUTHOR AVATAR */}
-                <Pressable className="bg-slate-300 h-10 w-10 items-center justify-center rounded-full">
-                  <Text className="text-slate-900 font-medium uppercase">
-                    s
-                  </Text>
-                </Pressable>
+            <FlatList
+              data={roomMessages}
+              keyExtractor={(item) => item.$id}
+              contentContainerStyle={{ marginTop: 24, paddingBottom: 80 }}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => (
+                // DISCUSSION MESSAGE CARD
 
-                {/* AUTHOR NAME & MESSAGE */}
-                <View className="gap-1">
-                  <Text className="text-slate-900 text-sm font-semibold">
-                    Swapna
-                  </Text>
+                <View className="flex-row gap-2 bg-slate-200 px-3 py-4 rounded-lg items-baseline mb-4">
+                  {/* AUTHOR AVATAR */}
+                  <Pressable className="bg-slate-300 h-10 w-10 items-center justify-center rounded-full">
+                    <Text className="text-slate-900 font-medium uppercase">
+                      {item.authorId.charAt(0)}
+                    </Text>
+                  </Pressable>
 
-                  <Text className="max-w-[95%] text-slate-600">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Harum ex odio nesciunt, fuga et cum necessitatibus eaquex?
-                    Reprehenderit consectetur, architecto dolores corporis saepe
-                    vero obcaecati necessitatibus, vel odit, aliquam iure.
-                  </Text>
+                  {/* AUTHOR NAME & MESSAGE */}
+                  <View className="gap-1">
+                    <Text className="text-slate-900 text-sm font-semibold">
+                      {item.authorId}
+                    </Text>
+
+                    <Text className="max-w-[95%] text-slate-600">
+                      {item.content}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            </View>
+              )}
+            />
           </View>
         </SafeAreaView>
       </View>
