@@ -220,7 +220,7 @@ const CreateRoomModal = ({
                   data={matchTypeDropdown}
                   labelField="label"
                   valueField="value"
-                  onChange={(value) => setMatchType(value)}
+                  onChange={(item) => setMatchType(item.value)}
                   placeholder="Select match type"
                   style={styles.dropdown}
                   containerStyle={styles.dropdownContainer}
