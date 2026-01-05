@@ -1,6 +1,13 @@
 import { Ionicons, Octicons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { Modal, Pressable, Text, TextInput, View } from "react-native";
+import {
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -188,6 +195,10 @@ const RoomsScreen = () => {
                     valueField="value"
                     onChange={(value) => setMatchType(value)}
                     placeholder="Select match type"
+                    style={styles.dropdown}
+                    containerStyle={styles.dropdownContainer}
+                    placeholderStyle={styles.dropdownPlaceholderText}
+                    selectedTextStyle={styles.dropdownSelectedText}
                   />
                 </View>
 
@@ -226,5 +237,27 @@ const RoomsScreen = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  dropdown: {
+    borderWidth: 1,
+    borderColor: "#d1d5dc",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    height: 42,
+  },
+  dropdownContainer: {
+    marginTop: 4,
+    borderRadius: 8,
+  },
+  dropdownPlaceholderText: {
+    color: "#6a7282",
+    fontSize: 16,
+  },
+  dropdownSelectedText: {
+    color: "#0f172b",
+    fontSize: 16,
+  },
+});
 
 export default RoomsScreen;
