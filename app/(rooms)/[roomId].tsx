@@ -1,7 +1,11 @@
 import { Room } from "@/interfaces/Room";
+import { RoomMessage } from "@/interfaces/RoomMessage";
 import { account } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
-import { createRoomMessage } from "@/services/roomMessage.service";
+import {
+  createRoomMessage,
+  fetchRoomMessages,
+} from "@/services/roomMessage.service";
 import { fetchRooms } from "@/services/rooms.service";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
@@ -21,6 +25,7 @@ const RoomDiscussion = () => {
   const [userId, setUserId] = useState<string>("");
 
   const [room, setRoom] = React.useState<Room | null>(null);
+  const [roomMessages, setRoomMessages] = useState<RoomMessage[]>([]);
 
   const [messageContent, setMessageContent] = useState<string>("");
 
@@ -48,8 +53,22 @@ const RoomDiscussion = () => {
       }
     }
 
+    async function loadRoomMessages() {
+      try {
+        const data = await fetchRoomMessages(roomId as string);
+        setRoomMessages(data.rows as any);
+      } catch (error) {
+        showToast({
+          type: "error",
+          text1: "Error fetching room messages",
+          text2: "Please try again later.",
+        });
+      }
+    }
+
     loadRoomDetails();
     fetchUserId();
+    loadRoomMessages();
 
     return () => {
       mounted = false;
