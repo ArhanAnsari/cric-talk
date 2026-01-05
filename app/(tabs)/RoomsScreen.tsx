@@ -26,6 +26,7 @@ const RoomsScreen = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [matchType, setMatchType] = useState<"ODI" | "TEST" | "T20">("ODI");
+  const [isLocked, setIsLocked] = useState<boolean>(false);
 
   const matchTypeDropdown = [
     {
@@ -224,6 +225,40 @@ const RoomsScreen = () => {
                   minimumDate={startDate || new Date()}
                 />
               </>
+            )}
+
+            {createPostType === "roomSettings" && (
+              <View className="mt-4">
+                <View>
+                  <Text className="text-slate-900 font-medium text-center">
+                    Do you want open chat now?
+                  </Text>
+
+                  <Text className="text-slate-500 text-sm text-center mt-1">
+                    You can change this setting later.
+                  </Text>
+                </View>
+
+                <View className="mt-4 gap-2 flex-row items-center">
+                  <Pressable
+                    className="bg-green-500 px-6 py-3 rounded-xl w-1/2 transition-all duration-300 active:opacity-85 active:scale-[0.95]"
+                    onPress={() => setIsLocked(false)}
+                  >
+                    <Text className="text-white font-medium text-center">
+                      Yes
+                    </Text>
+                  </Pressable>
+
+                  <Pressable
+                    className="bg-red-500 px-6 py-3 rounded-xl w-1/2 transition-all duration-300 active:opacity-85 active:scale-[0.95]"
+                    onPress={() => setIsLocked(true)}
+                  >
+                    <Text className="text-white font-medium text-center">
+                      No
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
             )}
 
             <Pressable className="bg-orange-500 px-6 py-3 rounded-lg mt-6 transition-all duration-300 active:opacity-85 active:scale-[0.98]">
