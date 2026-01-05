@@ -42,6 +42,7 @@ export async function createRoom(
     });
   } catch (error) {
     console.log(`Error while creating room ${error}`);
+    throw error;
   }
 }
 
@@ -54,5 +55,6 @@ export async function deleteRoom(roomId: string) {
     });
   } catch (error) {
     console.log(`Error while deleting the room ${error}`);
+    throw error;
   }
 }
