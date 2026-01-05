@@ -156,39 +156,44 @@ const RoomDiscussion = () => {
                 </View>
               </View>
             </View>
-
-            {/* DISCUSSION AREA */}
-            <FlatList
-              data={roomMessages}
-              keyExtractor={(item) => item.$id}
-              contentContainerStyle={{ marginTop: 24, paddingBottom: 80 }}
-              showsVerticalScrollIndicator={false}
-              renderItem={({ item }) => (
-                // DISCUSSION MESSAGE CARD
-
-                <View className="flex-row gap-2 bg-slate-200 px-3 py-4 rounded-lg items-baseline mb-4">
-                  {/* AUTHOR AVATAR */}
-                  <Pressable className="bg-slate-300 h-10 w-10 items-center justify-center rounded-full">
-                    <Text className="text-slate-900 font-medium uppercase">
-                      {item.authorId.charAt(0)}
-                    </Text>
-                  </Pressable>
-
-                  {/* AUTHOR NAME & MESSAGE */}
-                  <View className="gap-1">
-                    <Text className="text-slate-900 text-sm font-semibold">
-                      {item.authorId}
-                    </Text>
-
-                    <Text className="max-w-[95%] text-slate-600">
-                      {item.content}
-                    </Text>
-                  </View>
-                </View>
-              )}
-            />
           </View>
         </SafeAreaView>
+
+        <View className="flex-1 -mt-4">
+          {/* DISCUSSION AREA */}
+          <FlatList
+            data={roomMessages}
+            keyExtractor={(item) => item.$id}
+            contentContainerStyle={{
+              paddingBottom: 40,
+              paddingHorizontal: 24,
+            }}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => (
+              // DISCUSSION MESSAGE CARD
+
+              <View className="flex-row gap-2 bg-slate-200 px-3 py-4 rounded-lg items-baseline mb-4">
+                {/* AUTHOR AVATAR */}
+                <Pressable className="bg-slate-300 h-10 w-10 items-center justify-center rounded-full">
+                  <Text className="text-slate-900 font-medium uppercase">
+                    {item.authorId.charAt(0)}
+                  </Text>
+                </Pressable>
+
+                {/* AUTHOR NAME & MESSAGE */}
+                <View className="gap-1">
+                  <Text className="text-slate-900 text-sm font-semibold">
+                    {item.authorId}
+                  </Text>
+
+                  <Text className="max-w-[95%] text-slate-600">
+                    {item.content}
+                  </Text>
+                </View>
+              </View>
+            )}
+          />
+        </View>
       </View>
 
       <SafeAreaView>
