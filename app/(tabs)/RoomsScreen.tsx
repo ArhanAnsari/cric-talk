@@ -1,11 +1,40 @@
+import { Room } from "@/interfaces/Room";
+import { showToast } from "@/libs/showToast";
+import { fetchRooms } from "@/services/rooms.service";
 import { Ionicons, Octicons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CreateRoomModal from "../components/CreateRoomModal";
 
 const RoomsScreen = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const [rooms, setRooms] = useState<Room[]>([]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadRooms() {
+      if (!mounted) return;
+
+      try {
+        const data = await fetchRooms();
+        setRooms(data.rows);
+      } catch (error) {
+        showToast({
+          type: "error",
+          text1: "Error fetching rooms",
+          text2: "Please try again later.",
+        });
+      }
+    }
+    loadRooms();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <View className="flex-1 bg-white">
