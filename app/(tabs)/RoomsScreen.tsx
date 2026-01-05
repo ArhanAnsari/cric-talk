@@ -43,6 +43,20 @@ const RoomsScreen = () => {
     },
   ];
 
+  function handleNextStep() {
+    if (createPostType === "teamInfo") {
+      setCreatePostType("matchInfo");
+      return;
+    }
+
+    if (createPostType === "matchInfo") {
+      setCreatePostType("roomSettings");
+      return;
+    }
+
+    setIsVisible(false);
+  }
+
   return (
     <View className="flex-1 bg-white">
       {/* HEADER */}
@@ -261,7 +275,10 @@ const RoomsScreen = () => {
               </View>
             )}
 
-            <Pressable className="bg-orange-500 px-6 py-3 rounded-lg mt-6 transition-all duration-300 active:opacity-85 active:scale-[0.98]">
+            <Pressable
+              className="bg-orange-500 px-6 py-3 rounded-lg mt-6 transition-all duration-300 active:opacity-85 active:scale-[0.98]"
+              onPress={handleNextStep}
+            >
               <Text className="text-center text-white font-semibold text-lg">
                 {createPostType !== "roomSettings" ? "Next" : "Create Room"}
               </Text>
