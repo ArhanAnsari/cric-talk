@@ -3,7 +3,7 @@ import { showToast } from "@/libs/showToast";
 import { fetchRooms } from "@/services/rooms.service";
 import { Ionicons, Octicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { FlatList, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CreateRoomModal from "../components/CreateRoomModal";
 
@@ -58,37 +58,50 @@ const RoomsScreen = () => {
       {/* CONTENT */}
       <SafeAreaView>
         {/* MATCH ROOM CARD */}
-        <View className="mx-6 px-6 py-4 bg-white shadow-sm elevation-sm rounded-lg transition-all duration-300 active:scale-[0.97] active:opacity-85">
-          {/* TEAMS */}
-          <View className="flex-row items-center justify-between">
-            {/* TEAM 1 */}
-            <Pressable className="bg-gray-300 w-12 h-12 items-center justify-center rounded-full">
-              <Text className="text-slate-900 font-semibold">AUS</Text>
-            </Pressable>
+        <FlatList
+          data={rooms}
+          keyExtractor={(item) => item.$id}
+          contentContainerStyle={{ paddingTop: 4, paddingBottom: 80 }}
+          renderItem={({ item }) => (
+            <View className="mx-6 px-6 py-4 bg-white shadow-sm elevation-sm rounded-lg transition-all duration-300 active:scale-[0.97] active:opacity-85 mb-6">
+              {/* TEAMS */}
+              <View className="flex-row items-center justify-between">
+                {/* TEAM 1 */}
+                <Pressable className="bg-gray-300 w-12 h-12 items-center justify-center rounded-full">
+                  <Text className="text-slate-900 font-semibold">
+                    {item.teams[0].slice(0, 3).toUpperCase()}
+                  </Text>
+                </Pressable>
 
-            {/* TEAM FULL NAME */}
-            <Text className="text-slate-900 font-medium text-lg">
-              Australia vs India
-            </Text>
+                {/* TEAM FULL NAME */}
+                <Text className="text-slate-900 font-medium text-lg">
+                  {item.teams[0]} vs {item.teams[1]}
+                </Text>
 
-            {/* TEAM 2 */}
-            <Pressable className="bg-gray-300 w-12 h-12 items-center justify-center rounded-full">
-              <Text className="text-slate-900 font-semibold">IND</Text>
-            </Pressable>
-          </View>
+                {/* TEAM 2 */}
+                <Pressable className="bg-gray-300 w-12 h-12 items-center justify-center rounded-full">
+                  <Text className="text-slate-900 font-semibold">
+                    {item.teams[1].slice(0, 3).toUpperCase()}
+                  </Text>
+                </Pressable>
+              </View>
 
-          {/* MATCH STATUS */}
-          <View className="bg-green-400 mx-auto py-1 px-3 rounded-full">
-            <Text className="text-white text-xs uppercase font-semibold">
-              Live
-            </Text>
-          </View>
+              {/* MATCH STATUS */}
+              <View className="bg-green-400 mx-auto py-1 px-3 rounded-full">
+                <Text className="text-white text-xs uppercase font-semibold">
+                  {item.status}
+                </Text>
+              </View>
 
-          {/* ROOM JOIN BUTTON */}
-          <Pressable className="bg-orange-500 px-6 py-3 rounded-lg items-center justify-center mt-4 transition-all duration-300 active:scale-[0.98] active:opacity-85">
-            <Text className="text-white font-semibold text-lg">Join Room</Text>
-          </Pressable>
-        </View>
+              {/* ROOM JOIN BUTTON */}
+              <Pressable className="bg-orange-500 px-6 py-3 rounded-lg items-center justify-center mt-4 transition-all duration-300 active:scale-[0.98] active:opacity-85">
+                <Text className="text-white font-semibold text-lg">
+                  {item.status === "live" ? "Join Room" : "View Room"}
+                </Text>
+              </Pressable>
+            </View>
+          )}
+        />
       </SafeAreaView>
 
       {/* CREATE ROOM BUTTON */}
