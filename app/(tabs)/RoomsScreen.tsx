@@ -23,6 +23,8 @@ const RoomsScreen = () => {
     useState<boolean>(false);
   const [showEndDatePicker, setShowEndDatePicker] = useState<boolean>(false);
 
+  const [team1, setTeam1] = useState<string>("");
+  const [team2, setTeam2] = useState<string>("");
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [matchType, setMatchType] = useState<"ODI" | "TEST" | "T20">("ODI");
@@ -141,6 +143,8 @@ const RoomsScreen = () => {
                 <View className="mt-4 gap-2">
                   <Text className="text-600 font-medium">Team 1</Text>
                   <TextInput
+                    value={team1}
+                    onChangeText={setTeam1}
                     placeholder="Enter team name"
                     className="border border-gray-300 rounded-lg pl-4"
                   />
@@ -149,6 +153,8 @@ const RoomsScreen = () => {
                 <View className="mt-4 gap-2">
                   <Text className="text-600 font-medium">Team 2</Text>
                   <TextInput
+                    value={team2}
+                    onChangeText={setTeam2}
                     placeholder="Enter team name"
                     className="border border-gray-300 rounded-lg pl-4"
                   />
