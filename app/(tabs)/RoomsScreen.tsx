@@ -87,7 +87,15 @@ const RoomsScreen = () => {
               </View>
 
               {/* MATCH STATUS */}
-              <View className="bg-green-400 mx-auto py-1 px-3 rounded-full">
+              <View
+                className={`${
+                  item.status === "live"
+                    ? "bg-green-500"
+                    : item.status === "upcoming"
+                    ? "bg-yellow-500"
+                    : "bg-red-500"
+                } mx-auto py-1 px-3 rounded-full`}
+              >
                 <Text className="text-white text-xs uppercase font-semibold">
                   {item.status}
                 </Text>
