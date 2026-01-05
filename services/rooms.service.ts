@@ -23,6 +23,7 @@ export async function createRoom(
   status: "upcoming" | "live" | "finished",
   startTime: string,
   matchType: "ODI" | "TEST" | "T20",
+  isLocked: boolean,
   endTime?: string
 ) {
   try {
@@ -36,6 +37,7 @@ export async function createRoom(
         startTime,
         endTime,
         matchType,
+        isLocked,
       },
     });
   } catch (error) {

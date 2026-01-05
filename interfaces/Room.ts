@@ -8,4 +8,6 @@ export interface Room extends Models.Row {
   endTime?: string;
 
   matchType: "ODI" | "TEST" | "T20";
+
+  isLocked: boolean;
 }
