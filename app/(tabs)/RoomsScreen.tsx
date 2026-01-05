@@ -47,11 +47,26 @@ const RoomsScreen = () => {
 
   function handleNextStep() {
     if (createPostType === "teamInfo") {
+      if (!team1.trim() || !team2.trim()) {
+        alert("Please enter both team names.");
+        return;
+      }
+
       setCreatePostType("matchInfo");
       return;
     }
 
     if (createPostType === "matchInfo") {
+      if (!startDate || !endDate) {
+        alert("Please enter both starting and ending dates.");
+        return;
+      }
+
+      if (!matchType) {
+        alert("Please select the match type.");
+        return;
+      }
+
       setCreatePostType("roomSettings");
       return;
     }
