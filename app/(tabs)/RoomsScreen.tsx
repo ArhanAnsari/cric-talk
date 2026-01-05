@@ -1,6 +1,8 @@
 import { Ionicons, Octicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Modal, Pressable, Text, TextInput, View } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const RoomsScreen = () => {
@@ -9,6 +11,29 @@ const RoomsScreen = () => {
   const [createPostType, setCreatePostType] = useState<
     "teamInfo" | "matchInfo" | "roomSettings"
   >("teamInfo");
+
+  const [showStartDatePicker, setShowStartDatePicker] =
+    useState<boolean>(false);
+  const [showEndDatePicker, setShowEndDatePicker] = useState<boolean>(false);
+
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [matchType, setMatchType] = useState<"ODI" | "TEST" | "T20">("ODI");
+
+  const matchTypeDropdown = [
+    {
+      label: "ODI",
+      value: "ODI",
+    },
+    {
+      label: "TEST",
+      value: "TEST",
+    },
+    {
+      label: "T20",
+      value: "T20",
+    },
+  ];
 
   return (
     <View className="flex-1 bg-white">
@@ -106,6 +131,87 @@ const RoomsScreen = () => {
                     className="border border-gray-300 rounded-lg pl-4"
                   />
                 </View>
+              </>
+            )}
+
+            {createPostType === "matchInfo" && (
+              <>
+                <View className="mt-4 gap-2">
+                  <Text className="text-slate-900 font-medium">Start Date</Text>
+                  <Pressable
+                    className="border border-gray-300 rounded-lg pl-4 h-12 justify-center"
+                    onPress={() => setShowStartDatePicker(true)}
+                  >
+                    <Text
+                      className={startDate ? "text-slate-900" : "text-gray-400"}
+                    >
+                      {startDate
+                        ? startDate.toLocaleString("en-IN", {
+                            dateStyle: "medium",
+                            timeStyle: "short",
+                          })
+                        : new Date().toLocaleString("en-IN", {
+                            dateStyle: "medium",
+                            timeStyle: "short",
+                          })}
+                    </Text>
+                  </Pressable>
+                </View>
+
+                <View className="mt-4 gap-2">
+                  <Text className="text-slate-900 font-medium">End Date</Text>
+                  <Pressable
+                    className="border border-gray-300 rounded-lg pl-4 h-12 justify-center"
+                    onPress={() => setShowEndDatePicker(true)}
+                  >
+                    <Text
+                      className={endDate ? "text-slate-900" : "text-gray-400"}
+                    >
+                      {endDate
+                        ? endDate.toLocaleString("en-IN", {
+                            dateStyle: "medium",
+                            timeStyle: "short",
+                          })
+                        : new Date().toLocaleString("en-IN", {
+                            dateStyle: "medium",
+                            timeStyle: "short",
+                          })}
+                    </Text>
+                  </Pressable>
+                </View>
+
+                <View className="mt-4 gap-2">
+                  <Text className="text-slate-900 font-medium">Match Type</Text>
+                  <Dropdown
+                    data={matchTypeDropdown}
+                    labelField="label"
+                    valueField="value"
+                    onChange={(value) => setMatchType(value)}
+                    placeholder="Select match type"
+                  />
+                </View>
+
+                <DateTimePickerModal
+                  isVisible={showStartDatePicker}
+                  mode="datetime"
+                  onConfirm={(date) => {
+                    setStartDate(date);
+                    setShowStartDatePicker(false);
+                  }}
+                  onCancel={() => setShowStartDatePicker(false)}
+                  minimumDate={new Date()}
+                />
+
+                <DateTimePickerModal
+                  isVisible={showEndDatePicker}
+                  mode="datetime"
+                  onConfirm={(date) => {
+                    setEndDate(date);
+                    setShowEndDatePicker(false);
+                  }}
+                  onCancel={() => setShowEndDatePicker(false)}
+                  minimumDate={startDate || new Date()}
+                />
               </>
             )}
 
