@@ -10,7 +10,15 @@ import { fetchRooms } from "@/services/rooms.service";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FlatList, Pressable, Text, TextInput, View } from "react-native";
+import {
+  FlatList,
+  Keyboard,
+  Platform,
+  Pressable,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const RoomDiscussion = () => {
@@ -27,6 +35,29 @@ const RoomDiscussion = () => {
   const [roomMessages, setRoomMessages] = useState<RoomMessage[]>([]);
 
   const [messageContent, setMessageContent] = useState<string>("");
+
+  const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
+
+  useEffect(() => {
+    const keyboardShown = Keyboard.addListener(
+      Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow",
+      (e) => {
+        setKeyboardHeight(e.endCoordinates.height);
+      }
+    );
+
+    const keyboardHidden = Keyboard.addListener(
+      Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide",
+      (e) => {
+        setKeyboardHeight(0);
+      }
+    );
+
+    return () => {
+      keyboardShown.remove();
+      keyboardHidden.remove();
+    };
+  });
 
   useEffect(() => {
     let mounted = true;
@@ -215,7 +246,10 @@ const RoomDiscussion = () => {
         </View>
       </View>
 
-      <SafeAreaView>
+      <SafeAreaView
+        edges={["bottom"]}
+        style={{ marginBottom: keyboardHeight + 8 }}
+      >
         {/* MESSAGE INPUT AREA */}
         <View className="px-6 flex-row items-center bg-white shadow-sm elevation-sm mx-4 rounded-lg py-2">
           {/* MESSAGE INPUT */}
