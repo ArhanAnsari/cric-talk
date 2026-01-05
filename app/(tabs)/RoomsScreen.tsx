@@ -2,6 +2,7 @@ import { Room } from "@/interfaces/Room";
 import { showToast } from "@/libs/showToast";
 import { fetchRooms } from "@/services/rooms.service";
 import { Ionicons, Octicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -102,7 +103,10 @@ const RoomsScreen = () => {
               </View>
 
               {/* ROOM JOIN BUTTON */}
-              <Pressable className="bg-orange-500 px-6 py-3 rounded-lg items-center justify-center mt-4 transition-all duration-300 active:scale-[0.98] active:opacity-85">
+              <Pressable
+                className="bg-orange-500 px-6 py-3 rounded-lg items-center justify-center mt-4 transition-all duration-300 active:scale-[0.98] active:opacity-85"
+                onPress={() => router.push(`/(rooms)/${item.$id}`)}
+              >
                 <Text className="text-white font-semibold text-lg">
                   {item.status === "live" ? "Join Room" : "View Room"}
                 </Text>
