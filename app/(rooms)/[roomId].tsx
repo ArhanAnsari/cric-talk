@@ -10,14 +10,7 @@ import { fetchRooms } from "@/services/rooms.service";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  KeyboardAvoidingView,
-  Pressable,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { FlatList, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const RoomDiscussion = () => {
@@ -120,7 +113,7 @@ const RoomDiscussion = () => {
   }, [roomId]);
 
   return (
-    <KeyboardAvoidingView className="flex-1 bg-white" behavior="padding">
+    <View className="flex-1 bg-white">
       <View className="flex-1">
         <View className="w-full h-30 bg-orange-500">
           <SafeAreaView>
@@ -242,7 +235,7 @@ const RoomDiscussion = () => {
           </Pressable>
         </View>
       </SafeAreaView>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
