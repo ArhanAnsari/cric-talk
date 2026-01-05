@@ -13,7 +13,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const RoomsScreen = () => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   const [createPostType, setCreatePostType] = useState<
     "teamInfo" | "matchInfo" | "roomSettings"
@@ -121,7 +121,7 @@ const RoomsScreen = () => {
       </Pressable>
 
       {/* CREATE ROOM MODAL */}
-      <Modal visible={true} animationType="slide" transparent>
+      <Modal visible={isVisible} animationType="slide" transparent>
         <View className="flex-1 justify-center items-center">
           {/* OVERLAY */}
           <Pressable
