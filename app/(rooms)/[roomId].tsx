@@ -1,6 +1,6 @@
 import { Room } from "@/interfaces/Room";
 import { RoomMessage } from "@/interfaces/RoomMessage";
-import { account } from "@/libs/appwrite";
+import { account, client } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
 import {
   createRoomMessage,
@@ -21,6 +21,11 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const RoomDiscussion = () => {
+  const CRIC_TALK_DATABASE_ID =
+    process.env.EXPO_PUBLIC_APPWRITE_CRIC_TALK_DATABASE_ID!;
+  const ROOM_MESSAGE_TABLE_ID =
+    process.env.EXPO_PUBLIC_APPWRITE_ROOM_MESSAGE_TABLE_ID!;
+
   const { roomId } = useLocalSearchParams();
 
   const [userId, setUserId] = useState<string>("");
@@ -92,6 +97,27 @@ const RoomDiscussion = () => {
       });
     }
   }
+
+  useEffect(() => {
+    const unsubscribe = client.subscribe(
+      `databases.${CRIC_TALK_DATABASE_ID}.tables.${ROOM_MESSAGE_TABLE_ID}.rows`,
+      (res) => {
+        if (res.events.includes("databases.*.tables.*.rows.*.create")) {
+          const payload: RoomMessage = res.payload as RoomMessage;
+
+          if (payload.roomId === roomId) {
+            setRoomMessages((prev) =>
+              prev.some((msg) => msg.$id === payload.$id)
+                ? prev
+                : [...prev, payload]
+            );
+          }
+        }
+      }
+    );
+
+    return () => unsubscribe();
+  }, [roomId]);
 
   return (
     <KeyboardAvoidingView className="flex-1 bg-white" behavior="padding">
