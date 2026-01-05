@@ -88,6 +88,31 @@ const RoomDiscussion = () => {
               </View>
             </View>
           </View>
+
+          {/* DISCUSSION AREA */}
+          <View className="mt-6">
+            {/* DISCUSSION MESSAGE CARD */}
+            <View className="flex-row gap-2 bg-slate-200 px-3 py-4 rounded-lg items-baseline">
+              {/* AUTHOR AVATAR */}
+              <Pressable className="bg-slate-300 h-10 w-10 items-center justify-center rounded-full">
+                <Text className="text-slate-900 font-medium uppercase">s</Text>
+              </Pressable>
+
+              {/* AUTHOR NAME & MESSAGE */}
+              <View className="gap-1">
+                <Text className="text-slate-900 text-sm font-semibold">
+                  Swapna
+                </Text>
+
+                <Text className="max-w-[95%] text-slate-600">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Harum ex odio nesciunt, fuga et cum necessitatibus eaquex?
+                  Reprehenderit consectetur, architecto dolores corporis saepe
+                  vero obcaecati necessitatibus, vel odit, aliquam iure.
+                </Text>
+              </View>
+            </View>
+          </View>
         </View>
       </SafeAreaView>
     </View>
