@@ -1,5 +1,5 @@
 import { tablesDB } from "@/libs/appwrite";
-import { Query } from "react-native-appwrite";
+import { ID, Query } from "react-native-appwrite";
 
 const CRIC_TALK_DATABASE_ID =
   process.env.EXPO_PUBLIC_APPWRITE_CRIC_TALK_DATABASE_ID!;
@@ -15,6 +15,32 @@ export async function fetchRoomMessages(roomId: string) {
     });
   } catch (error) {
     console.log(`Error while fetching room messages ${error}`);
+    throw error;
+  }
+}
+
+export async function createRoomMessage({
+  roomId,
+  authorId,
+  content,
+}: {
+  roomId: string;
+  authorId: string;
+  content: string;
+}) {
+  try {
+    return await tablesDB.createRow({
+      databaseId: CRIC_TALK_DATABASE_ID,
+      tableId: ROOM_MESSAGE_TABLE_ID,
+      rowId: ID.unique(),
+      data: {
+        roomId,
+        authorId,
+        content,
+      },
+    });
+  } catch (error) {
+    console.log(`Error while creating the room message ${error}`);
     throw error;
   }
 }
