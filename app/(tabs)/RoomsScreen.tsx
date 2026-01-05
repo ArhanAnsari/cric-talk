@@ -1,9 +1,11 @@
 import { Ionicons, Octicons } from "@expo/vector-icons";
-import React from "react";
-import { Pressable, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Modal, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const RoomsScreen = () => {
+  const [isVisible, setIsVisible] = useState(true);
+
   return (
     <View className="flex-1 bg-white">
       {/* HEADER */}
@@ -60,9 +62,52 @@ const RoomsScreen = () => {
       </SafeAreaView>
 
       {/* CREATE ROOM BUTTON */}
-      <Pressable className="w-16 h-16 bg-orange-500 rounded-full items-center justify-center absolute bottom-6 right-6 shadow-md elevation-xs">
+      <Pressable
+        className="w-16 h-16 bg-orange-500 rounded-full items-center justify-center absolute bottom-6 right-6 shadow-md elevation-xs"
+        onPress={() => setIsVisible(!isVisible)}
+      >
         <Octicons name="plus" size={24} color="white" />
       </Pressable>
+
+      {/* CREATE ROOM MODAL */}
+      <Modal visible={true} animationType="slide" transparent>
+        <View className="flex-1 justify-center items-center">
+          {/* OVERLAY */}
+          <Pressable
+            className="absolute inset-0 bg-gray-950/20"
+            onPress={() => setIsVisible(false)}
+          />
+
+          {/* MODAL CONTENT */}
+          <View className="bg-white w-80 h-120 shadow-sm elevation-sm rounded-lg px-6 py-4">
+            <Text className="text-slate-900 font-semibold text-center text-lg">
+              Create Room
+            </Text>
+
+            <View className="mt-4 gap-2">
+              <Text className="text-600 font-medium">Team 1</Text>
+              <TextInput
+                placeholder="Enter team name"
+                className="border border-gray-300 rounded-lg pl-4"
+              />
+            </View>
+
+            <View className="mt-4 gap-2">
+              <Text className="text-600 font-medium">Team 2</Text>
+              <TextInput
+                placeholder="Enter team name"
+                className="border border-gray-300 rounded-lg pl-4"
+              />
+            </View>
+
+            <Pressable className="bg-orange-500 px-6 py-3 rounded-lg mt-6 transition-all duration-300 active:opacity-85 active:scale-[0.98]">
+              <Text className="text-center text-white font-semibold text-lg">
+                Create Room
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
