@@ -1,3 +1,4 @@
+import { Room } from "@/interfaces/Room";
 import { tablesDB } from "@/libs/appwrite";
 import { ID, Query } from "react-native-appwrite";
 
@@ -7,7 +8,7 @@ const ROOMS_TABLE_ID = process.env.EXPO_PUBLIC_APPWRITE_COMMENTS_TABLE_ID!;
 
 export async function fetchRooms() {
   try {
-    return await tablesDB.listRows({
+    return await tablesDB.listRows<Room>({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: ROOMS_TABLE_ID,
       queries: [Query.orderDesc("startTime"), Query.limit(20)],
@@ -27,7 +28,7 @@ export async function createRoom(
   endTime?: string
 ) {
   try {
-    return await tablesDB.createRow({
+    return await tablesDB.createRow<Room>({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: ROOMS_TABLE_ID,
       rowId: ID.unique(),
