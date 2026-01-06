@@ -133,7 +133,7 @@ const RoomDiscussion = () => {
             setRoomMessages((prev) =>
               prev.some((msg) => msg.$id === payload.$id)
                 ? prev
-                : [...prev, payload]
+                : [payload, ...prev]
             );
           }
         }
@@ -219,6 +219,7 @@ const RoomDiscussion = () => {
               paddingHorizontal: 24,
             }}
             showsVerticalScrollIndicator={false}
+            inverted
             renderItem={({ item }) => (
               // DISCUSSION MESSAGE CARD
 
