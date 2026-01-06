@@ -297,7 +297,7 @@ const RoomDiscussion = () => {
             renderItem={({ item }) => (
               // DISCUSSION MESSAGE CARD
 
-              <View className="flex-row gap-2 bg-slate-200 px-3 py-4 rounded-lg items-baseline mb-4">
+              <View className="flex-row gap-2 bg-slate-200 px-3 py-4 rounded-lg items-start mb-4">
                 {/* AUTHOR AVATAR */}
                 <Pressable className="bg-slate-300 h-10 w-10 items-center justify-center rounded-full">
                   <Text className="text-slate-900 font-medium uppercase">
@@ -311,14 +311,14 @@ const RoomDiscussion = () => {
                     {item.authorName}
                   </Text>
 
-                  <Text className="max-w-[95%] text-slate-600">
+                  <Text className="max-w-[90%] text-slate-600">
                     {item.content}
                   </Text>
                 </View>
 
                 {/* EDIT + DELETE BUTTONS */}
                 {item.authorId === userId && (
-                  <View className="flex-row gap-2 ml-auto">
+                  <View className="flex-row gap-2 ml-auto absolute right-3 top-3">
                     <Pressable
                       onPress={() => {
                         setIsEditModalVisible(true);
