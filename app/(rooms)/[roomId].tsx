@@ -30,6 +30,7 @@ const RoomDiscussion = () => {
   const { roomId } = useLocalSearchParams();
 
   const [userId, setUserId] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
 
   const [room, setRoom] = React.useState<Room | null>(null);
   const [roomMessages, setRoomMessages] = useState<RoomMessage[]>([]);
@@ -70,10 +71,11 @@ const RoomDiscussion = () => {
       setRoom(roomDetails || null);
     }
 
-    async function fetchUserId() {
+    async function fetchUserDetails() {
       try {
         const user = await account.get();
         setUserId(user.$id);
+        setUsername(user.name || user.email.split("@")[0]);
       } catch (error) {
         showToast({
           type: "error",
@@ -97,7 +99,7 @@ const RoomDiscussion = () => {
     }
 
     loadRoomDetails();
-    fetchUserId();
+    fetchUserDetails();
     loadRoomMessages();
 
     return () => {
@@ -110,7 +112,9 @@ const RoomDiscussion = () => {
       await createRoomMessage({
         roomId: roomId as string,
         authorId: userId,
+        authorName: username,
         content: messageContent,
+        isEdited: false,
       });
       setMessageContent("");
     } catch (error) {
