@@ -176,7 +176,7 @@ const RoomDiscussion = () => {
               {/* MATCH INFO */}
               <View className="mt-6 gap-2">
                 <View className="flex-row">
-                  <Text className="text-slate-500">Match ID</Text>
+                  <Text className="text-slate-500">Room ID</Text>
                   <Text className="ml-auto text-slate-900 text-sm">
                     {roomId}
                   </Text>
