@@ -1,0 +1,81 @@
+import { Room } from "@/interfaces/Room";
+import { Ionicons } from "@expo/vector-icons";
+import React from "react";
+import { Modal, Pressable, Text, View } from "react-native";
+
+type Props = {
+  roomId: string;
+  room: Room;
+  isVisible: boolean;
+  onClose: () => void;
+};
+
+const RoomDetailsCard = ({ roomId, room, isVisible, onClose }: Props) => {
+  return (
+    <Modal visible={isVisible} transparent animationType="slide">
+      {/* OVERLAY */}
+      <Pressable
+        className="absolute inset-0 bg-gray-950/30"
+        onPress={onClose}
+      />
+
+      {/* CONTENT */}
+      <View className="flex-1 justify-center">
+        <View className="px-6 py-4">
+          {/* ROOM DETAILS CARD */}
+          <View className="bg-slate-50 h-50 w-full rounded-lg shadow-sm elevation-lg px-4 py-2">
+            {/* MATCH TITLE + CLOSE ICON */}
+            <View className="flex-row items-center justify-center relative">
+              <Text className="text-slate-900 text-lg font-semibold">
+                {room?.teams[0]} vs {room?.teams[1]}
+              </Text>
+
+              <Pressable onPress={onClose} className="absolute right-0">
+                <Ionicons name="close" size={18} color="#0f172b" />
+              </Pressable>
+            </View>
+
+            {/* MATCH INFO */}
+            <View className="mt-6 gap-2">
+              <View className="flex-row">
+                <Text className="text-slate-500">Room ID</Text>
+                <Text className="ml-auto text-slate-900 text-sm">{roomId}</Text>
+              </View>
+
+              <View className="flex-row items-center">
+                <Text className="text-slate-500">Match Type</Text>
+                <View className="ml-auto bg-orange-500/10 px-2 py-0.5 rounded-full">
+                  <Text className="text-orange-500 font-semibold text-sm">
+                    {room?.matchType}
+                  </Text>
+                </View>
+              </View>
+
+              <View className="flex-row">
+                <Text className="text-slate-500">Start Time</Text>
+                <Text className="ml-auto text-slate-900 text-sm">
+                  {new Date(room?.startTime || "").toLocaleString("en-IN", {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  })}
+                </Text>
+              </View>
+
+              <View className="flex-row">
+                <Text className="text-slate-500">End Time</Text>
+                <Text className="ml-auto text-slate-900 text-sm">
+                  {new Date(room?.endTime || "").toLocaleString("en-IN", {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  })}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+};
+
+export default RoomDetailsCard;
