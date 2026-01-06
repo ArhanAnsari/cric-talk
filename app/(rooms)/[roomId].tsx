@@ -13,6 +13,7 @@ import React, { useEffect, useState } from "react";
 import {
   FlatList,
   Keyboard,
+  Modal,
   Platform,
   Pressable,
   Text,
@@ -36,8 +37,11 @@ const RoomDiscussion = () => {
   const [roomMessages, setRoomMessages] = useState<RoomMessage[]>([]);
 
   const [messageContent, setMessageContent] = useState<string>("");
+  const [editMessageContent, setEditMessageContent] = useState<string>("");
 
   const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
+
+  const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const keyboardShown = Keyboard.addListener(
@@ -255,7 +259,7 @@ const RoomDiscussion = () => {
                 {/* EDIT + DELETE BUTTONS */}
                 {item.authorId === userId && (
                   <View className="flex-row gap-2 ml-auto">
-                    <Pressable>
+                    <Pressable onPress={() => setIsEditModalVisible(true)}>
                       <Ionicons
                         name="create-outline"
                         size={18}
@@ -301,6 +305,43 @@ const RoomDiscussion = () => {
           </Pressable>
         </View>
       </SafeAreaView>
+
+      {/* EDIT MESSAGE MODAL */}
+      <Modal visible={isEditModalVisible} transparent animationType="slide">
+        {/* OVERLAY */}
+        <Pressable
+          className="absolute inset-0 bg-gray-950/30"
+          onPress={() => setIsEditModalVisible(false)}
+        />
+
+        <View className="flex-1 items-center justify-center">
+          <View className="bg-white w-80 h-56 rounded-lg shadow-sm elevation-sm px-6 py-4">
+            <Text className="text-lg text-slate-900 font-medium">
+              Edit Message
+            </Text>
+
+            <TextInput
+              value={editMessageContent}
+              onChangeText={setEditMessageContent}
+              placeholder="Edit your message"
+              className="border border-gray-300 rounded-lg h-24 mt-2 pl-4"
+              textAlignVertical="top"
+              multiline
+            />
+
+            {/* ACTION BUTTONS */}
+            <View className="flex-row items-center gap-2 ml-auto mt-auto">
+              <Pressable onPress={() => setIsEditModalVisible(false)}>
+                <Text className="text-slate-900">Cancel</Text>
+              </Pressable>
+
+              <Pressable className="bg-orange-500 px-4 py-2 rounded-lg">
+                <Text className="text-white font-medium">Save</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
