@@ -215,7 +215,7 @@ const RoomDiscussion = () => {
           </View>
         </SafeAreaView>
 
-        <View className="flex-1 -mt-4">
+        <View className="flex-1 -mt-14 ">
           {/* DISCUSSION AREA */}
           <FlatList
             data={roomMessages}
