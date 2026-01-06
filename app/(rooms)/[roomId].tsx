@@ -266,7 +266,7 @@ const RoomDiscussion = () => {
           />
         </SafeAreaView>
 
-        <View className="flex-1 -mt-14 ">
+        <View className="flex-1 -mt-18">
           {/* DISCUSSION AREA */}
           <FlatList
             data={roomMessages}
@@ -274,6 +274,7 @@ const RoomDiscussion = () => {
             contentContainerStyle={{
               paddingTop: 40,
               paddingHorizontal: 24,
+              paddingBottom: 24,
             }}
             showsVerticalScrollIndicator={false}
             inverted
