@@ -237,14 +237,14 @@ const RoomDiscussion = () => {
                 {/* AUTHOR AVATAR */}
                 <Pressable className="bg-slate-300 h-10 w-10 items-center justify-center rounded-full">
                   <Text className="text-slate-900 font-medium uppercase">
-                    {item.authorId.charAt(0)}
+                    {item.authorName.charAt(0)}
                   </Text>
                 </Pressable>
 
                 {/* AUTHOR NAME & MESSAGE */}
                 <View className="gap-1">
                   <Text className="text-slate-900 text-sm font-semibold">
-                    {item.authorId}
+                    {item.authorName}
                   </Text>
 
                   <Text className="max-w-[95%] text-slate-600">
