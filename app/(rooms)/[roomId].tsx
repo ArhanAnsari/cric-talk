@@ -251,6 +251,27 @@ const RoomDiscussion = () => {
                     {item.content}
                   </Text>
                 </View>
+
+                {/* EDIT + DELETE BUTTONS */}
+                {item.authorId === userId && (
+                  <View className="flex-row gap-2 ml-auto">
+                    <Pressable>
+                      <Ionicons
+                        name="create-outline"
+                        size={18}
+                        color="#0f172b"
+                      />
+                    </Pressable>
+
+                    <Pressable>
+                      <Ionicons
+                        name="trash-outline"
+                        size={18}
+                        color="#0f172b"
+                      />
+                    </Pressable>
+                  </View>
+                )}
               </View>
             )}
           />
