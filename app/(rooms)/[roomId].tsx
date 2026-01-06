@@ -170,7 +170,7 @@ const RoomDiscussion = () => {
             <View className="bg-slate-50 h-50 w-full rounded-lg shadow-sm elevation-lg px-4 py-2">
               {/* MATCH TITLE */}
               <Text className="text-slate-900 text-lg text-center font-semibold">
-                India vs Australia
+                {room?.teams[0]} vs {room?.teams[1]}
               </Text>
 
               {/* MATCH INFO */}
@@ -186,7 +186,7 @@ const RoomDiscussion = () => {
                   <Text className="text-slate-500">Match Type</Text>
                   <View className="ml-auto bg-orange-500/10 px-2 py-0.5 rounded-full">
                     <Text className="text-orange-500 font-semibold text-sm">
-                      ODI
+                      {room?.matchType}
                     </Text>
                   </View>
                 </View>
@@ -194,14 +194,20 @@ const RoomDiscussion = () => {
                 <View className="flex-row">
                   <Text className="text-slate-500">Start Time</Text>
                   <Text className="ml-auto text-slate-900 text-sm">
-                    5 Jan 2026, 07:00 PM
+                    {new Date(room?.startTime || "").toLocaleString("en-IN", {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    })}
                   </Text>
                 </View>
 
                 <View className="flex-row">
                   <Text className="text-slate-500">End Time</Text>
                   <Text className="ml-auto text-slate-900 text-sm">
-                    5 Jan 2026, 10:00 PM
+                    {new Date(room?.endTime || "").toLocaleString("en-IN", {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    })}
                   </Text>
                 </View>
               </View>
