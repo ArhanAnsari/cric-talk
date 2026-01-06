@@ -5,6 +5,7 @@ import { showToast } from "@/libs/showToast";
 import {
   createRoomMessage,
   fetchRoomMessages,
+  updateRoomMessage,
 } from "@/services/roomMessage.service";
 import { fetchRooms } from "@/services/rooms.service";
 import { Ionicons } from "@expo/vector-icons";
@@ -38,6 +39,7 @@ const RoomDiscussion = () => {
 
   const [messageContent, setMessageContent] = useState<string>("");
   const [editMessageContent, setEditMessageContent] = useState<string>("");
+  const [editRoomMessageId, setEditRoomMessageId] = useState<string>("");
 
   const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
 
@@ -125,6 +127,29 @@ const RoomDiscussion = () => {
       showToast({
         type: "error",
         text1: "Error sending message",
+        text2: "Please try again later.",
+      });
+    }
+  }
+
+  async function handleUpdateRoomMessage() {
+    try {
+      await updateRoomMessage({
+        roomMessageId: editRoomMessageId,
+        content: editMessageContent,
+      });
+      setIsEditModalVisible(false);
+      setEditMessageContent("");
+      setEditRoomMessageId("");
+
+      showToast({
+        type: "success",
+        text1: "Message updated successfully",
+      });
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error updating message",
         text2: "Please try again later.",
       });
     }
@@ -259,7 +284,13 @@ const RoomDiscussion = () => {
                 {/* EDIT + DELETE BUTTONS */}
                 {item.authorId === userId && (
                   <View className="flex-row gap-2 ml-auto">
-                    <Pressable onPress={() => setIsEditModalVisible(true)}>
+                    <Pressable
+                      onPress={() => {
+                        setIsEditModalVisible(true);
+                        setEditMessageContent(item.content);
+                        setEditRoomMessageId(item.$id);
+                      }}
+                    >
                       <Ionicons
                         name="create-outline"
                         size={18}
@@ -335,7 +366,10 @@ const RoomDiscussion = () => {
                 <Text className="text-slate-900">Cancel</Text>
               </Pressable>
 
-              <Pressable className="bg-orange-500 px-4 py-2 rounded-lg">
+              <Pressable
+                className="bg-orange-500 px-4 py-2 rounded-lg"
+                onPress={handleUpdateRoomMessage}
+              >
                 <Text className="text-white font-medium">Save</Text>
               </Pressable>
             </View>
