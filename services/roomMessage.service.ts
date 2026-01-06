@@ -50,3 +50,38 @@ export async function createRoomMessage({
     throw error;
   }
 }
+
+export async function updateRoomMessage({
+  roomMessageId,
+  content,
+}: {
+  roomMessageId: string;
+  content: string;
+}) {
+  try {
+    return await tablesDB.updateRow({
+      databaseId: CRIC_TALK_DATABASE_ID,
+      tableId: ROOM_MESSAGE_TABLE_ID,
+      rowId: roomMessageId,
+      data: {
+        content,
+      },
+    });
+  } catch (error) {
+    console.log(`Error while updating the room message ${error}`);
+    throw error;
+  }
+}
+
+export async function deleteRoomMessage(roomMessageId: string) {
+  try {
+    return await tablesDB.deleteRow({
+      databaseId: CRIC_TALK_DATABASE_ID,
+      tableId: ROOM_MESSAGE_TABLE_ID,
+      rowId: roomMessageId,
+    });
+  } catch (error) {
+    console.log(`Error while deleting the room message ${error}`);
+    throw error;
+  }
+}
