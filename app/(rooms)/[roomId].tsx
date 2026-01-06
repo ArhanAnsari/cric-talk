@@ -225,7 +225,7 @@ const RoomDiscussion = () => {
             data={roomMessages}
             keyExtractor={(item) => item.$id}
             contentContainerStyle={{
-              paddingBottom: 40,
+              paddingTop: 40,
               paddingHorizontal: 24,
             }}
             showsVerticalScrollIndicator={false}
