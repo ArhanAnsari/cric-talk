@@ -43,6 +43,8 @@ const RoomDiscussion = () => {
   const [messageContent, setMessageContent] = useState<string>("");
   const [editMessageContent, setEditMessageContent] = useState<string>("");
   const [editRoomMessageId, setEditRoomMessageId] = useState<string>("");
+  const canSendMessage = messageContent.trim().length > 0;
+  const canEditMessage = editMessageContent.trim().length > 0;
 
   const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
 
@@ -119,6 +121,15 @@ const RoomDiscussion = () => {
   }, []);
 
   async function handleCreateRoomMessage() {
+    if (messageContent.trim().length > 512) {
+      showToast({
+        type: "error",
+        text1: "Message too long",
+        text2: "Please limit your message to 512 characters.",
+      });
+      return;
+    }
+
     try {
       await createRoomMessage({
         roomId: roomId as string,
@@ -138,6 +149,11 @@ const RoomDiscussion = () => {
   }
 
   async function handleUpdateRoomMessage() {
+    if (editMessageContent.trim().length > 512) {
+      alert("Message too long. Please limit to 512 characters.");
+      return;
+    }
+
     try {
       await updateRoomMessage({
         roomMessageId: editRoomMessageId,
@@ -350,7 +366,10 @@ const RoomDiscussion = () => {
 
           {/* MESSAGE ADD BUTTON */}
           <Pressable
-            className="h-12 w-12 bg-orange-500 rounded-lg items-center justify-center"
+            disabled={!canSendMessage}
+            className={`h-12 w-12 ${
+              canSendMessage ? "bg-orange-500" : "bg-gray-500"
+            } rounded-lg items-center justify-center`}
             onPress={handleCreateRoomMessage}
           >
             <Ionicons name="send-outline" size={18} color="white" />
@@ -388,7 +407,10 @@ const RoomDiscussion = () => {
               </Pressable>
 
               <Pressable
-                className="bg-orange-500 px-4 py-2 rounded-lg"
+                disabled={!canEditMessage}
+                className={`${
+                  canEditMessage ? "bg-orange-500" : "bg-gray-500"
+                } px-4 py-2 rounded-lg`}
                 onPress={handleUpdateRoomMessage}
               >
                 <Text className="text-white font-medium">Save</Text>
