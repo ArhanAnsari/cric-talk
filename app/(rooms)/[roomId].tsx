@@ -201,6 +201,26 @@ const RoomDiscussion = () => {
             );
           }
         }
+
+        if (res.events.includes("databases.*.tables.*.rows.*.update")) {
+          const payload: RoomMessage = res.payload as RoomMessage;
+
+          if (payload.roomId === roomId) {
+            setRoomMessages((prev) =>
+              prev.map((m) => (m.$id === payload.$id ? payload : m))
+            );
+          }
+        }
+
+        if (res.events.includes("databases.*.tables.*.rows.*.delete")) {
+          const payload: RoomMessage = res.payload as RoomMessage;
+
+          if (payload.roomId === roomId) {
+            setRoomMessages((prev) =>
+              prev.filter((m) => m.$id !== payload.$id)
+            );
+          }
+        }
       }
     );
 
