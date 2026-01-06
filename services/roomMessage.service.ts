@@ -22,11 +22,15 @@ export async function fetchRoomMessages(roomId: string) {
 export async function createRoomMessage({
   roomId,
   authorId,
+  authorName,
   content,
+  isEdited,
 }: {
   roomId: string;
   authorId: string;
+  authorName: string;
   content: string;
+  isEdited: boolean;
 }) {
   try {
     return await tablesDB.createRow({
@@ -36,7 +40,9 @@ export async function createRoomMessage({
       data: {
         roomId,
         authorId,
+        authorName,
         content,
+        isEdited,
       },
     });
   } catch (error) {
