@@ -4,6 +4,7 @@ import { account, client } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
 import {
   createRoomMessage,
+  deleteRoomMessage,
   fetchRoomMessages,
   updateRoomMessage,
 } from "@/services/roomMessage.service";
@@ -12,6 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
+  Alert,
   FlatList,
   Keyboard,
   Modal,
@@ -153,6 +155,35 @@ const RoomDiscussion = () => {
         text2: "Please try again later.",
       });
     }
+  }
+
+  async function handleDeleteRoomMessage(roomMessageId: string) {
+    Alert.alert(
+      "Delete Message",
+      "Are you sure you want to delete this message? This action cannot be undone.",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await deleteRoomMessage(roomMessageId);
+              showToast({
+                type: "success",
+                text1: "Message deleted successfully",
+              });
+            } catch (error) {
+              showToast({
+                type: "error",
+                text1: "Error deleting message",
+                text2: "Please try again later.",
+              });
+            }
+          },
+        },
+      ]
+    );
   }
 
   useEffect(() => {
@@ -298,7 +329,9 @@ const RoomDiscussion = () => {
                       />
                     </Pressable>
 
-                    <Pressable>
+                    <Pressable
+                      onPress={() => handleDeleteRoomMessage(item.$id)}
+                    >
                       <Ionicons
                         name="trash-outline"
                         size={18}
