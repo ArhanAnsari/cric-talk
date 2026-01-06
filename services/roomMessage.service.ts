@@ -11,7 +11,11 @@ export async function fetchRoomMessages(roomId: string) {
     return await tablesDB.listRows({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: ROOM_MESSAGE_TABLE_ID,
-      queries: [Query.equal("roomId", roomId), Query.orderDesc("$createdAt")],
+      queries: [
+        Query.equal("roomId", roomId),
+        Query.orderDesc("$createdAt"),
+        Query.limit(50),
+      ],
     });
   } catch (error) {
     console.log(`Error while fetching room messages ${error}`);
