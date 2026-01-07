@@ -1,9 +1,5 @@
 import { showToast } from "@/libs/showToast";
-import {
-  createRoomMessage,
-  deleteRoomMessage,
-  updateRoomMessage,
-} from "@/services/roomMessage.service";
+import { executeRoomMessage } from "@/services/roomMessage.service";
 import { Alert } from "react-native";
 
 const useRoomMessage = (roomId: string) => {
@@ -28,13 +24,12 @@ const useRoomMessage = (roomId: string) => {
     }
 
     try {
-      await createRoomMessage({
-        roomId: roomId as string,
-        authorId: userId,
-        authorName: username,
+      await executeRoomMessage({
+        action: "create",
+        roomId,
         content: messageContent,
-        isEdited: false,
       });
+
       setMessageContent("");
     } catch (error) {
       showToast({
@@ -64,9 +59,11 @@ const useRoomMessage = (roomId: string) => {
     }
 
     try {
-      await updateRoomMessage({
-        roomMessageId: editRoomMessageId,
+      await executeRoomMessage({
+        action: "update",
+        roomId,
         content: editMessageContent,
+        roomMessageId: editRoomMessageId,
       });
       setIsEditModalVisible(false);
       setEditMessageContent("");
@@ -96,7 +93,12 @@ const useRoomMessage = (roomId: string) => {
           style: "destructive",
           onPress: async () => {
             try {
-              await deleteRoomMessage(roomMessageId);
+              const execution = await executeRoomMessage({
+                action: "delete",
+                roomId,
+                roomMessageId,
+              });
+              console.log(execution);
               showToast({
                 type: "success",
                 text1: "Message deleted successfully",
