@@ -1,11 +1,11 @@
-import { Client, ID, TablesDB, Users } from "node-appwrite";
+import { Client, ID, TablesDB, Users } from 'node-appwrite';
 
 export default async ({ req, res }) => {
   try {
-    const userId = req.headers["x-appwrite-user-id"];
+    const userId = req.headers['x-appwrite-user-id'];
 
     if (!userId) {
-      return res.json({ error: "Unauthorized" }, 401);
+      return res.json({ error: 'Unauthorized' }, 401);
     }
 
     const { roomId, content, roomMessageId, action } = req.bodyJson;
@@ -13,7 +13,7 @@ export default async ({ req, res }) => {
     const client = new Client()
       .setEndpoint(process.env.APPWRITE_ENDPOINT)
       .setProject(process.env.APPWRITE_PROJECT_ID)
-      .setKey(process.env.APPWRIT_API_KEY);
+      .setKey(req.headers['x-appwrite-key']);
 
     const CRIC_TALK_DATABASE_ID = process.env.CRIC_TALK_DATABASE_ID;
     const ROOMS_TABLE_ID = process.env.ROOMS_TABLE_ID;
@@ -23,7 +23,7 @@ export default async ({ req, res }) => {
     const users = new Users(client);
 
     const user = await users.get(userId);
-    const username = user.name || user.email.split("@")[0];
+    const username = user.name || user.email.split('@')[0];
 
     async function createRoomMessage() {
       const room = await tablesDB.getRow({
@@ -32,8 +32,8 @@ export default async ({ req, res }) => {
         rowId: roomId,
       });
 
-      if (room.status !== "live") {
-        return res.json({ error: "Unauthorized" }, 401);
+      if (room.status !== 'live') {
+        return res.json({ error: 'Unauthorized' }, 401);
       }
 
       await tablesDB.createRow({
@@ -57,8 +57,8 @@ export default async ({ req, res }) => {
         rowId: roomId,
       });
 
-      if (room.status !== "live") {
-        return res.json({ error: "Unauthorized" }, 401);
+      if (room.status !== 'live') {
+        return res.json({ error: 'Unauthorized' }, 401);
       }
 
       await tablesDB.updateRow({
@@ -78,8 +78,8 @@ export default async ({ req, res }) => {
         rowId: roomId,
       });
 
-      if (room.status !== "live") {
-        return res.json({ error: "Unauthorized" }, 401);
+      if (room.status !== 'live') {
+        return res.json({ error: 'Unauthorized' }, 401);
       }
 
       await tablesDB.deleteRow({
@@ -90,17 +90,17 @@ export default async ({ req, res }) => {
     }
 
     switch (action) {
-      case "create":
+      case 'create':
         await createRoomMessage();
         break;
-      case "update":
+      case 'update':
         await updateRoomMessage();
         break;
-      case "delete":
+      case 'delete':
         await deleteRoomMessage();
         break;
       default:
-        return res.json({ error: "Invalid action" }, 400);
+        return res.json({ error: 'Invalid action' }, 400);
     }
 
     return res.json({ success: true });
