@@ -15,6 +15,10 @@ export default async ({ req, res }) => {
   const tablesDB = new TablesDB(client);
   const users = new Users(client);
 
+  const userId = req.headers["x-appwrite-user-id"];
+  const user = await users.get(userId);
+  const username = user.name || user.email.split("@")[0];
+
   async function createRoomMessage() {
     const room = await tablesDB.getRow({
       databaseId: CRIC_TALK_DATABASE_ID,
@@ -32,6 +36,8 @@ export default async ({ req, res }) => {
       rowId: ID.unique(),
       data: {
         roomId,
+        authorId: userId,
+        authorName: username,
         content,
         isEdited: false,
       },
