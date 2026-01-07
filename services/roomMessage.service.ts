@@ -1,10 +1,12 @@
-import { tablesDB } from "@/libs/appwrite";
-import { ID, Query } from "react-native-appwrite";
+import { functions, tablesDB } from "@/libs/appwrite";
+import { Query } from "react-native-appwrite";
 
 const CRIC_TALK_DATABASE_ID =
   process.env.EXPO_PUBLIC_APPWRITE_CRIC_TALK_DATABASE_ID!;
 const ROOM_MESSAGE_TABLE_ID =
   process.env.EXPO_PUBLIC_APPWRITE_ROOM_MESSAGE_TABLE_ID!;
+const ROOM_MESSAGE_GUARD_FUNCTION_ID =
+  process.env.EXPO_PUBLIC_ROOM_MESSAGE_GUARD_FUNCTION_ID!;
 
 export async function fetchRoomMessages(roomId: string) {
   try {
@@ -23,69 +25,25 @@ export async function fetchRoomMessages(roomId: string) {
   }
 }
 
-export async function createRoomMessage({
+export async function executeRoomMessage({
   roomId,
-  authorId,
-  authorName,
   content,
-  isEdited,
-}: {
-  roomId: string;
-  authorId: string;
-  authorName: string;
-  content: string;
-  isEdited: boolean;
-}) {
-  try {
-    return await tablesDB.createRow({
-      databaseId: CRIC_TALK_DATABASE_ID,
-      tableId: ROOM_MESSAGE_TABLE_ID,
-      rowId: ID.unique(),
-      data: {
-        roomId,
-        authorId,
-        authorName,
-        content,
-        isEdited,
-      },
-    });
-  } catch (error) {
-    console.log(`Error while creating the room message ${error}`);
-    throw error;
-  }
-}
-
-export async function updateRoomMessage({
   roomMessageId,
-  content,
+  action,
 }: {
-  roomMessageId: string;
-  content: string;
+  action: "create" | "update" | "delete";
+  roomId: string;
+  content?: string;
+  roomMessageId?: string;
 }) {
   try {
-    return await tablesDB.updateRow({
-      databaseId: CRIC_TALK_DATABASE_ID,
-      tableId: ROOM_MESSAGE_TABLE_ID,
-      rowId: roomMessageId,
-      data: {
-        content,
-      },
+    return await functions.createExecution({
+      functionId: ROOM_MESSAGE_GUARD_FUNCTION_ID,
+      body: JSON.stringify({ roomId, content, roomMessageId, action }),
+      async: false,
     });
   } catch (error) {
-    console.log(`Error while updating the room message ${error}`);
-    throw error;
-  }
-}
-
-export async function deleteRoomMessage(roomMessageId: string) {
-  try {
-    return await tablesDB.deleteRow({
-      databaseId: CRIC_TALK_DATABASE_ID,
-      tableId: ROOM_MESSAGE_TABLE_ID,
-      rowId: roomMessageId,
-    });
-  } catch (error) {
-    console.log(`Error while deleting the room message ${error}`);
+    console.log(`Error while executing room message ${action} action ${error}`);
     throw error;
   }
 }

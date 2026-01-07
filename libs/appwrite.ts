@@ -1,7 +1,7 @@
 const API_ENDPOINT = process.env.EXPO_PUBLIC_APPWRITE_API_ENDPOINT!;
 const PROJECT_ID = process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!;
 
-import { Account, Client, TablesDB } from "react-native-appwrite";
+import { Account, Client, Functions, TablesDB } from "react-native-appwrite";
 
 export const client = new Client()
   .setEndpoint(API_ENDPOINT)
@@ -9,3 +9,4 @@ export const client = new Client()
 
 export const account = new Account(client);
 export const tablesDB = new TablesDB(client);
+export const functions = new Functions(client);
