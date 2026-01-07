@@ -1,20 +1,15 @@
 import useKeyboardHeight from "@/hooks/useKeyboardHeight";
+import useRoomMessage from "@/hooks/useRoomMessage";
 import { Room } from "@/interfaces/Room";
 import { RoomMessage } from "@/interfaces/RoomMessage";
 import { account, client } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
-import {
-  createRoomMessage,
-  deleteRoomMessage,
-  fetchRoomMessages,
-  updateRoomMessage,
-} from "@/services/roomMessage.service";
+import { fetchRoomMessages } from "@/services/roomMessage.service";
 import { fetchRooms } from "@/services/rooms.service";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  Alert,
   FlatList,
   Modal,
   Pressable,
@@ -48,6 +43,12 @@ const RoomDiscussion = () => {
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
   const [isRoomDetailsVisible, setIsRoomDetailsVisible] =
     useState<boolean>(false);
+
+  const {
+    handleCreateRoomMessage,
+    handleUpdateRoomMessage,
+    handleDeleteRoomMessage,
+  } = useRoomMessage(roomId as string);
 
   const keyboardHeight = useKeyboardHeight();
 
@@ -97,91 +98,6 @@ const RoomDiscussion = () => {
       mounted = false;
     };
   }, []);
-
-  async function handleCreateRoomMessage() {
-    if (messageContent.trim().length > 512) {
-      showToast({
-        type: "error",
-        text1: "Message too long",
-        text2: "Please limit your message to 512 characters.",
-      });
-      return;
-    }
-
-    try {
-      await createRoomMessage({
-        roomId: roomId as string,
-        authorId: userId,
-        authorName: username,
-        content: messageContent,
-        isEdited: false,
-      });
-      setMessageContent("");
-    } catch (error) {
-      showToast({
-        type: "error",
-        text1: "Error sending message",
-        text2: "Please try again later.",
-      });
-    }
-  }
-
-  async function handleUpdateRoomMessage() {
-    if (editMessageContent.trim().length > 512) {
-      alert("Message too long. Please limit to 512 characters.");
-      return;
-    }
-
-    try {
-      await updateRoomMessage({
-        roomMessageId: editRoomMessageId,
-        content: editMessageContent,
-      });
-      setIsEditModalVisible(false);
-      setEditMessageContent("");
-      setEditRoomMessageId("");
-
-      showToast({
-        type: "success",
-        text1: "Message updated successfully",
-      });
-    } catch (error) {
-      showToast({
-        type: "error",
-        text1: "Error updating message",
-        text2: "Please try again later.",
-      });
-    }
-  }
-
-  async function handleDeleteRoomMessage(roomMessageId: string) {
-    Alert.alert(
-      "Delete Message",
-      "Are you sure you want to delete this message? This action cannot be undone.",
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: async () => {
-            try {
-              await deleteRoomMessage(roomMessageId);
-              showToast({
-                type: "success",
-                text1: "Message deleted successfully",
-              });
-            } catch (error) {
-              showToast({
-                type: "error",
-                text1: "Error deleting message",
-                text2: "Please try again later.",
-              });
-            }
-          },
-        },
-      ]
-    );
-  }
 
   useEffect(() => {
     const unsubscribe = client.subscribe(
@@ -348,7 +264,14 @@ const RoomDiscussion = () => {
             className={`h-12 w-12 ${
               canSendMessage ? "bg-orange-500" : "bg-gray-500"
             } rounded-lg items-center justify-center`}
-            onPress={handleCreateRoomMessage}
+            onPress={() =>
+              handleCreateRoomMessage({
+                messageContent,
+                userId,
+                username,
+                setMessageContent,
+              })
+            }
           >
             <Ionicons name="send-outline" size={18} color="white" />
           </Pressable>
@@ -389,7 +312,15 @@ const RoomDiscussion = () => {
                 className={`${
                   canEditMessage ? "bg-orange-500" : "bg-gray-500"
                 } px-4 py-2 rounded-lg`}
-                onPress={handleUpdateRoomMessage}
+                onPress={() =>
+                  handleUpdateRoomMessage({
+                    editMessageContent,
+                    editRoomMessageId,
+                    setIsEditModalVisible,
+                    setEditMessageContent,
+                    setEditRoomMessageId,
+                  })
+                }
               >
                 <Text className="text-white font-medium">Save</Text>
               </Pressable>
