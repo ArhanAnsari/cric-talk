@@ -5,7 +5,7 @@ export default async ({ req, res }) => {
     const userId = req.headers['x-appwrite-user-id'];
 
     if (!userId) {
-      return res.json({ error: 'Unauthorized' }, 401);
+      throw new Error('Unauthorized: User not authenticated');
     }
 
     const { roomId, content, roomMessageId, action } = req.bodyJson;
@@ -33,7 +33,7 @@ export default async ({ req, res }) => {
       });
 
       if (room.status !== 'live') {
-        return res.json({ error: 'Unauthorized' }, 401);
+        throw new Error('Unauthorized: room is not live');
       }
 
       await tablesDB.createRow({
@@ -58,7 +58,7 @@ export default async ({ req, res }) => {
       });
 
       if (room.status !== 'live') {
-        return res.json({ error: 'Unauthorized' }, 401);
+        throw new Error('Unauthorized: room is not live');
       }
 
       await tablesDB.updateRow({
@@ -79,7 +79,7 @@ export default async ({ req, res }) => {
       });
 
       if (room.status !== 'live') {
-        return res.json({ error: 'Unauthorized' }, 401);
+        throw new Error('Unauthorized: room is not live');
       }
 
       await tablesDB.deleteRow({
@@ -100,11 +100,11 @@ export default async ({ req, res }) => {
         await deleteRoomMessage();
         break;
       default:
-        return res.json({ error: 'Invalid action' }, 400);
+        throw new Error('Invalid action');
     }
 
     return res.json({ success: true });
   } catch (error) {
-    return res.json({ error: error.message }, 500);
+    throw new Error(error.message);
   }
 };

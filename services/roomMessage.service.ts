@@ -37,11 +37,15 @@ export async function executeRoomMessage({
   roomMessageId?: string;
 }) {
   try {
-    return await functions.createExecution({
+    const execution = await functions.createExecution({
       functionId: ROOM_MESSAGE_GUARD_FUNCTION_ID,
       body: JSON.stringify({ roomId, content, roomMessageId, action }),
       async: false,
     });
+
+    if (execution.status === "failed") {
+      throw new Error("Function execution failed");
+    }
   } catch (error) {
     console.log(`Error while executing room message ${action} action ${error}`);
     throw error;
