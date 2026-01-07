@@ -7,7 +7,7 @@ export default async ({ req, res }) => {
     return res.json({ error: "Unauthorized" }, 401);
   }
 
-  const { roomId, content } = req.body;
+  const { roomId, content, roomMessageId, action } = req.body;
 
   const client = new Client()
     .setEndpoint(process.env.APPWRITE_ENDPOINT!)
@@ -49,7 +49,7 @@ export default async ({ req, res }) => {
     });
   }
 
-  async function updateRoomMessage(roomMessageId: string) {
+  async function updateRoomMessage() {
     const room = await tablesDB.getRow({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: ROOMS_TABLE_ID,
@@ -70,7 +70,7 @@ export default async ({ req, res }) => {
     });
   }
 
-  async function deleteRoomMessage(roomMessageId: string) {
+  async function deleteRoomMessage() {
     const room = await tablesDB.getRow({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: ROOMS_TABLE_ID,
@@ -86,5 +86,19 @@ export default async ({ req, res }) => {
       tableId: ROOM_MESSAGE_TABLE_ID,
       rowId: roomMessageId,
     });
+  }
+
+  switch (action) {
+    case "create":
+      createRoomMessage();
+      break;
+    case "update":
+      updateRoomMessage();
+      break;
+    case "delete":
+      deleteRoomMessage();
+      break;
+    default:
+      return res.json({ error: "Invalid action" }, 400);
   }
 };
