@@ -6,7 +6,7 @@ const CRIC_TALK_DATABASE_ID =
 const ROOM_MESSAGE_TABLE_ID =
   process.env.EXPO_PUBLIC_APPWRITE_ROOM_MESSAGE_TABLE_ID!;
 const ROOM_MESSAGE_GUARD_FUNCTION_ID =
-  process.env.EXPO_PUBLIC_ROOM_MESSAGE_GUARD_FUNCTION_ID!;
+  process.env.EXPO_PUBLIC_APPWRITE_ROOM_MESSAGE_GUARD_FUNCTION_ID!;
 
 export async function fetchRoomMessages(roomId: string) {
   try {
