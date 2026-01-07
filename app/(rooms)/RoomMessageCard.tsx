@@ -56,6 +56,19 @@ const RoomMessageCard = ({
           </Pressable>
         </View>
       )}
+
+      {/* SEND DATE */}
+      <Text className="absolute bottom-0 right-0 text-sm text-slate-400 p-2">
+        {new Date(item.$createdAt).toLocaleDateString() ===
+        new Date().toLocaleDateString()
+          ? new Date(item.$createdAt).toLocaleString("en-IN", {
+              timeStyle: "short",
+            })
+          : new Date(item.$createdAt).toLocaleString("en-IN", {
+              dateStyle: "medium",
+              timeStyle: "short",
+            })}
+      </Text>
     </View>
   );
 };
