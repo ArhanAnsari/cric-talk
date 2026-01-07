@@ -175,6 +175,28 @@ const RoomDiscussion = () => {
             isVisible={isRoomDetailsVisible}
             onClose={() => setIsRoomDetailsVisible(false)}
           />
+
+          {/* UPCOMING / FINISHED MATCH BANNER */}
+          {room && room?.status !== "live" && (
+            <View className="mx-auto">
+              <Text className="text-lg text-slate-900 font-medium text-center">
+                {room?.status === "upcoming"
+                  ? "The room hasn't started yet"
+                  : room?.status === "finished"
+                  ? "The room has finished"
+                  : ""}
+              </Text>
+
+              <Text className="text-sm text-slate-600 text-center">
+                You can't send or edit messages when a room&nbsp;
+                {room?.status === "upcoming"
+                  ? "is upcoming."
+                  : room?.status == "finished"
+                  ? "has been finished."
+                  : ""}
+              </Text>
+            </View>
+          )}
         </SafeAreaView>
 
         <View className="flex-1 -mt-18">
@@ -210,33 +232,35 @@ const RoomDiscussion = () => {
         style={{ marginBottom: keyboardHeight + 8 }}
       >
         {/* MESSAGE INPUT AREA */}
-        <View className="px-6 flex-row items-center bg-white shadow-sm elevation-sm mx-4 rounded-lg py-2">
-          {/* MESSAGE INPUT */}
-          <TextInput
-            value={messageContent}
-            onChangeText={setMessageContent}
-            placeholder="Comment"
-            className="border border-gray-300 rounded-lg pl-4 h-12 flex-1 mr-4"
-          />
+        {room?.status === "live" && (
+          <View className="px-6 flex-row items-center bg-white shadow-sm elevation-sm mx-4 rounded-lg py-2">
+            {/* MESSAGE INPUT */}
+            <TextInput
+              value={messageContent}
+              onChangeText={setMessageContent}
+              placeholder="Comment"
+              className="border border-gray-300 rounded-lg pl-4 h-12 flex-1 mr-4"
+            />
 
-          {/* MESSAGE ADD BUTTON */}
-          <Pressable
-            disabled={!canSendMessage}
-            className={`h-12 w-12 ${
-              canSendMessage ? "bg-orange-500" : "bg-gray-500"
-            } rounded-lg items-center justify-center transition-all duration-200 ease-in-out scale-[0.98] active:opacity-85`}
-            onPress={() =>
-              handleCreateRoomMessage({
-                messageContent,
-                userId,
-                username,
-                setMessageContent,
-              })
-            }
-          >
-            <Ionicons name="send-outline" size={18} color="white" />
-          </Pressable>
-        </View>
+            {/* MESSAGE ADD BUTTON */}
+            <Pressable
+              disabled={!canSendMessage}
+              className={`h-12 w-12 ${
+                canSendMessage ? "bg-orange-500" : "bg-gray-500"
+              } rounded-lg items-center justify-center transition-all duration-200 ease-in-out scale-[0.98] active:opacity-85`}
+              onPress={() =>
+                handleCreateRoomMessage({
+                  messageContent,
+                  userId,
+                  username,
+                  setMessageContent,
+                })
+              }
+            >
+              <Ionicons name="send-outline" size={18} color="white" />
+            </Pressable>
+          </View>
+        )}
       </SafeAreaView>
 
       {/* EDIT MESSAGE MODAL */}
