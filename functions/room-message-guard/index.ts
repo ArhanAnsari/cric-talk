@@ -91,13 +91,13 @@ export default async ({ req, res }) => {
 
     switch (action) {
       case "create":
-        createRoomMessage();
+        await createRoomMessage();
         break;
       case "update":
-        updateRoomMessage();
+        await updateRoomMessage();
         break;
       case "delete":
-        deleteRoomMessage();
+        await deleteRoomMessage();
         break;
       default:
         return res.json({ error: "Invalid action" }, 400);
