@@ -1,3 +1,4 @@
+import useKeyboardHeight from "@/hooks/useKeyboardHeight";
 import { Room } from "@/interfaces/Room";
 import { RoomMessage } from "@/interfaces/RoomMessage";
 import { account, client } from "@/libs/appwrite";
@@ -15,9 +16,7 @@ import React, { useEffect, useState } from "react";
 import {
   Alert,
   FlatList,
-  Keyboard,
   Modal,
-  Platform,
   Pressable,
   Text,
   TextInput,
@@ -46,32 +45,11 @@ const RoomDiscussion = () => {
   const canSendMessage = messageContent.trim().length > 0;
   const canEditMessage = editMessageContent.trim().length > 0;
 
-  const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
-
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
   const [isRoomDetailsVisible, setIsRoomDetailsVisible] =
     useState<boolean>(false);
 
-  useEffect(() => {
-    const keyboardShown = Keyboard.addListener(
-      Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow",
-      (e) => {
-        setKeyboardHeight(e.endCoordinates.height);
-      }
-    );
-
-    const keyboardHidden = Keyboard.addListener(
-      Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide",
-      (e) => {
-        setKeyboardHeight(0);
-      }
-    );
-
-    return () => {
-      keyboardShown.remove();
-      keyboardHidden.remove();
-    };
-  });
+  const keyboardHeight = useKeyboardHeight();
 
   useEffect(() => {
     let mounted = true;
