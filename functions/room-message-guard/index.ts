@@ -1,6 +1,12 @@
 import { Client, ID, TablesDB, Users } from "node-appwrite";
 
 export default async ({ req, res }) => {
+  const userId = req.headers["x-appwrite-user-id"];
+
+  if (!userId) {
+    return res.json({ error: "Unauthorized" }, 401);
+  }
+
   const { roomId, content } = req.body;
 
   const client = new Client()
@@ -15,7 +21,6 @@ export default async ({ req, res }) => {
   const tablesDB = new TablesDB(client);
   const users = new Users(client);
 
-  const userId = req.headers["x-appwrite-user-id"];
   const user = await users.get(userId);
   const username = user.name || user.email.split("@")[0];
 
