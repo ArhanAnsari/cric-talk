@@ -8,7 +8,7 @@ export default async ({ req, res }) => {
       return res.json({ error: "Unauthorized" }, 401);
     }
 
-    const { roomId, content, roomMessageId, action } = req.body;
+    const { roomId, content, roomMessageId, action } = req.bodyJson;
 
     const client = new Client()
       .setEndpoint(process.env.APPWRITE_ENDPOINT!)
