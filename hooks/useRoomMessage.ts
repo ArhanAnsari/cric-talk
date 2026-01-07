@@ -93,12 +93,11 @@ const useRoomMessage = (roomId: string) => {
           style: "destructive",
           onPress: async () => {
             try {
-              const execution = await executeRoomMessage({
+              await executeRoomMessage({
                 action: "delete",
                 roomId,
                 roomMessageId,
               });
-              console.log(execution);
               showToast({
                 type: "success",
                 text1: "Message deleted successfully",
