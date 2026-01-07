@@ -224,7 +224,7 @@ const RoomDiscussion = () => {
             disabled={!canSendMessage}
             className={`h-12 w-12 ${
               canSendMessage ? "bg-orange-500" : "bg-gray-500"
-            } rounded-lg items-center justify-center`}
+            } rounded-lg items-center justify-center transition-all duration-200 ease-in-out scale-[0.98] active:opacity-85`}
             onPress={() =>
               handleCreateRoomMessage({
                 messageContent,
@@ -272,7 +272,7 @@ const RoomDiscussion = () => {
                 disabled={!canEditMessage}
                 className={`${
                   canEditMessage ? "bg-orange-500" : "bg-gray-500"
-                } px-4 py-2 rounded-lg`}
+                } px-4 py-2 rounded-lg transition-all duration-200 ease-in-out active:scale-[0.98] active:opacity-85`}
                 onPress={() =>
                   handleUpdateRoomMessage({
                     editMessageContent,
