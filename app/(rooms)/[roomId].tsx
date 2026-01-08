@@ -155,7 +155,7 @@ const RoomDiscussion = () => {
               </Pressable>
 
               <Text className="text-white font-semibold text-lg text-center flex-1 -ml-6">
-                India vs Australia
+                {room?.teams && `${room?.teams[0]} vs ${room?.teams[1]}`}
               </Text>
 
               <Pressable
