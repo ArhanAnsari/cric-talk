@@ -3,7 +3,7 @@ import { showToast } from "@/libs/showToast";
 import { fetchRooms } from "@/services/rooms.service";
 import { Ionicons, Octicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FlatList, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CreateRoomModal from "../components/CreateRoomModal";
@@ -43,6 +43,11 @@ const RoomsScreen = () => {
   const [selectedFilter, setSelectedFilter] = useState<
     "all" | "live" | "upcoming" | "finished"
   >("live");
+
+  const filteredRooms = useMemo(() => {
+    if (selectedFilter === "all") return rooms;
+    else return rooms.filter((room) => room.status === selectedFilter);
+  }, [rooms, selectedFilter]);
 
   useEffect(() => {
     let mounted = true;
@@ -111,7 +116,7 @@ const RoomsScreen = () => {
 
         {/* MATCH ROOM CARD */}
         <FlatList
-          data={rooms}
+          data={filteredRooms}
           keyExtractor={(item) => item.$id}
           contentContainerStyle={{ paddingTop: 4, paddingBottom: 80 }}
           renderItem={({ item }) => (
