@@ -4,14 +4,45 @@ import { fetchRooms } from "@/services/rooms.service";
 import { Ionicons, Octicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FlatList, Pressable, Text, View } from "react-native";
+import { FlatList, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CreateRoomModal from "../components/CreateRoomModal";
+
+type FilterChipProps = {
+  label: string;
+  selected: boolean;
+  onPress: () => void;
+};
+
+const FilterChip = ({ label, selected, onPress }: FilterChipProps) => {
+  return (
+    <Pressable
+      className={`${
+        selected ? "bg-orange-500" : "bg-transparent border border-orange-500"
+      } px-4 py-2 rounded-full ${
+        label === "all" || label === "live" ? "w-20" : "w-max"
+      } items-center transition-all duration-300 ease-in-out active:scale-[0.97] active:opacity-85`}
+      onPress={onPress}
+    >
+      <Text
+        className={`${
+          selected ? "text-white" : "text-orange-500"
+        } font-medium capitalize`}
+      >
+        {label}
+      </Text>
+    </Pressable>
+  );
+};
 
 const RoomsScreen = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const [rooms, setRooms] = useState<Room[]>([]);
+
+  const [selectedFilter, setSelectedFilter] = useState<
+    "all" | "live" | "upcoming" | "finished"
+  >("live");
 
   useEffect(() => {
     let mounted = true;
@@ -58,6 +89,26 @@ const RoomsScreen = () => {
 
       {/* CONTENT */}
       <SafeAreaView>
+        {/* FILTER BAR */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            alignItems: "center",
+            gap: 8,
+            paddingHorizontal: 24,
+            paddingBottom: 16,
+          }}
+        >
+          {["all", "live", "upcoming", "finished"].map((label) => (
+            <FilterChip
+              label={label}
+              selected={selectedFilter === label}
+              onPress={() => setSelectedFilter(label as any)}
+            />
+          ))}
+        </ScrollView>
+
         {/* MATCH ROOM CARD */}
         <FlatList
           data={rooms}
