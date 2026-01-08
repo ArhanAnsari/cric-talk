@@ -23,16 +23,12 @@ const RoomDetailsCard = ({ roomId, room, isVisible, onClose }: Props) => {
       <View className="flex-1 justify-center">
         <View className="px-6 py-4">
           {/* ROOM DETAILS CARD */}
-          <View className="bg-slate-50 h-50 w-full rounded-lg shadow-sm elevation-lg px-4 py-2">
+          <View className="bg-slate-50 h-65 w-full rounded-lg shadow-sm elevation-lg px-4 py-2">
             {/* MATCH TITLE + CLOSE ICON */}
-            <View className="flex-row items-center justify-center relative">
-              <Text className="text-slate-900 text-lg font-semibold">
+            <View className="flex-row ">
+              <Text className="text-slate-900 text-lg font-semibold text-center flex-1">
                 {room?.teams[0]} vs {room?.teams[1]}
               </Text>
-
-              <Pressable onPress={onClose} className="absolute right-0">
-                <Ionicons name="close" size={18} color="#0f172b" />
-              </Pressable>
             </View>
 
             {/* MATCH INFO */}
@@ -75,6 +71,14 @@ const RoomDetailsCard = ({ roomId, room, isVisible, onClose }: Props) => {
                 </Text>
               </View>
             </View>
+
+            {/* CLOSE BUTTON */}
+            <Pressable
+              className="mt-auto items-center px-6 py-3 rounded-lg border border-slate-300"
+              onPress={onClose}
+            >
+              <Text>Close</Text>
+            </Pressable>
           </View>
         </View>
       </View>
