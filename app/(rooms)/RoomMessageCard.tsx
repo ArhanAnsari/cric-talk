@@ -47,6 +47,13 @@ const RoomMessageCard = ({
             : "rounded-tl-3xl rounded-br-3xl"
         }`}
       >
+        {/* AUTHOR NAME */}
+        {!isOwnMessage && (
+          <Text className="text-black text-sm font-medium mb-2">
+            {item.authorName}
+          </Text>
+        )}
+
         {/* MESSAGE CONTENT */}
         <Text
           className={`${
