@@ -20,55 +20,78 @@ const RoomMessageCard = ({
   setEditRoomMessageId,
   handleDeleteRoomMessage,
 }: Props) => {
+  const isOwnMessage = item.authorId === userId;
+
   return (
-    <View className="flex-row gap-2 bg-slate-200 px-3 py-4 rounded-lg items-start mb-4">
-      {/* AUTHOR AVATAR */}
-      <Pressable className="bg-slate-300 h-10 w-10 items-center justify-center rounded-full">
-        <Text className="text-slate-900 font-medium uppercase">
+    <View>
+      {/* USER AVATAR */}
+      <View
+        className={`${
+          isOwnMessage
+            ? "self-end bg-blue-400 text-white"
+            : "self-start bg-gray-400 text-black"
+        } mb-1 w-8 h-8 items-center justify-center rounded-full`}
+      >
+        <Text className="uppercase font-medium">
           {item.authorName.charAt(0)}
         </Text>
-      </Pressable>
+      </View>
 
-      {/* AUTHOR NAME & MESSAGE */}
-      <View className="gap-1">
-        <Text className="text-slate-900 text-sm font-semibold">
-          {item.authorName}
+      {/* MESSAGE BUBBLE */}
+      <View
+        className={`${
+          isOwnMessage ? "bg-blue-400 self-end" : "self-start bg-gray-400"
+        } px-3 py-4 mb-2 rounded-lg max-w-[75%] ${
+          isOwnMessage
+            ? "rounded-tr-3xl rounded-bl-3xl"
+            : "rounded-tl-3xl rounded-br-3xl"
+        }`}
+      >
+        {/* MESSAGE CONTENT */}
+        <Text
+          className={`${
+            isOwnMessage ? "text-white" : "text-black"
+          } tracking-wide leading-5`}
+        >
+          {item.content}
         </Text>
 
-        <Text className="max-w-[90%] text-slate-600">{item.content}</Text>
+        {/* SEND DATE */}
+        <Text
+          className={`${
+            isOwnMessage ? "text-blue-100" : "text-gray-100"
+          } mt-2 text-sm ml-auto`}
+        >
+          {new Date(item.$createdAt).toLocaleDateString() ===
+          new Date().toLocaleDateString()
+            ? new Date(item.$createdAt).toLocaleString("en-IN", {
+                timeStyle: "short",
+              })
+            : new Date(item.$createdAt).toLocaleString("en-IN", {
+                dateStyle: "medium",
+                timeStyle: "short",
+              })}
+        </Text>
       </View>
 
       {/* EDIT + DELETE BUTTONS */}
-      {item.authorId === userId && (
-        <View className="flex-row gap-2 ml-auto absolute right-3 top-3">
+      {isOwnMessage && (
+        <View className="self-end flex-row gap-2 mb-4">
           <Pressable
             onPress={() => {
               setIsEditModalVisible(true);
-              setEditMessageContent(item.content);
               setEditRoomMessageId(item.$id);
+              setEditMessageContent(item.content);
             }}
           >
-            <Ionicons name="create-outline" size={18} color="#0f172b" />
+            <Ionicons name="create-outline" size={18} color="black" />
           </Pressable>
 
           <Pressable onPress={() => handleDeleteRoomMessage(item.$id)}>
-            <Ionicons name="trash-outline" size={18} color="#0f172b" />
+            <Ionicons name="trash-outline" size={18} color="black" />
           </Pressable>
         </View>
       )}
-
-      {/* SEND DATE */}
-      <Text className="absolute bottom-0 right-0 text-sm text-slate-400 p-2">
-        {new Date(item.$createdAt).toLocaleDateString() ===
-        new Date().toLocaleDateString()
-          ? new Date(item.$createdAt).toLocaleString("en-IN", {
-              timeStyle: "short",
-            })
-          : new Date(item.$createdAt).toLocaleString("en-IN", {
-              dateStyle: "medium",
-              timeStyle: "short",
-            })}
-      </Text>
     </View>
   );
 };
