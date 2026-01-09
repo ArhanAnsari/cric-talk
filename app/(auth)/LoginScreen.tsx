@@ -2,11 +2,14 @@ import { showToast } from "@/libs/showToast";
 import { loginUserWithEmailAndPassword } from "@/services/auth.service";
 import { Octicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { usePreventScreenCapture } from "expo-screen-capture";
 import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginScreen = () => {
+  usePreventScreenCapture();
+
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
@@ -107,7 +110,7 @@ const LoginScreen = () => {
           <Text className="text-lg font-medium text-slate-900">
             Don't have an account?
           </Text>
-          <Pressable onPress={() => router.replace("/(auth)/LoginScreen")}>
+          <Pressable onPress={() => router.replace("/(auth)/SignupScreen")}>
             <Text className="text-lg text-orange-500 font-medium">Signup</Text>
           </Pressable>
         </View>
