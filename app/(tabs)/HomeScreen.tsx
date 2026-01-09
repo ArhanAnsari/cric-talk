@@ -1,4 +1,5 @@
 import useCreatePost from "@/hooks/useCreatePost";
+import useLikePost from "@/hooks/useLikePost";
 import { account } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
 import { fetchPosts, updatePost } from "@/services/posts.service";
@@ -30,6 +31,7 @@ const HomeScreen = () => {
   const setPosts = usePosts((s) => s.setPosts);
   const updatePostState = usePosts((s) => s.updatePost);
   const { createNewPost } = useCreatePost();
+  const { likePost } = useLikePost();
 
   async function increamentView(postId: string) {
     const post = posts.find((post) => post.$id === postId);
@@ -107,34 +109,6 @@ const HomeScreen = () => {
         },
       },
     ]);
-  }
-
-  async function handleLikePost(postId: string) {
-    const post = posts.find((p) => p.$id === postId);
-    if (!post) return;
-
-    const isLiked = post.likedBy.includes(userId);
-    const updatedPostData = {
-      likes: isLiked ? post.likes - 1 : post.likes + 1,
-      likedBy: isLiked
-        ? post.likedBy.filter((id) => id !== userId)
-        : [...post.likedBy, userId],
-    };
-
-    try {
-      updatePostState({
-        $id: postId,
-        ...updatedPostData,
-      });
-      const updatedPost = await updatePost(postId, updatedPostData);
-    } catch (error) {
-      showToast({
-        type: "error",
-        text1: "Error",
-        text2: "Could not like. Please try again later.",
-      });
-      updatePostState(post);
-    }
   }
 
   return (
@@ -230,7 +204,7 @@ const HomeScreen = () => {
                 <View className="flex-row items-center justify-between mt-4">
                   <Pressable
                     className="flex-row items-center gap-2"
-                    onPress={() => handleLikePost(item.$id)}
+                    onPress={() => likePost({ postId: item.$id, userId })}
                   >
                     <Octicons
                       name={
