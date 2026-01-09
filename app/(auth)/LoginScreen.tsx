@@ -107,7 +107,7 @@ const LoginScreen = () => {
           <Text className="text-lg font-medium text-slate-900">
             Don't have an account?
           </Text>
-          <Pressable onPress={() => router.replace("/SignupScreen")}>
+          <Pressable onPress={() => router.replace("/(auth)/LoginScreen")}>
             <Text className="text-lg text-orange-500 font-medium">Signup</Text>
           </Pressable>
         </View>
