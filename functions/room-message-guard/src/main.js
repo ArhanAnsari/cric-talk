@@ -18,6 +18,7 @@ export default async ({ req, res }) => {
     const CRIC_TALK_DATABASE_ID = process.env.CRIC_TALK_DATABASE_ID;
     const ROOMS_TABLE_ID = process.env.ROOMS_TABLE_ID;
     const ROOM_MESSAGE_TABLE_ID = process.env.ROOM_MESSAGE_TABLE_ID;
+    const USERS_TABLE_ID = process.env.USERS_TABLE_ID;
 
     const tablesDB = new TablesDB(client);
     const users = new Users(client);
@@ -47,6 +48,14 @@ export default async ({ req, res }) => {
           content,
           isEdited: false,
         },
+      });
+
+      await tablesDB.incrementRowColumn({
+        databaseId: CRIC_TALK_DATABASE_ID,
+        tableId: USERS_TABLE_ID,
+        rowId: userId,
+        column: 'messageCount',
+        value: 1,
       });
     }
 
