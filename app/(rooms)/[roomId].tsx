@@ -18,8 +18,8 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import RoomDetailsCard from "./RoomDetailsCard";
-import RoomMessageCard from "./RoomMessageCard";
+import RoomDetailsCard from "../components/RoomDetailsCard";
+import RoomMessageCard from "../components/RoomMessageCard";
 
 const RoomDiscussion = () => {
   const CRIC_TALK_DATABASE_ID =
