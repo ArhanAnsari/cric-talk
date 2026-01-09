@@ -1,9 +1,38 @@
+import { UserStats } from "@/interfaces/UserStats";
+import { showToast } from "@/libs/showToast";
+import { fetchUsersMessageCount } from "@/services/messageCount.service";
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const LeaderboardScreen = () => {
+  const [messageLeaderboard, setMessageLeaderboard] = useState<UserStats[]>([]);
+
+  useEffect(() => {
+    let mounted = false;
+
+    async function loadUsersMessageCount() {
+      if (!mounted) return;
+
+      try {
+        const data = await fetchUsersMessageCount();
+        setMessageLeaderboard(data.rows);
+      } catch (error) {
+        showToast({
+          type: "error",
+          text1: "Error fetching message count leaderboard",
+          text2: "Please try again later.",
+        });
+      }
+    }
+    loadUsersMessageCount();
+
+    return () => {
+      mounted = true;
+    };
+  }, []);
+
   return (
     <View className="flex-1 bg-white">
       <View className="w-full h-100 bg-linear-to-br from-orange-500 to-orange-600">
