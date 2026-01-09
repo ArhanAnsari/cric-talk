@@ -1,7 +1,7 @@
-import { Post } from "@/interfaces/Post";
+import useCreatePost from "@/hooks/useCreatePost";
 import { account } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
-import { createPost, fetchPosts, updatePost } from "@/services/posts.service";
+import { fetchPosts, updatePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { Ionicons, Octicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -28,8 +28,8 @@ const HomeScreen = () => {
 
   const posts = usePosts((s) => s.posts);
   const setPosts = usePosts((s) => s.setPosts);
-  const addPost = usePosts((s) => s.addPost);
   const updatePostState = usePosts((s) => s.updatePost);
+  const { createNewPost } = useCreatePost();
 
   async function increamentView(postId: string) {
     const post = posts.find((post) => post.$id === postId);
@@ -88,11 +88,7 @@ const HomeScreen = () => {
         text: "Create",
         onPress: async () => {
           try {
-            const newPost: Post = await createPost({
-              content,
-              authorId: userId,
-            });
-            addPost(newPost);
+            await createNewPost({ content, userId });
             setIsVisible(false);
             setContent("");
 
