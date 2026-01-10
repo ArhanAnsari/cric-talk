@@ -6,7 +6,7 @@ const CRIC_TALK_DATABASE_ID =
   process.env.EXPO_PUBLIC_APPWRITE_CRIC_TALK_DATABASE_ID!;
 const USERS_TABLE_ID = process.env.EXPO_PUBLIC_APPWRITE_USERS_TABLE_ID!;
 
-export async function fetchUsersMessageCount() {
+export async function fetchUsersStats() {
   try {
     return await tablesDB.listRows<UserStats>({
       databaseId: CRIC_TALK_DATABASE_ID,
@@ -19,7 +19,7 @@ export async function fetchUsersMessageCount() {
   }
 }
 
-export async function fetchUserMessageCount(userId: string) {
+export async function fetchUserStat(userId: string) {
   try {
     await tablesDB.getRow<UserStats>({
       databaseId: CRIC_TALK_DATABASE_ID,
