@@ -1,3 +1,4 @@
+import useKeyboardHeight from "@/hooks/useKeyboardHeight";
 import { account } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
 import {
@@ -14,7 +15,6 @@ import React, { useEffect, useState } from "react";
 import {
   Alert,
   FlatList,
-  KeyboardAvoidingView,
   Pressable,
   ScrollView,
   Text,
@@ -39,6 +39,8 @@ const PostDetails = () => {
   const deleteCommentState = useComments((s) => s.deleteComment);
 
   const [comment, setComment] = useState<string>("");
+
+  const keyboardHeight = useKeyboardHeight();
 
   useEffect(() => {
     async function fetchUserId() {
@@ -167,11 +169,7 @@ const PostDetails = () => {
   }
 
   return (
-    <KeyboardAvoidingView
-      className="flex-1 bg-white"
-      behavior="padding"
-      keyboardVerticalOffset={0}
-    >
+    <View className="flex-1 bg-white">
       <View className="flex-1">
         {/* HEADER */}
         <View className="w-full h-30 bg-orange-500">
@@ -349,7 +347,10 @@ const PostDetails = () => {
       </View>
 
       {/* COMMENT INPUT BOX */}
-      <SafeAreaView>
+      <SafeAreaView
+        edges={["bottom"]}
+        style={{ marginBottom: keyboardHeight + 8 }}
+      >
         <View className="px-6 flex-row items-center ">
           {/* COMMENT INPUT */}
           <TextInput
@@ -368,7 +369,7 @@ const PostDetails = () => {
           </Pressable>
         </View>
       </SafeAreaView>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
