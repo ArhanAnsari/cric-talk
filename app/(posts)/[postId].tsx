@@ -83,35 +83,6 @@ const PostDetails = () => {
     };
   }, []);
 
-  async function handleLikePost() {
-    if (!post) return;
-    const prevPost = { ...post, likedBy: [...post.likedBy] };
-
-    const isLiked = post?.likedBy.includes(userId);
-    const updatedPostData = {
-      likes: isLiked ? post?.likes - 1 : post?.likes + 1,
-      likedBy: isLiked
-        ? post.likedBy.filter((id) => id !== userId)
-        : [...post.likedBy, userId],
-    };
-
-    try {
-      updatePostState({
-        $id: post.$id,
-        ...updatedPostData,
-      });
-
-      await updatePost(post.$id, updatedPostData);
-    } catch (error) {
-      showToast({
-        type: "error",
-        text1: "Error",
-        text2: "Could not like. Please try again later.",
-      });
-      updatePostState(prevPost);
-    }
-  }
-
   async function handleAddComment() {
     if (comment.trim().length === 0) {
       showToast({
