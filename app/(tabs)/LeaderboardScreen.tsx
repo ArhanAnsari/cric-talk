@@ -7,7 +7,9 @@ import { FlatList, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const LeaderboardScreen = () => {
-  const [messageLeaderboard, setMessageLeaderboard] = useState<UserStats[]>([]);
+  const [userStatsLeaderboard, setUserStatsLeaderboard] = useState<UserStats[]>(
+    []
+  );
 
   useEffect(() => {
     let mounted = true;
@@ -17,7 +19,7 @@ const LeaderboardScreen = () => {
 
       try {
         const data = await fetchUsersStats();
-        setMessageLeaderboard(data.rows);
+        setUserStatsLeaderboard(data.rows);
       } catch (error) {
         showToast({
           type: "error",
@@ -55,14 +57,14 @@ const LeaderboardScreen = () => {
             <View className="items-center">
               <View className="bg-slate-200 w-24 h-24 rounded-full items-center justify-center">
                 <Text className="text-slate-900 capitalize font-medium text-3xl">
-                  {messageLeaderboard[0]?.username?.[0] ?? "-"}
+                  {userStatsLeaderboard[0]?.username?.[0] ?? "-"}
                 </Text>
               </View>
 
               <View className="bg-slate-200 px-3 py-1 -mt-5 rounded-lg shadow-xs elevation-xs">
                 <Text className="text-slate-900 font-medium text-sm">
                   <Text className="text-lg text-orange-500">#1 </Text>
-                  {messageLeaderboard[0]?.username || "-"}
+                  {userStatsLeaderboard[0]?.username || "-"}
                 </Text>
               </View>
             </View>
@@ -72,14 +74,14 @@ const LeaderboardScreen = () => {
               <View className="items-center">
                 <View className="bg-slate-300 w-20 h-20 rounded-full items-center justify-center">
                   <Text className="text-slate-900 capitalize font-medium text-3xl">
-                    {messageLeaderboard[1]?.username?.[0] ?? "-"}
+                    {userStatsLeaderboard[1]?.username?.[0] ?? "-"}
                   </Text>
                 </View>
 
                 <View className="bg-slate-200 px-3 py-1 -mt-2 rounded-lg">
                   <Text className="text-slate-900 font-medium text-sm">
                     <Text className="text-lg text-orange-500">#2 </Text>
-                    {messageLeaderboard[1]?.username ?? "-"}
+                    {userStatsLeaderboard[1]?.username ?? "-"}
                   </Text>
                 </View>
               </View>
@@ -87,14 +89,14 @@ const LeaderboardScreen = () => {
               <View className="items-center">
                 <View className="bg-slate-300 w-20 h-20 rounded-full items-center justify-center">
                   <Text className="text-slate-900 capitalize font-medium text-3xl">
-                    {messageLeaderboard[2]?.username?.[0] ?? "-"}
+                    {userStatsLeaderboard[2]?.username?.[0] ?? "-"}
                   </Text>
                 </View>
 
                 <View className="bg-slate-200 px-3 py-1 -mt-2 rounded-lg">
                   <Text className="text-slate-900 font-medium text-sm">
                     <Text className="text-lg text-orange-500">#3 </Text>
-                    {messageLeaderboard[2]?.username ?? "-"}
+                    {userStatsLeaderboard[2]?.username ?? "-"}
                   </Text>
                 </View>
               </View>
@@ -106,7 +108,7 @@ const LeaderboardScreen = () => {
       <View className="mt-6 px-6">
         {/* LEADERBOARD LIST */}
         <FlatList
-          data={messageLeaderboard.slice(3, 3 + 7)}
+          data={userStatsLeaderboard.slice(3, 3 + 7)}
           keyExtractor={(item) => item.$id}
           contentContainerStyle={{ paddingBottom: 80 }}
           showsVerticalScrollIndicator={false}
