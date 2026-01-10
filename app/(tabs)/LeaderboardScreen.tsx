@@ -55,14 +55,14 @@ const LeaderboardScreen = () => {
             <View className="items-center">
               <View className="bg-slate-200 w-24 h-24 rounded-full items-center justify-center">
                 <Text className="text-slate-900 capitalize font-medium text-3xl">
-                  s
+                  {messageLeaderboard[0]?.username?.[0] ?? "-"}
                 </Text>
               </View>
 
               <View className="bg-slate-200 px-3 py-1 -mt-5 rounded-lg shadow-xs elevation-xs">
                 <Text className="text-slate-900 font-medium text-sm">
                   <Text className="text-lg text-orange-500">#1 </Text>
-                  SwapnaSahoo
+                  {messageLeaderboard[0]?.username || "-"}
                 </Text>
               </View>
             </View>
@@ -72,14 +72,14 @@ const LeaderboardScreen = () => {
               <View className="items-center">
                 <View className="bg-slate-300 w-20 h-20 rounded-full items-center justify-center">
                   <Text className="text-slate-900 capitalize font-medium text-3xl">
-                    s
+                    {messageLeaderboard[1]?.username?.[0] ?? "-"}
                   </Text>
                 </View>
 
                 <View className="bg-slate-200 px-3 py-1 -mt-2 rounded-lg">
                   <Text className="text-slate-900 font-medium text-sm">
                     <Text className="text-lg text-orange-500">#2 </Text>
-                    SwapnaSahoo
+                    {messageLeaderboard[1]?.username ?? "-"}
                   </Text>
                 </View>
               </View>
@@ -87,14 +87,14 @@ const LeaderboardScreen = () => {
               <View className="items-center">
                 <View className="bg-slate-300 w-20 h-20 rounded-full items-center justify-center">
                   <Text className="text-slate-900 capitalize font-medium text-3xl">
-                    s
+                    {messageLeaderboard[2]?.username?.[0] ?? "-"}
                   </Text>
                 </View>
 
                 <View className="bg-slate-200 px-3 py-1 -mt-2 rounded-lg">
                   <Text className="text-slate-900 font-medium text-sm">
                     <Text className="text-lg text-orange-500">#3 </Text>
-                    SwapnaSahoo
+                    {messageLeaderboard[2]?.username ?? "-"}
                   </Text>
                 </View>
               </View>
