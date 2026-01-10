@@ -3,7 +3,7 @@ import { showToast } from "@/libs/showToast";
 import { fetchUsersMessageCount } from "@/services/messageCount.service";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { FlatList, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const LeaderboardScreen = () => {
@@ -105,18 +105,36 @@ const LeaderboardScreen = () => {
 
       <View className="mt-6 px-6">
         {/* LEADERBOARD LIST */}
-        <View className="w-full h-16 bg-slate-200 rounded-lg shadow-sm elevation-xs transition-all duration-300 active:scale-[0.98] active:opacity-85 px-4 flex-row items-center">
-          <View className="bg-orange-500 w-10 h-10 items-center justify-center rounded-full">
-            <Text className="text-white font-medium">#4</Text>
-          </View>
+        <FlatList
+          data={messageLeaderboard.slice(3, 3 + 7)}
+          keyExtractor={(item) => item.$id}
+          contentContainerStyle={{ paddingBottom: 80 }}
+          showsVerticalScrollIndicator={false}
+          maxToRenderPerBatch={}
+          renderItem={({ item, index }) => (
+            <View className="w-full h-16 bg-slate-200 rounded-lg shadow-sm elevation-xs transition-all duration-300 active:scale-[0.98] active:opacity-85 px-4 flex-row items-center">
+              <View className="bg-orange-500 w-10 h-10 items-center justify-center rounded-full">
+                <Text className="text-white font-medium">#{index + 4}</Text>
+              </View>
 
-          <View className="ml-4">
-            <Text className="text-slate-900 font-medium">SwapnaSahoo</Text>
-            <Text className="text-xs text-slate-500">3000 messages</Text>
-          </View>
+              <View className="ml-4">
+                <Text className="text-slate-900 font-medium">
+                  {item.username}
+                </Text>
+                <Text className="text-xs text-slate-500">
+                  {item.messageCount} message
+                  {item.messageCount === 1 ? "" : "s"}
+                </Text>
+              </View>
 
-          <Text className="ml-auto font-medium text-slate-800">3k</Text>
-        </View>
+              <Text className="ml-auto font-medium text-slate-800">
+                {new Intl.NumberFormat("en-IN", { notation: "compact" }).format(
+                  item.messageCount
+                )}
+              </Text>
+            </View>
+          )}
+        />
       </View>
     </View>
   );
