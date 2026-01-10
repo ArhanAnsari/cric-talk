@@ -1,4 +1,5 @@
 import useKeyboardHeight from "@/hooks/useKeyboardHeight";
+import { Post } from "@/interfaces/Post";
 import { account } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
 import {
@@ -22,6 +23,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import PostCard from "../components/PostCard";
 
 const PostDetails = () => {
   const { postId } = useLocalSearchParams();
@@ -198,86 +200,7 @@ const PostDetails = () => {
             {/* POST DETAILS */}
             <View className="px-6 -mt-4">
               {/* POST CONTENT */}
-              <View className="border-b border-gray-300 pb-4">
-                {/* AUTHOR INFO + PUBLISH DATE */}
-                <View className="flex-row items-center gap-2">
-                  {/* AUTHOR PROFILE IMAGE */}
-                  <Pressable className="bg-gray-300 h-10 w-10 items-center justify-center rounded-full">
-                    <Text className="text-lg font-semibold capitalize text-slate-950">
-                      {post?.authorId[0]}
-                    </Text>
-                  </Pressable>
-
-                  {/* AUTHOR NAME */}
-                  <Text className="text-lg font-medium text-slate-900">
-                    {post?.authorId}
-                  </Text>
-
-                  {/* PUBLISH DATE */}
-                  <Text className="text-sm text-slate-600 ml-auto">
-                    {new Date(post?.$createdAt || "").toLocaleDateString(
-                      "en-IN",
-                      {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                        hour: "numeric",
-                        minute: "numeric",
-                      }
-                    )}
-                  </Text>
-                </View>
-
-                {/* POST CONTENT */}
-                <View className="mt-4">
-                  <Text className="leading-6 text-slate-800">
-                    {post?.content}
-                  </Text>
-                </View>
-
-                {/* IMAGE PLACEHOLDER */}
-                {post?.image?.length !== 0 && (
-                  <View className="w-full aspect-video bg-gray-300 rounded-lg my-4" />
-                )}
-
-                {/* POST ACTIONS */}
-                <View className="mt-4 flex-row items-center justify-between">
-                  <Pressable
-                    className="flex-row gap-2"
-                    onPress={handleLikePost}
-                  >
-                    <Octicons
-                      name={
-                        post?.likedBy.includes(userId) ? "heart-fill" : "heart"
-                      }
-                      size={18}
-                      color={post?.likedBy.includes(userId) ? "red" : "gray"}
-                    />
-                    <Text>
-                      {post?.likes} Like{post?.likes === 1 ? "" : "s"}
-                    </Text>
-                  </Pressable>
-
-                  <Pressable className="flex-row gap-2">
-                    <Octicons
-                      name="comment-discussion"
-                      size={18}
-                      color="black"
-                    />
-                    <Text>
-                      {commentList.length} Comment
-                      {commentList.length === 1 ? "" : "s"}
-                    </Text>
-                  </Pressable>
-
-                  <Pressable className="flex-row gap-2">
-                    <Octicons name="eye" size={18} color="black" />
-                    <Text>
-                      {post?.views} View{post?.views === 1 ? "" : "s"}
-                    </Text>
-                  </Pressable>
-                </View>
-              </View>
+              <PostCard userId={userId} post={post as Post} />
 
               {/* COMMENTS SECTION */}
               <View className="mt-4">
