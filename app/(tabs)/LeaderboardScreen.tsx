@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import LeaderboardPodiumUser from "../components/LeaderboardPodiumUser";
 
 const LeaderboardScreen = () => {
   const [userStatsLeaderboard, setUserStatsLeaderboard] = useState<UserStats[]>(
@@ -54,52 +55,22 @@ const LeaderboardScreen = () => {
 
           {/* TOP 3 LEADERBOARD */}
           <View className="items-center mt-4">
-            <View className="items-center">
-              <View className="bg-slate-200 w-24 h-24 rounded-full items-center justify-center">
-                <Text className="text-slate-900 capitalize font-medium text-3xl">
-                  {userStatsLeaderboard[0]?.username?.[0] ?? "-"}
-                </Text>
-              </View>
-
-              <View className="bg-slate-200 px-3 py-1 -mt-5 rounded-lg shadow-xs elevation-xs">
-                <Text className="text-slate-900 font-medium text-sm">
-                  <Text className="text-lg text-orange-500">#1 </Text>
-                  {userStatsLeaderboard[0]?.username || "-"}
-                </Text>
-              </View>
-            </View>
+            <LeaderboardPodiumUser
+              userStat={userStatsLeaderboard[0]}
+              rank={1}
+            />
 
             {/* TOP 2 */}
             <View className="flex-row items-center gap-8 mt-6">
-              <View className="items-center">
-                <View className="bg-slate-300 w-20 h-20 rounded-full items-center justify-center">
-                  <Text className="text-slate-900 capitalize font-medium text-3xl">
-                    {userStatsLeaderboard[1]?.username?.[0] ?? "-"}
-                  </Text>
-                </View>
+              <LeaderboardPodiumUser
+                userStat={userStatsLeaderboard[1]}
+                rank={2}
+              />
 
-                <View className="bg-slate-200 px-3 py-1 -mt-2 rounded-lg">
-                  <Text className="text-slate-900 font-medium text-sm">
-                    <Text className="text-lg text-orange-500">#2 </Text>
-                    {userStatsLeaderboard[1]?.username ?? "-"}
-                  </Text>
-                </View>
-              </View>
-
-              <View className="items-center">
-                <View className="bg-slate-300 w-20 h-20 rounded-full items-center justify-center">
-                  <Text className="text-slate-900 capitalize font-medium text-3xl">
-                    {userStatsLeaderboard[2]?.username?.[0] ?? "-"}
-                  </Text>
-                </View>
-
-                <View className="bg-slate-200 px-3 py-1 -mt-2 rounded-lg">
-                  <Text className="text-slate-900 font-medium text-sm">
-                    <Text className="text-lg text-orange-500">#3 </Text>
-                    {userStatsLeaderboard[2]?.username ?? "-"}
-                  </Text>
-                </View>
-              </View>
+              <LeaderboardPodiumUser
+                userStat={userStatsLeaderboard[2]}
+                rank={3}
+              />
             </View>
           </View>
         </SafeAreaView>
