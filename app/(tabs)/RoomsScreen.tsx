@@ -105,8 +105,9 @@ const RoomsScreen = () => {
             paddingBottom: 16,
           }}
         >
-          {["all", "live", "upcoming", "finished"].map((label) => (
+          {["all", "live", "upcoming", "finished"].map((label, index) => (
             <FilterChip
+              key={index}
               label={label}
               selected={selectedFilter === label}
               onPress={() => setSelectedFilter(label as any)}
