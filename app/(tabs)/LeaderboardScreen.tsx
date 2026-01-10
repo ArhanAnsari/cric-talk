@@ -10,7 +10,7 @@ const LeaderboardScreen = () => {
   const [messageLeaderboard, setMessageLeaderboard] = useState<UserStats[]>([]);
 
   useEffect(() => {
-    let mounted = false;
+    let mounted = true;
 
     async function loadUsersMessageCount() {
       if (!mounted) return;
@@ -29,7 +29,7 @@ const LeaderboardScreen = () => {
     loadUsersMessageCount();
 
     return () => {
-      mounted = true;
+      mounted = false;
     };
   }, []);
 
