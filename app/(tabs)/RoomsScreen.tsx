@@ -42,7 +42,7 @@ const RoomsScreen = () => {
 
   const [selectedFilter, setSelectedFilter] = useState<
     "all" | "live" | "upcoming" | "finished"
-  >("live");
+  >("all");
 
   const filteredRooms = useMemo(() => {
     if (selectedFilter === "all") return rooms;
