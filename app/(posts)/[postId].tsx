@@ -1,5 +1,4 @@
 import useKeyboardHeight from "@/hooks/useKeyboardHeight";
-import { Post } from "@/interfaces/Post";
 import { account } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
 import {
@@ -32,6 +31,14 @@ const PostDetails = () => {
 
   const posts = usePosts((s) => s.posts);
   const post = posts.find((post) => post.$id === postId);
+
+  if (!post) {
+    showToast({
+      type: "error",
+      text1: "Post not found",
+    });
+    throw new Error("Post not found");
+  }
 
   const updatePostState = usePosts((s) => s.updatePost);
 
@@ -200,7 +207,7 @@ const PostDetails = () => {
             {/* POST DETAILS */}
             <View className="px-6 -mt-4">
               {/* POST CONTENT */}
-              <PostCard userId={userId} post={post as Post} />
+              <PostCard userId={userId} post={post} />
 
               {/* COMMENTS SECTION */}
               <View className="mt-4">
