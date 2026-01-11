@@ -10,7 +10,9 @@ export interface CommentType extends Models.Row {
 export interface Post extends Models.Row {
   content: string;
   image?: string[];
+
   authorId: string;
+  authorName: string;
 
   likes: number;
   likedBy: string[];
