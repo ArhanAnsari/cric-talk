@@ -25,13 +25,14 @@ export async function fetchPosts() {
 
 export async function fetchPostsByUserId(userId: string) {
   try {
-    return await tablesDB.listRows({
+    return await tablesDB.listRows<Post>({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: POSTS_TABLES_ID,
       queries: [Query.equal("authorId", userId), Query.orderDesc("$createdAt")],
     });
   } catch (error) {
     console.log(`Error while fetching posts by user id ${error}`);
+    throw error;
   }
 }
 
