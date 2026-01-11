@@ -1,10 +1,14 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const ProfileScreen = () => {
+  const [activeTab, setActiveTab] = useState<"posts" | "rooms" | "stats">(
+    "posts"
+  );
+
   return (
     <View className="flex-1 bg-white">
       <View className="w-full h-100 bg-linear-to-br from-orange-500 to-orange-600">
@@ -49,6 +53,29 @@ const ProfileScreen = () => {
             </Text>
           </View>
         </SafeAreaView>
+      </View>
+
+      <View className="px-6 py-4">
+        {/* TABS OPTION */}
+        <View className="flex-row items-center gap-2 bg-slate-200 px-2 py-2 rounded-md">
+          {(["posts", "rooms", "stats"] as const).map((label) => (
+            <Pressable
+              key={label}
+              className={`${
+                activeTab === label ? "bg-white" : "bg-transparent"
+              } flex-1 items-center rounded-lg px-6 py-2 transition-transform duration-300 ease-in-out active:scale-[0.97]`}
+              onPress={() => setActiveTab(label)}
+            >
+              <Text
+                className={`capitalize ${
+                  activeTab === label ? "text-slate-900" : "text-slate-600"
+                }`}
+              >
+                {label}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
       </View>
     </View>
   );
