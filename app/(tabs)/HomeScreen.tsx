@@ -4,6 +4,7 @@ import { account } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
 import { fetchPosts, updatePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
+import { useUser } from "@/store/useUser";
 import { Ionicons, Octicons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { ViewToken } from "react-native";
@@ -33,6 +34,8 @@ const HomeScreen = () => {
   const updatePostState = usePosts((s) => s.updatePost);
   const { createNewPost } = useCreatePost();
   const { likePost } = useLikePost();
+
+  const username = useUser((s) => s.username);
 
   async function increamentView(postId: string) {
     const post = posts.find((post) => post.$id === postId);
@@ -124,7 +127,7 @@ const HomeScreen = () => {
             {/* USER AVATAR */}
             <Pressable className="w-10 h-10 bg-gray-200 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
               <Text className="text-slate-900 font-medium text-lg capitalize">
-                s
+                {username?.charAt(0)}
               </Text>
             </Pressable>
 
