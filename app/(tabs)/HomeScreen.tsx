@@ -6,6 +6,7 @@ import { fetchPosts, updatePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { useUser } from "@/store/useUser";
 import { Ionicons, Octicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { ViewToken } from "react-native";
 import {
@@ -278,7 +279,10 @@ const HomeScreen = () => {
 
             {/* PROFILE CONTENTS */}
             <View className="mt-8 gap-4">
-              <Pressable className="flex-row items-center gap-2">
+              <Pressable
+                className="flex-row items-center gap-2"
+                onPress={() => router.push("/(profile)/ProfileScreen")}
+              >
                 <Ionicons name="person-outline" size={24} color="white" />
                 <Text className="text-white font-medium text-xl">Profile</Text>
               </Pressable>
