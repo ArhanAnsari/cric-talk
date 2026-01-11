@@ -25,7 +25,7 @@ export default function RootLayout() {
         setUser(userData);
 
         if (!userData) return;
-        setUsername(userData.name);
+        setUsername(userData.name || userData.email.split("@")[0]);
         setFavTeam(userData.prefs.favTeam || "None");
         setEmail(userData.email);
       } catch (error) {
