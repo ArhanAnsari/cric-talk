@@ -25,7 +25,7 @@ const LeaderboardPodiumUser = ({ userStat, rank }: Props) => {
         }`}
       >
         <Text className="text-slate-900 font-medium text-sm">
-          <Text className="text-lg text-orange-500">#{rank + 1} </Text>
+          <Text className="text-lg text-orange-500">#{rank} </Text>
           {userStat?.username || "-"}
         </Text>
       </View>
