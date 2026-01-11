@@ -227,6 +227,20 @@ const HomeScreen = () => {
         </View>
       </Modal>
 
+      {/* PROFILE DRAWER OVERLAY */}
+      <Pressable
+        style={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: "rgba(0, 0, 0, 0.4)",
+          zIndex: 10,
+          display: "none",
+        }}
+      />
+
       {/* PROFILE DRAWER */}
       <Animated.View
         style={{
@@ -240,6 +254,7 @@ const HomeScreen = () => {
           transitionProperty: "all",
           transitionDuration: 250,
           transitionTimingFunction: "ease-in",
+          zIndex: 20,
         }}
       >
         <SafeAreaView>
