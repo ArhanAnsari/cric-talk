@@ -26,6 +26,28 @@ const ProfileScreen = () => {
               <Ionicons name="settings-outline" size={18} color="white" />
             </Pressable>
           </View>
+
+          {/* USER INFO */}
+          <View className="px-6 py-4 mt-6">
+            <View className="flex-row items-center gap-4">
+              <View className="w-30 h-30 bg-orange-600 rounded-full items-center justify-center">
+                <Text className="text-4xl text-white font-medium">S</Text>
+              </View>
+
+              <View>
+                <Text className="text-lg text-white font-medium">
+                  SwapnaSahoo
+                </Text>
+                <Text className="text-sm text-slate-200 font-medium">
+                  user@gmail.com
+                </Text>
+              </View>
+            </View>
+
+            <Text className="mt-4 text-slate-300 text-sm ">
+              Joined on 29 December 2025
+            </Text>
+          </View>
         </SafeAreaView>
       </View>
     </View>
