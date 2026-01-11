@@ -9,7 +9,7 @@ import {
 import { updatePost } from "@/services/posts.service";
 import { useComments } from "@/store/useComments";
 import { usePosts } from "@/store/usePosts";
-import { Ionicons, Octicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
@@ -154,17 +154,19 @@ const PostDetails = () => {
         {/* HEADER */}
         <View className="w-full h-30 bg-orange-500">
           <SafeAreaView>
-            <View className="px-6 flex-row items-center w-full">
-              <Octicons
-                name="arrow-left"
-                size={24}
-                color="white"
+            <View className="px-6 py-4 flex-row items-center">
+              <Pressable
+                className="h-10 w-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 ease-in-out active:[scale-0.98] active:opacity-85"
                 onPress={() => router.back()}
-              />
+              >
+                <Ionicons name="arrow-back" size={18} color="white" />
+              </Pressable>
 
-              <Text className="text-white font-semibold text-xl text-center flex-1">
-                CricTalk
-              </Text>
+              <View className="absolute left-0 right-0 items-center">
+                <Text className="text-lg text-white font-semibold">
+                  CricTalk
+                </Text>
+              </View>
             </View>
           </SafeAreaView>
         </View>
