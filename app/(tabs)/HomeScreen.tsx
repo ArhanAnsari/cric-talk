@@ -10,6 +10,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { ViewToken } from "react-native";
 import {
   Alert,
+  Dimensions,
   FlatList,
   Modal,
   Pressable,
@@ -36,6 +37,8 @@ const HomeScreen = () => {
   const { likePost } = useLikePost();
 
   const username = useUser((s) => s.username);
+
+  const SIDEBAR_WIDTH = Dimensions.get("window").width * 0.75;
 
   async function increamentView(postId: string) {
     const post = posts.find((post) => post.$id === postId);
@@ -222,6 +225,61 @@ const HomeScreen = () => {
           </SafeAreaView>
         </View>
       </Modal>
+
+      {/* PROFILE DRAWER */}
+      <View
+        style={{
+          width: SIDEBAR_WIDTH,
+          backgroundColor: "#0f172b",
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: -320,
+          shadowColor: "black",
+        }}
+      >
+        <SafeAreaView>
+          <View className="px-6 py-4">
+            {/* USER INFO */}
+            <Pressable className="flex-row items-center gap-2">
+              <View className="w-8 h-8 bg-slate-400 rounded-full items-center justify-center">
+                <Text className="uppercase text-lg font-medium text-slate-800">
+                  {username?.charAt(0)}
+                </Text>
+              </View>
+
+              <Text className="text-white text-base">{username}</Text>
+            </Pressable>
+
+            {/* PROFILE CONTENTS */}
+            <View className="mt-8 gap-4">
+              <Pressable className="flex-row items-center gap-2">
+                <Ionicons name="person-outline" size={24} color="white" />
+                <Text className="text-white font-medium text-xl">Profile</Text>
+              </Pressable>
+
+              <Pressable className="flex-row items-center gap-2">
+                <Ionicons name="search-outline" size={24} color="white" />
+                <Text className="text-white font-medium text-xl">Explore</Text>
+              </Pressable>
+
+              <Pressable className="flex-row items-center gap-2">
+                <Ionicons
+                  name="chatbubble-ellipses-outline"
+                  size={24}
+                  color="white"
+                />
+                <Text className="text-white font-medium text-xl">Rooms</Text>
+              </Pressable>
+
+              <Pressable className="flex-row items-center gap-2">
+                <Ionicons name="settings-outline" size={24} color="white" />
+                <Text className="text-white font-medium text-xl">Settings</Text>
+              </Pressable>
+            </View>
+          </View>
+        </SafeAreaView>
+      </View>
     </View>
   );
 };
