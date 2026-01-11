@@ -1,6 +1,6 @@
 import { UserStats } from "@/interfaces/UserStats";
+import { functions } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
-import { fetchUsersStats } from "@/services/userStats.service";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
@@ -20,8 +20,14 @@ const LeaderboardScreen = () => {
       if (!mounted) return;
 
       try {
-        const data = await fetchUsersStats();
-        setUserStatsLeaderboard(data.rows);
+        const data = await functions.createExecution({
+          functionId:
+            process.env.EXPO_PUBLIC_APPWRITE_LEADERBOARD_GUARD_FUNCTION_ID!,
+          async: false,
+        });
+        const leaderboardData = JSON.parse(data.responseBody).rows;
+
+        setUserStatsLeaderboard(leaderboardData);
       } catch (error) {
         showToast({
           type: "error",

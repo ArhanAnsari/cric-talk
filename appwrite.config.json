@@ -59,6 +59,26 @@
             "commands": "npm install",
             "specification": "s-0.5vcpu-512mb",
             "path": "functions/room-message-guard"
+        },
+        {
+            "$id": "6963302c0021374fee8d",
+            "name": "leaderboard-guard",
+            "runtime": "node-22",
+            "specification": "s-0.5vcpu-512mb",
+            "execute": [
+                "any"
+            ],
+            "events": [],
+            "scopes": [
+                "users.read"
+            ],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "path": "functions/leaderboard-guard"
         }
     ],
     "tablesDB": [
