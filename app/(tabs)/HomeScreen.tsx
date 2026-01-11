@@ -28,6 +28,7 @@ const HomeScreen = () => {
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
   const [content, setContent] = useState<string>("");
 
@@ -129,7 +130,10 @@ const HomeScreen = () => {
         <SafeAreaView>
           <View className="px-6 py-4 flex-row items-center justify-between w-full">
             {/* USER AVATAR */}
-            <Pressable className="w-10 h-10 bg-gray-200 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
+            <Pressable
+              className="w-10 h-10 bg-gray-200 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85"
+              onPress={() => setIsDrawerOpen(true)}
+            >
               <Text className="text-slate-900 font-medium text-lg capitalize">
                 {username?.charAt(0)}
               </Text>
@@ -228,18 +232,20 @@ const HomeScreen = () => {
       </Modal>
 
       {/* PROFILE DRAWER OVERLAY */}
-      <Pressable
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.4)",
-          zIndex: 10,
-          display: "none",
-        }}
-      />
+      {isDrawerOpen && (
+        <Pressable
+          style={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
+            zIndex: 10,
+          }}
+          onPress={() => setIsDrawerOpen(false)}
+        />
+      )}
 
       {/* PROFILE DRAWER */}
       <Animated.View
@@ -249,7 +255,7 @@ const HomeScreen = () => {
           position: "absolute",
           top: 0,
           bottom: 0,
-          left: -320,
+          left: isDrawerOpen ? 0 : -320,
           shadowColor: "black",
           transitionProperty: "all",
           transitionDuration: 250,
