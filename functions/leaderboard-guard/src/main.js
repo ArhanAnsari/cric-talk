@@ -21,7 +21,7 @@ export default async ({ req, res }) => {
     const data = await tablesDb.listRows({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: USERS_TABLE_ID,
-      queries: [Query.limit(LIMIT)],
+      queries: [Query.orderDesc("messageCount"), Query.limit(LIMIT)],
     });
 
     return res.json(data);
