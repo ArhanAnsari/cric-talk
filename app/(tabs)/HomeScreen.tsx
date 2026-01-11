@@ -21,6 +21,7 @@ import PostCard from "../components/PostCard";
 
 const HomeScreen = () => {
   const [userId, setUserId] = useState<string>("");
+  const [authorName, setAuthorName] = useState<string>("");
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -67,7 +68,10 @@ const HomeScreen = () => {
     async function fetchUserId() {
       if (!mounted) return;
       const user = await account.get();
+      const name = user.name || user.email.split("@")[0];
+
       setUserId(user.$id);
+      setAuthorName(name);
     }
     fetchUserId();
 
@@ -90,7 +94,7 @@ const HomeScreen = () => {
         text: "Create",
         onPress: async () => {
           try {
-            await createNewPost({ content, userId });
+            await createNewPost({ content, userId, authorName });
             setIsVisible(false);
             setContent("");
 

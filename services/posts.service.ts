@@ -27,10 +27,12 @@ export async function createPost({
   content,
   image = [],
   authorId,
+  authorName,
 }: {
   content: string;
   image?: string[];
   authorId: string;
+  authorName: string;
 }) {
   try {
     return await tablesDB.createRow<Post>({
@@ -41,6 +43,7 @@ export async function createPost({
         content,
         image,
         authorId,
+        authorName,
         likes: 0,
         likedBy: [],
         views: 0,

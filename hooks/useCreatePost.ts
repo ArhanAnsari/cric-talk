@@ -8,11 +8,17 @@ const useCreatePost = () => {
   async function createNewPost({
     content,
     userId,
+    authorName,
   }: {
     content: string;
     userId: string;
+    authorName: string;
   }) {
-    const newPost: Post = await createPost({ content, authorId: userId });
+    const newPost: Post = await createPost({
+      content,
+      authorId: userId,
+      authorName,
+    });
     addPost(newPost);
     return newPost;
   }
