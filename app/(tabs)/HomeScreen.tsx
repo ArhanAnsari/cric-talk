@@ -18,6 +18,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import Animated from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PostCard from "../components/PostCard";
 
@@ -227,7 +228,7 @@ const HomeScreen = () => {
       </Modal>
 
       {/* PROFILE DRAWER */}
-      <View
+      <Animated.View
         style={{
           width: SIDEBAR_WIDTH,
           backgroundColor: "#0f172b",
@@ -236,6 +237,9 @@ const HomeScreen = () => {
           bottom: 0,
           left: -320,
           shadowColor: "black",
+          transitionProperty: "all",
+          transitionDuration: 250,
+          transitionTimingFunction: "ease-in",
         }}
       >
         <SafeAreaView>
@@ -279,7 +283,7 @@ const HomeScreen = () => {
             </View>
           </View>
         </SafeAreaView>
-      </View>
+      </Animated.View>
     </View>
   );
 };
