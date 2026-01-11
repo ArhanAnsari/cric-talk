@@ -23,6 +23,18 @@ export async function fetchPosts() {
   }
 }
 
+export async function fetchPostsByUserId(userId: string) {
+  try {
+    return await tablesDB.listRows({
+      databaseId: CRIC_TALK_DATABASE_ID,
+      tableId: POSTS_TABLES_ID,
+      queries: [Query.equal("authorId", userId), Query.orderDesc("$createdAt")],
+    });
+  } catch (error) {
+    console.log(`Error while fetching posts by user id ${error}`);
+  }
+}
+
 export async function createPost({
   content,
   image = [],
