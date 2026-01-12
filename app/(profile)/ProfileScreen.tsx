@@ -1,13 +1,30 @@
+import { account } from "@/libs/appwrite";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const ProfileScreen = () => {
+  const [userId, setUserId] = useState<string>("");
+
   const [activeTab, setActiveTab] = useState<"posts" | "rooms" | "stats">(
     "posts"
   );
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function fetchUserId() {
+      const user = await account.get();
+      setUserId(user.$id);
+    }
+    fetchUserId();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <View className="flex-1 bg-white">
