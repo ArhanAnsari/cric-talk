@@ -315,7 +315,10 @@ const HomeScreen = () => {
                 <Text className="text-white font-medium text-xl">Rooms</Text>
               </Pressable>
 
-              <Pressable className="flex-row items-center gap-2">
+              <Pressable
+                className="flex-row items-center gap-2"
+                onPress={() => router.push("/(profile)/SettingsScreen")}
+              >
                 <Ionicons name="settings-outline" size={24} color="white" />
                 <Text className="text-white font-medium text-xl">Settings</Text>
               </Pressable>
