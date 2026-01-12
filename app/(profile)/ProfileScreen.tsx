@@ -20,6 +20,11 @@ const ProfileScreen = () => {
   const [userPosts, setUserPosts] = useState<Post[]>([]);
   const [userStats, setUserStats] = useState<UserStats[]>([]);
 
+  const messageCount = userStats.reduce(
+    (acc, stat) => acc + stat.messageCount,
+    0
+  );
+
   useEffect(() => {
     let mounted = true;
 
@@ -125,6 +130,19 @@ const ProfileScreen = () => {
           style={{ flex: 1 }}
           renderItem={({ item }) => <PostCard userId={userId} post={item} />}
         />
+      ) : activeTab === "stats" ? (
+        <View className="px-6 py-4">
+          <View className="bg-slate-200/60 border border-slate-200/80 h-40 px-3 py-1 items-center justify-center rounded-lg">
+            <Text className="text-xl font-medium text-slate-900">
+              {new Intl.NumberFormat("en-IN").format(messageCount)}{" "}
+              <Text className="text-sm">messages sent</Text>
+            </Text>
+
+            <Text className="text-sm text-slate-500">
+              You're doing great! Keep it up!
+            </Text>
+          </View>
+        </View>
       ) : (
         ""
       )}
