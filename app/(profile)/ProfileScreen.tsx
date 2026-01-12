@@ -6,8 +6,9 @@ import { fetchUserStatsByUserId } from "@/services/userStats.service";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { FlatList, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import PostCard from "../components/PostCard";
 
 const ProfileScreen = () => {
   const [userId, setUserId] = useState<string>("");
@@ -114,6 +115,19 @@ const ProfileScreen = () => {
           ))}
         </View>
       </View>
+
+      {/* ACTIVE TAB DATA */}
+      {activeTab === "posts" ? (
+        <FlatList
+          data={userPosts}
+          keyExtractor={(item) => item.$id}
+          contentContainerClassName="px-6 mt-4 pb-40"
+          style={{ flex: 1 }}
+          renderItem={({ item }) => <PostCard userId={userId} post={item} />}
+        />
+      ) : (
+        ""
+      )}
     </View>
   );
 };
