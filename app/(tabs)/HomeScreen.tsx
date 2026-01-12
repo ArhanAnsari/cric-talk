@@ -28,6 +28,7 @@ const HomeScreen = () => {
   const [authorName, setAuthorName] = useState<string>("");
 
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const seacrhQueryRef = useRef<TextInput>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
@@ -157,6 +158,7 @@ const HomeScreen = () => {
           <TextInput
             value={searchQuery}
             onChangeText={setSearchQuery}
+            ref={seacrhQueryRef}
             placeholder="Search anything..."
             className="border border-gray-300 rounded-lg pl-4 flex-1 mr-4 h-12"
           />
@@ -287,7 +289,13 @@ const HomeScreen = () => {
                 <Text className="text-white font-medium text-xl">Profile</Text>
               </Pressable>
 
-              <Pressable className="flex-row items-center gap-2">
+              <Pressable
+                className="flex-row items-center gap-2"
+                onPress={() => {
+                  setIsDrawerOpen(false);
+                  seacrhQueryRef.current?.focus();
+                }}
+              >
                 <Ionicons name="search-outline" size={24} color="white" />
                 <Text className="text-white font-medium text-xl">Explore</Text>
               </Pressable>
