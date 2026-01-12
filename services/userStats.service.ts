@@ -1,5 +1,6 @@
 import { UserStats } from "@/interfaces/UserStats";
 import { tablesDB } from "@/libs/appwrite";
+import { Query } from "react-native-appwrite";
 
 const CRIC_TALK_DATABASE_ID =
   process.env.EXPO_PUBLIC_APPWRITE_CRIC_TALK_DATABASE_ID!;
@@ -14,6 +15,19 @@ export async function fetchUserStat(userId: string) {
     });
   } catch (error) {
     console.log(`Error while fetching user message count ${error}`);
+    throw error;
+  }
+}
+
+export async function fetchUserStatsByUserId(userId: string) {
+  try {
+    return await tablesDB.listRows<UserStats>({
+      databaseId: CRIC_TALK_DATABASE_ID,
+      tableId: USERS_TABLE_ID,
+      queries: [Query.equal("$id", userId), Query.orderDesc("$createdAt")],
+    });
+  } catch (error) {
+    console.log(`Error while fetching user stats by user id ${error}`);
     throw error;
   }
 }
