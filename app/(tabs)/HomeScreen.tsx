@@ -300,7 +300,13 @@ const HomeScreen = () => {
                 <Text className="text-white font-medium text-xl">Explore</Text>
               </Pressable>
 
-              <Pressable className="flex-row items-center gap-2">
+              <Pressable
+                className="flex-row items-center gap-2"
+                onPress={() => {
+                  setIsDrawerOpen(false);
+                  router.push("/(tabs)/RoomsScreen");
+                }}
+              >
                 <Ionicons
                   name="chatbubble-ellipses-outline"
                   size={24}
