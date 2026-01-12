@@ -1,4 +1,8 @@
+import { Post } from "@/interfaces/Post";
+import { UserStats } from "@/interfaces/UserStats";
 import { account } from "@/libs/appwrite";
+import { fetchPostsByUserId } from "@/services/posts.service";
+import { fetchUserStatsByUserId } from "@/services/userStats.service";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -11,6 +15,9 @@ const ProfileScreen = () => {
   const [activeTab, setActiveTab] = useState<"posts" | "rooms" | "stats">(
     "posts"
   );
+
+  const [userPosts, setUserPosts] = useState<Post[]>([]);
+  const [userStats, setUserStats] = useState<UserStats[]>([]);
 
   useEffect(() => {
     let mounted = true;
@@ -25,6 +32,19 @@ const ProfileScreen = () => {
       mounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!userId) return;
+
+    async function loadData() {
+      const posts = await fetchPostsByUserId(userId);
+      const stats = await fetchUserStatsByUserId(userId);
+
+      setUserPosts(posts.rows);
+      setUserStats(stats.rows);
+    }
+    loadData();
+  }, [userId]);
 
   return (
     <View className="flex-1 bg-white">
