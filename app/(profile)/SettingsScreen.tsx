@@ -11,7 +11,7 @@ type SettingOptionProps = {
 
 const SettingOption = ({ icon, title, description }: SettingOptionProps) => {
   return (
-    <Pressable className="flex-row items-center gap-2 bg-white shadow-sm elevation-xs p-3 rounded-md">
+    <Pressable className="flex-row items-center gap-2 bg-white shadow-sm elevation-xs p-3 rounded-md transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85">
       <Ionicons name={icon} size={24} color="#0f172b" />
 
       <View className="gap-1 flex-1">
