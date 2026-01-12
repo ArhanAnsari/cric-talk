@@ -20,6 +20,60 @@ const SettingsScreen = () => {
           </View>
         </SafeAreaView>
       </View>
+
+      {/* SETTINGS CONTENT */}
+      <View className="px-6 py-4 mt-6">
+        <View className="gap-4">
+          <Pressable className="flex-row items-center gap-2 bg-white shadow-sm elevation-xs p-3 rounded-lg">
+            <Ionicons name="person-outline" size={24} color="#0f172b" />
+
+            <View className="gap-1 flex-1">
+              {/* SETTING NAME + ARROW */}
+              <View className="flex-row items-center">
+                <Text className="text-slate-900 text-lg font-medium">
+                  Account
+                </Text>
+
+                <Pressable className="ml-auto">
+                  <Ionicons name="chevron-forward" size={18} color="#62748e" />
+                </Pressable>
+              </View>
+
+              {/* SETTING DESCRIPTION */}
+              <Text className="text-slate-500 text-sm max-w-[95%]">
+                Change your username, profile picture and email address.
+              </Text>
+            </View>
+          </Pressable>
+
+          <Pressable className="flex-row items-center gap-2 bg-white shadow-sm elevation-xs p-3 rounded-md">
+            <Ionicons
+              name="shield-checkmark-outline"
+              size={24}
+              color="#0f172b"
+            />
+
+            <View className="gap-1 flex-1">
+              {/* SETTING NAME + ARROW */}
+              <View className="flex-row items-center">
+                <Text className="text-slate-900 text-lg font-medium">
+                  Login and Security
+                </Text>
+
+                <Pressable className="ml-auto">
+                  <Ionicons name="chevron-forward" size={18} color="#62748e" />
+                </Pressable>
+              </View>
+
+              {/* SETTING DESCRIPTION */}
+              <Text className="text-slate-500 text-sm max-w-[95%]">
+                Change your password, download your data, logout from this
+                device or logout from all logged in devices.
+              </Text>
+            </View>
+          </Pressable>
+        </View>
+      </View>
     </View>
   );
 };
