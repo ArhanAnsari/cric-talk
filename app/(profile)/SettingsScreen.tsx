@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -7,11 +8,20 @@ type SettingOptionProps = {
   icon: React.ComponentProps<typeof Ionicons>["name"];
   title: string;
   description: string;
+  onPress: () => void;
 };
 
-const SettingOption = ({ icon, title, description }: SettingOptionProps) => {
+const SettingOption = ({
+  icon,
+  title,
+  description,
+  onPress,
+}: SettingOptionProps) => {
   return (
-    <Pressable className="flex-row items-center gap-2 bg-white shadow-sm elevation-xs p-3 rounded-md transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85">
+    <Pressable
+      className="flex-row items-center gap-2 bg-white shadow-sm elevation-xs p-3 rounded-md transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85"
+      onPress={onPress}
+    >
       <Ionicons name={icon} size={24} color="#0f172b" />
 
       <View className="gap-1 flex-1">
@@ -58,12 +68,14 @@ const SettingsScreen = () => {
             icon="person-outline"
             title="Account"
             description="Change your username, profile picture and email address."
+            onPress={() => router.push("/(profile)/Account")}
           />
 
           <SettingOption
             icon="shield-checkmark-outline"
             title="Login and Security"
             description="Change your password, download your data, logout from this device or logout from all logged in devices."
+            onPress={() => router.push("/(profile)/LoginSecurity")}
           />
         </View>
       </View>
