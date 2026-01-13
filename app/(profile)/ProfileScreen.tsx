@@ -15,6 +15,7 @@ const ProfileScreen = () => {
   const [userId, setUserId] = useState<string>("");
   const username = useUser((s) => s.username) || "";
   const email = useUser((s) => s.email);
+  const joinDate = useUser((s) => s.joinDate);
 
   const MAX_CHARS = 16;
 
@@ -103,7 +104,10 @@ const ProfileScreen = () => {
             </View>
 
             <Text className="mt-4 text-slate-300 text-sm ">
-              Joined on 29 December 2025
+              Joined on{" "}
+              {joinDate.toLocaleDateString("en-IN", {
+                dateStyle: "long",
+              })}
             </Text>
           </View>
         </SafeAreaView>
