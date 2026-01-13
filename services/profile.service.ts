@@ -50,3 +50,16 @@ export async function deleteAllSessions() {
     throw error;
   }
 }
+
+export async function updateFavTeam(newTeamName: string) {
+  try {
+    return await account.updatePrefs({
+      prefs: {
+        favTeam: newTeamName,
+      },
+    });
+  } catch (error) {
+    console.log(`Error while updating favourite team name ${error}`);
+    throw error;
+  }
+}
