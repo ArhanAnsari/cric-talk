@@ -2,7 +2,7 @@ import { useUser } from "@/store/useUser";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Modal, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Account = () => {
@@ -14,9 +14,14 @@ const Account = () => {
   const setEmail = useUser((s) => s.setEmail);
   const [newEmail, setNewEmail] = useState<string>(email);
 
+  const [password, setPassword] = useState<string>("");
+
   const isNewUsername =
     username.trim() !== newUsername.trim() && newUsername.trim() !== "";
   const isNewEmail = email.trim() !== newEmail.trim() && newEmail.trim() !== "";
+
+  const [isEmailModalVisible, setIsEmailModalVisible] =
+    useState<boolean>(false);
 
   return (
     <View className="flex-1 bg-white">
@@ -98,6 +103,7 @@ const Account = () => {
                 className={`w-12 h-12 ${
                   isNewEmail ? "bg-orange-500" : "bg-slate-500"
                 } rounded-lg items-center justify-center transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85`}
+                onPress={() => setIsEmailModalVisible(true)}
               >
                 <Ionicons
                   name={isNewEmail ? "save-outline" : "create-outline"}
@@ -109,6 +115,46 @@ const Account = () => {
           </View>
         </View>
       </View>
+
+      {/* EMAIL CHANGE MODAL */}
+      <Modal visible={isEmailModalVisible} transparent animationType="slide">
+        {/* OVERLAY */}
+        <Pressable
+          className="bg-gray-900/40 absolute inset-0"
+          onPress={() => setIsEmailModalVisible(false)}
+        />
+
+        <View className="flex-1 justify-center items-center">
+          <View className="bg-white w-80 h-60 px-4 py-4 rounded-lg">
+            <View className="gap-2">
+              <Text className="text-slate-900 font-medium">
+                Enter your password
+              </Text>
+              <Text className="text-sm text-slate-500">
+                In order to change your email address you have to enter your
+                password.
+              </Text>
+            </View>
+
+            <TextInput
+              value={password}
+              onChangeText={setPassword}
+              placeholder="Enter your password"
+              className="border border-slate-300 rounded-lg mt-2 pl-4"
+            />
+
+            <View className="flex-row mt-auto ml-auto gap-6 items-center">
+              <Pressable onPress={() => setIsEmailModalVisible(false)}>
+                <Text className="text-slate-900">Cancel</Text>
+              </Pressable>
+
+              <Pressable className="bg-orange-500 px-3 py-1.5 rounded-lg">
+                <Text className="text-white font-medium">Change</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
