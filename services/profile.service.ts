@@ -32,3 +32,21 @@ export async function updatePassword({
     throw error;
   }
 }
+
+export async function deleteCurrentSession() {
+  try {
+    await account.deleteSession({ sessionId: "current" });
+  } catch (error) {
+    console.log(`Error while deleting current session ${error}`);
+    throw error;
+  }
+}
+
+export async function deleteAllSessions() {
+  try {
+    await account.deleteSessions();
+  } catch (error) {
+    console.log(`Error while deleting all session ${error}`);
+    throw error;
+  }
+}
