@@ -8,6 +8,8 @@ const LoginSecurity = () => {
   const [oldPassword, setOldPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
 
+  const [isPasswordHidden, setPasswordHidden] = useState<boolean>(true);
+
   return (
     <View className="flex-1 bg-white">
       <View className="w-full h-30 bg-orange-500">
@@ -41,22 +43,45 @@ const LoginSecurity = () => {
           <View className="gap-2">
             <View className="gap-2">
               <Text className="text-slate-900 font-medium">Old Password</Text>
-              <TextInput
-                value={oldPassword}
-                onChangeText={setOldPassword}
-                placeholder="Enter your old password"
-                className="border border-slate-300 rounded-lg"
-              />
+
+              <View className="relative">
+                <TextInput
+                  value={oldPassword}
+                  onChangeText={setOldPassword}
+                  placeholder="Enter your old password"
+                  className="border border-slate-300 rounded-lg"
+                  secureTextEntry={isPasswordHidden}
+                />
+                <Pressable>
+                  <Ionicons
+                    name={isPasswordHidden ? "eye-off-outline" : "eye-outline"}
+                    size={18}
+                    color="#0f172b"
+                    style={{ position: "absolute", right: 12, bottom: 10 }}
+                  />
+                </Pressable>
+              </View>
             </View>
 
             <View className="gap-2">
               <Text className="text-slate-900 font-medium">New Password</Text>
-              <TextInput
-                value={newPassword}
-                onChangeText={setNewPassword}
-                placeholder="Enter your new password"
-                className="border border-slate-300 rounded-lg"
-              />
+              <View className="relative">
+                <TextInput
+                  value={newPassword}
+                  onChangeText={setNewPassword}
+                  placeholder="Enter your new password"
+                  className="border border-slate-300 rounded-lg"
+                  secureTextEntry={isPasswordHidden}
+                />
+                <Pressable>
+                  <Ionicons
+                    name={isPasswordHidden ? "eye-off-outline" : "eye-outline"}
+                    size={20}
+                    color="#0f172b"
+                    style={{ position: "absolute", right: 12, bottom: 10 }}
+                  />
+                </Pressable>
+              </View>
             </View>
           </View>
 
