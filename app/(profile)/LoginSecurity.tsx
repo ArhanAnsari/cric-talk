@@ -1,5 +1,9 @@
 import { showToast } from "@/libs/showToast";
-import { updatePassword } from "@/services/profile.service";
+import {
+  deleteAllSessions,
+  deleteCurrentSession,
+  updatePassword,
+} from "@/services/profile.service";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
@@ -39,6 +43,64 @@ const LoginSecurity = () => {
         },
       },
     ]);
+  }
+
+  async function handleLogoutCurrent() {
+    Alert.alert("Are you sure?", "Do you want to logout from this device?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Logout",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await deleteCurrentSession();
+
+            router.replace("/(auth)/LoginScreen");
+            showToast({
+              type: "success",
+              text1: "Logged out successfully from this device",
+            });
+          } catch (error) {
+            showToast({
+              type: "error",
+              text1: "Failed logging out of this device",
+              text2: "Please try again later.",
+            });
+          }
+        },
+      },
+    ]);
+  }
+
+  async function handleLogoutAll() {
+    Alert.alert(
+      "Are you sure?",
+      "Do you want to logout from all the devices?",
+      [
+        { text: "Cancel", style: "destructive" },
+        {
+          text: "Logout",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await deleteAllSessions();
+
+              router.replace("/(auth)/LoginScreen");
+              showToast({
+                type: "success",
+                text1: "Logged out successfully from all devices",
+              });
+            } catch (error) {
+              showToast({
+                type: "error",
+                text1: "Failed logging out of all devices",
+                text2: "Please try again later.",
+              });
+            }
+          },
+        },
+      ]
+    );
   }
 
   return (
@@ -126,11 +188,17 @@ const LoginSecurity = () => {
 
         {/* LOGOUT */}
         <View className="mt-16 gap-4">
-          <Pressable className="bg-red-500 px-6 py-3 items-center rounded-lg">
+          <Pressable
+            className="bg-red-500 px-6 py-3 items-center rounded-lg"
+            onPress={handleLogoutCurrent}
+          >
             <Text className="text-white">Logout from this device</Text>
           </Pressable>
 
-          <Pressable className="border border-red-500 px-6 py-3 items-center rounded-lg">
+          <Pressable
+            className="border border-red-500 px-6 py-3 items-center rounded-lg"
+            onPress={handleLogoutAll}
+          >
             <Text className="text-slate-900">Logout from all devices</Text>
           </Pressable>
         </View>
