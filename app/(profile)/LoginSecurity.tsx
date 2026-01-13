@@ -202,14 +202,14 @@ const LoginSecurity = () => {
         {/* LOGOUT */}
         <View className="mt-4 gap-4">
           <Pressable
-            className="bg-red-500 px-6 py-3 items-center rounded-lg"
+            className="bg-red-500 px-6 py-3 items-center rounded-lg transition-all duration-300 ease-in-out active:opacity-85 active:scale-[0.98]"
             onPress={handleLogoutCurrent}
           >
             <Text className="text-white">Logout from this device</Text>
           </Pressable>
 
           <Pressable
-            className="border border-red-500 px-6 py-3 items-center rounded-lg"
+            className="border border-red-500 px-6 py-3 items-center rounded-lg transition-all duration-300 ease-in-out active:opacity-85 active:scale-[0.98]"
             onPress={handleLogoutAll}
           >
             <Text className="text-slate-900">Logout from all devices</Text>
