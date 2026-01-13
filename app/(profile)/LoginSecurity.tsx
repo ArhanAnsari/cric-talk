@@ -1,7 +1,9 @@
+import { showToast } from "@/libs/showToast";
+import { updatePassword } from "@/services/profile.service";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Alert, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginSecurity = () => {
@@ -9,6 +11,35 @@ const LoginSecurity = () => {
   const [newPassword, setNewPassword] = useState<string>("");
 
   const [isPasswordHidden, setPasswordHidden] = useState<boolean>(true);
+
+  async function handleUpdatePassword() {
+    Alert.alert("Are you sure?", "Do you want to change your password?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Change",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await updatePassword({ oldPassword, newPassword });
+
+            setOldPassword("");
+            setNewPassword("");
+
+            showToast({
+              type: "success",
+              text1: "Password updated successfully",
+            });
+          } catch (error) {
+            showToast({
+              type: "error",
+              text1: "Failed updating password",
+              text2: "Please try again later.",
+            });
+          }
+        },
+      },
+    ]);
+  }
 
   return (
     <View className="flex-1 bg-white">
@@ -85,7 +116,10 @@ const LoginSecurity = () => {
             </View>
           </View>
 
-          <Pressable className="bg-orange-500 items-center w-full rounded-lg px-6 py-3 mt-4 transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85">
+          <Pressable
+            className="bg-orange-500 items-center w-full rounded-lg px-6 py-3 mt-4 transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85"
+            onPress={handleUpdatePassword}
+          >
             <Text className="text-white font-medium">Update</Text>
           </Pressable>
         </View>
