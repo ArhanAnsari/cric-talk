@@ -27,8 +27,10 @@ const Account = () => {
 
   async function handleUpdateUsername() {
     try {
-      if (newUsername.trim().length >= 36)
+      if (newUsername.trim().length >= 36) {
         alert("Username can't be longer than 36 characaters");
+        return;
+      }
 
       await updateUsername(newUsername.trim());
       setUsername(newUsername.trim());
