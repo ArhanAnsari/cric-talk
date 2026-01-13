@@ -17,3 +17,18 @@ export async function updateEmail(email: string, password: string) {
     throw error;
   }
 }
+
+export async function updatePassword({
+  oldPassword,
+  newPassword,
+}: {
+  oldPassword: string;
+  newPassword: string;
+}) {
+  try {
+    await account.updatePassword({ password: newPassword, oldPassword });
+  } catch (error) {
+    console.log(`Error while updating password ${error}`);
+    throw error;
+  }
+}
