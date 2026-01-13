@@ -68,7 +68,7 @@ const Account = () => {
                 disabled={!isNewUsername}
                 className={`w-12 h-12 ${
                   isNewUsername ? "bg-orange-500" : "bg-slate-500"
-                } rounded-lg items-center justify-center`}
+                } rounded-lg items-center justify-center transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85`}
               >
                 <Ionicons
                   name={isNewUsername ? "save-outline" : "create-outline"}
@@ -97,7 +97,7 @@ const Account = () => {
                 disabled={!isNewEmail}
                 className={`w-12 h-12 ${
                   isNewEmail ? "bg-orange-500" : "bg-slate-500"
-                } rounded-lg items-center justify-center`}
+                } rounded-lg items-center justify-center transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85`}
               >
                 <Ionicons
                   name={isNewEmail ? "save-outline" : "create-outline"}
