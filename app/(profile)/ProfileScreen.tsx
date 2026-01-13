@@ -32,17 +32,11 @@ const ProfileScreen = () => {
   );
 
   useEffect(() => {
-    let mounted = true;
-
     async function fetchUserId() {
       const user = await account.get();
       setUserId(user.$id);
     }
     fetchUserId();
-
-    return () => {
-      mounted = false;
-    };
   }, []);
 
   useEffect(() => {
