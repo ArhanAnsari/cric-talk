@@ -14,6 +14,7 @@ export default function RootLayout() {
   const setUsername = useUser((s) => s.setUsername);
   const setEmail = useUser((s) => s.setEmail);
   const setFavTeam = useUser((s) => s.setFavTeam);
+  const setJoinDate = useUser((s) => s.setJoinDate);
 
   useEffect(() => {
     let mounted: boolean = true;
@@ -28,6 +29,7 @@ export default function RootLayout() {
         setUsername(userData.name || userData.email.split("@")[0]);
         setFavTeam(userData.prefs.favTeam || "None");
         setEmail(userData.email);
+        setJoinDate(new Date(userData.$createdAt));
       } catch (error) {
         console.log("Error fetching user:", error);
         throw error;
