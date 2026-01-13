@@ -1,3 +1,5 @@
+import { showToast } from "@/libs/showToast";
+import { updateUsername } from "@/services/profile.service";
 import { useUser } from "@/store/useUser";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -22,6 +24,27 @@ const Account = () => {
 
   const [isEmailModalVisible, setIsEmailModalVisible] =
     useState<boolean>(false);
+
+  async function handleUpdateUsername() {
+    try {
+      if (newUsername.trim().length >= 36)
+        alert("Username can't be longer than 36 characaters");
+
+      await updateUsername(newUsername.trim());
+      setUsername(newUsername.trim());
+
+      showToast({
+        type: "success",
+        text1: "Username updated successfully",
+      });
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error updating username",
+        text2: "Please try again later.",
+      });
+    }
+  }
 
   return (
     <View className="flex-1 bg-white">
@@ -74,6 +97,7 @@ const Account = () => {
                 className={`w-12 h-12 ${
                   isNewUsername ? "bg-orange-500" : "bg-slate-500"
                 } rounded-lg items-center justify-center transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85`}
+                onPress={handleUpdateUsername}
               >
                 <Ionicons
                   name={isNewUsername ? "save-outline" : "create-outline"}
