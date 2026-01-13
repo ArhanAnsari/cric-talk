@@ -104,7 +104,7 @@ const Account = () => {
         {/* PROFILE PICTURE CHANGE */}
         <View className="size-45 bg-slate-300 rounded-full mx-auto mt-6 items-center justify-center">
           <Text className="capitalize text-4xl font-medium text-slate-600">
-            s
+            {username[0]}
           </Text>
 
           <Pressable className="absolute bottom-4 right-3 bg-slate-300 p-1 shadow-sm elevation-xs rounded-full transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85">
