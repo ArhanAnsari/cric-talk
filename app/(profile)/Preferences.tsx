@@ -70,6 +70,7 @@ const Preferences = () => {
             />
 
             <Pressable
+              disabled={!isNewFavTeam}
               className={`w-12 h-12 ${
                 isNewFavTeam ? "bg-orange-500" : "bg-slate-500"
               } items-center justify-center rounded-lg transition-all duration-300 ease-in-out active:opacity-85 active:scale-[0.98]`}
