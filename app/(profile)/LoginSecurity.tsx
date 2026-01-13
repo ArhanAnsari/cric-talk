@@ -7,7 +7,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Alert, Pressable, Text, TextInput, View } from "react-native";
+import { Alert, Modal, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginSecurity = () => {
@@ -15,6 +15,9 @@ const LoginSecurity = () => {
   const [newPassword, setNewPassword] = useState<string>("");
 
   const [isPasswordHidden, setPasswordHidden] = useState<boolean>(true);
+
+  const [isDownloadDataModalVisible, setIsDownloadDataModalVisible] =
+    useState<boolean>(false);
 
   async function handleUpdatePassword() {
     Alert.alert("Are you sure?", "Do you want to change your password?", [
@@ -186,8 +189,18 @@ const LoginSecurity = () => {
           </Pressable>
         </View>
 
+        {/* DOWNLOAD DATA */}
+        <View className="mt-16">
+          <Pressable
+            className="bg-slate-900 items-center rounded-lg px-6 py-4 transition-all duration-300 ease-in-out active:opacity-85 active:scale-[0.98]"
+            onPress={() => setIsDownloadDataModalVisible(true)}
+          >
+            <Text className="text-white">Download Data</Text>
+          </Pressable>
+        </View>
+
         {/* LOGOUT */}
-        <View className="mt-16 gap-4">
+        <View className="mt-4 gap-4">
           <Pressable
             className="bg-red-500 px-6 py-3 items-center rounded-lg"
             onPress={handleLogoutCurrent}
@@ -203,6 +216,42 @@ const LoginSecurity = () => {
           </Pressable>
         </View>
       </View>
+
+      {/* DOWNLOAD DATA MODAL */}
+      <Modal
+        visible={isDownloadDataModalVisible}
+        transparent
+        animationType="slide"
+      >
+        <Pressable
+          className="bg-gray-900/40 absolute inset-0"
+          onPress={() => setIsDownloadDataModalVisible(false)}
+        />
+
+        <View className="flex-1 items-center justify-center">
+          <View className="bg-white w-80 h-65 rounded-lg px-6 py-4 items-center">
+            <View className="bg-slate-300/50 h-14 w-14 items-center justify-center rounded-full">
+              <Ionicons name="lock-closed-outline" size={24} color="#45556c" />
+            </View>
+
+            <View className="gap-2 mt-2 items-center">
+              <Text className="text-slate-900 font-semibold">Coming Soon</Text>
+
+              <Text className="text-sm text-slate-500 text-center">
+                We are spinning up things to make this ready and allow you to
+                download your data!
+              </Text>
+            </View>
+
+            <Pressable
+              className="bg-orange-500 w-full rounded-lg items-center mt-auto px-6 py-3 transition-all duration-300 ease-in-out active:opacity-85 active:scale-[0.98]"
+              onPress={() => setIsDownloadDataModalVisible(false)}
+            >
+              <Text className="text-white font-medium">Close</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
