@@ -52,7 +52,7 @@ const LoginSecurity = () => {
                   className="border border-slate-300 rounded-lg"
                   secureTextEntry={isPasswordHidden}
                 />
-                <Pressable>
+                <Pressable onPress={() => setPasswordHidden(!isPasswordHidden)}>
                   <Ionicons
                     name={isPasswordHidden ? "eye-off-outline" : "eye-outline"}
                     size={18}
@@ -73,7 +73,7 @@ const LoginSecurity = () => {
                   className="border border-slate-300 rounded-lg"
                   secureTextEntry={isPasswordHidden}
                 />
-                <Pressable>
+                <Pressable onPress={() => setPasswordHidden(!isPasswordHidden)}>
                   <Ionicons
                     name={isPasswordHidden ? "eye-off-outline" : "eye-outline"}
                     size={20}
