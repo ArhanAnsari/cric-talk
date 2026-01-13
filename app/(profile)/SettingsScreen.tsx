@@ -77,6 +77,13 @@ const SettingsScreen = () => {
             description="Change your password, download your data, logout from this device or logout from all logged in devices."
             onPress={() => router.push("/(profile)/LoginSecurity")}
           />
+
+          <SettingOption
+            icon="construct-outline"
+            title="Preferences"
+            description="Change your favourite team."
+            onPress={() => router.push("/(profile)/Preferences")}
+          />
         </View>
       </View>
     </View>
