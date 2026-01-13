@@ -1,3 +1,4 @@
+import { useUser } from "@/store/useUser";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
@@ -5,8 +6,17 @@ import { Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Account = () => {
-  const [newUsername, setNewUsername] = useState<string>("");
-  const [newEmail, setNewEmail] = useState<string>("");
+  const username = useUser((s) => s.username) || "";
+  const setUsername = useUser((s) => s.setUsername);
+  const [newUsername, setNewUsername] = useState<string>(username);
+
+  const email = useUser((s) => s.email) || "";
+  const setEmail = useUser((s) => s.setEmail);
+  const [newEmail, setNewEmail] = useState<string>(email);
+
+  const isNewUsername =
+    username.trim() !== newUsername.trim() && newUsername.trim() !== "";
+  const isNewEmail = email.trim() !== newEmail.trim() && newEmail.trim() !== "";
 
   return (
     <View className="flex-1 bg-white">
@@ -48,13 +58,23 @@ const Account = () => {
 
             <View className="flex-row gap-2">
               <TextInput
+                value={newUsername}
                 onChangeText={setNewUsername}
                 placeholder="Change your username"
                 className="border border-slate-300 rounded-lg h-12 text-slate-900 flex-1"
               />
 
-              <Pressable className="w-12 h-12 bg-orange-500 rounded-lg items-center justify-center">
-                <Ionicons name="create-outline" size={18} color="white" />
+              <Pressable
+                disabled={!isNewUsername}
+                className={`w-12 h-12 ${
+                  isNewUsername ? "bg-orange-500" : "bg-slate-500"
+                } rounded-lg items-center justify-center`}
+              >
+                <Ionicons
+                  name={isNewUsername ? "save-outline" : "create-outline"}
+                  size={18}
+                  color="white"
+                />
               </Pressable>
             </View>
           </View>
@@ -67,13 +87,23 @@ const Account = () => {
 
             <View className="flex-row gap-2">
               <TextInput
+                value={newEmail}
                 onChangeText={setNewEmail}
                 placeholder="Change your email address"
                 className="border border-slate-300 rounded-lg h-12 text-slate-900 flex-1"
               />
 
-              <Pressable className="w-12 h-12 bg-orange-500 rounded-lg items-center justify-center">
-                <Ionicons name="create-outline" size={18} color="white" />
+              <Pressable
+                disabled={!isNewEmail}
+                className={`w-12 h-12 ${
+                  isNewEmail ? "bg-orange-500" : "bg-slate-500"
+                } rounded-lg items-center justify-center`}
+              >
+                <Ionicons
+                  name={isNewEmail ? "save-outline" : "create-outline"}
+                  size={18}
+                  color="white"
+                />
               </Pressable>
             </View>
           </View>
