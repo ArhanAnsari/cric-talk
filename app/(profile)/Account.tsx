@@ -1,5 +1,5 @@
 import { showToast } from "@/libs/showToast";
-import { updateUsername } from "@/services/profile.service";
+import { updateEmail, updateUsername } from "@/services/profile.service";
 import { useUser } from "@/store/useUser";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -41,6 +41,40 @@ const Account = () => {
       showToast({
         type: "error",
         text1: "Error updating username",
+        text2: "Please try again later.",
+      });
+    }
+  }
+
+  async function handleUpdateEmail() {
+    try {
+      const emailRegex: RegExp =
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      if (!emailRegex.test(newEmail)) {
+        showToast({
+          type: "error",
+          text1: "Invalid email format",
+        });
+        setIsEmailModalVisible(false);
+
+        return;
+      }
+
+      await updateEmail(newEmail.trim(), password.trim());
+      setEmail(newEmail);
+      setPassword("");
+      setIsEmailModalVisible(false);
+
+      showToast({
+        type: "error",
+        text1: "Email updated successfully",
+      });
+    } catch (error) {
+      setIsEmailModalVisible(false);
+      showToast({
+        type: "error",
+        text1: "Error updating email address",
         text2: "Please try again later.",
       });
     }
@@ -172,7 +206,10 @@ const Account = () => {
                 <Text className="text-slate-900">Cancel</Text>
               </Pressable>
 
-              <Pressable className="bg-orange-500 px-3 py-1.5 rounded-lg">
+              <Pressable
+                className="bg-orange-500 px-3 py-1.5 rounded-lg"
+                onPress={handleUpdateEmail}
+              >
                 <Text className="text-white font-medium">Change</Text>
               </Pressable>
             </View>
