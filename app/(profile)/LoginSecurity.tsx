@@ -64,6 +64,17 @@ const LoginSecurity = () => {
             <Text className="text-white font-medium">Update</Text>
           </Pressable>
         </View>
+
+        {/* LOGOUT */}
+        <View className="mt-16 gap-4">
+          <Pressable className="bg-red-500 px-6 py-3 items-center rounded-lg">
+            <Text className="text-white">Logout from this device</Text>
+          </Pressable>
+
+          <Pressable className="border border-red-500 px-6 py-3 items-center rounded-lg">
+            <Text className="text-slate-900">Logout from all devices</Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
