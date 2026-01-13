@@ -3,6 +3,7 @@ import { UserStats } from "@/interfaces/UserStats";
 import { account } from "@/libs/appwrite";
 import { fetchPostsByUserId } from "@/services/posts.service";
 import { fetchUserStatsByUserId } from "@/services/userStats.service";
+import { useUser } from "@/store/useUser";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -12,6 +13,10 @@ import PostCard from "../components/PostCard";
 
 const ProfileScreen = () => {
   const [userId, setUserId] = useState<string>("");
+  const username = useUser((s) => s.username) || "";
+  const email = useUser((s) => s.email);
+
+  const MAX_CHARS = 16;
 
   const [activeTab, setActiveTab] = useState<"posts" | "rooms" | "stats">(
     "posts"
@@ -66,7 +71,9 @@ const ProfileScreen = () => {
             </Pressable>
 
             <Text className="text-white text-lg font-semibold">
-              SwapnaSahoo
+              {username?.length > MAX_CHARS
+                ? username?.slice(0, MAX_CHARS) + "..."
+                : username}
             </Text>
 
             <Pressable className="h-10 w-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85">
@@ -78,15 +85,19 @@ const ProfileScreen = () => {
           <View className="px-6 py-4 mt-6">
             <View className="flex-row items-center gap-4">
               <View className="w-30 h-30 bg-orange-600 rounded-full items-center justify-center">
-                <Text className="text-4xl text-white font-medium">S</Text>
+                <Text className="text-4xl text-white font-medium">
+                  {username?.[0].toUpperCase()}
+                </Text>
               </View>
 
               <View>
                 <Text className="text-lg text-white font-medium">
-                  SwapnaSahoo
+                  {username?.length > 16
+                    ? username?.slice(0, MAX_CHARS)
+                    : username}
                 </Text>
                 <Text className="text-sm text-slate-200 font-medium">
-                  user@gmail.com
+                  {email}
                 </Text>
               </View>
             </View>
