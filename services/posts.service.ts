@@ -83,3 +83,16 @@ export async function updatePost(id: string, postData: Partial<Post>) {
     throw error;
   }
 }
+
+export async function deletePost(postId: string) {
+  try {
+    return await tablesDB.deleteRow({
+      databaseId: CRIC_TALK_DATABASE_ID,
+      tableId: POSTS_TABLES_ID,
+      rowId: postId,
+    });
+  } catch (error) {
+    console.log(`Error while deleting post ${error}`);
+    throw error;
+  }
+}
