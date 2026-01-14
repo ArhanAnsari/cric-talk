@@ -34,7 +34,7 @@ export default async ({ req, res }) => {
     const authorName = user.name || user.email.split("@")[0];
 
     async function createRoom() {
-       await tablesDB.createRow({
+      await tablesDB.createRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOMS_TABLE_ID,
         rowId: ID.unique(),
@@ -52,6 +52,16 @@ export default async ({ req, res }) => {
     }
 
     async function deleteRoom() {
+      const room = await tablesDB.getRow({
+        databaseId: CRIC_TALK_DATABASE_ID,
+        tableId: ROOMS_TABLE_ID,
+        rowId: roomId,
+      });
+
+      if (room.authorId !== userId) {
+        throw new Error("Forbidden: You aren't the author of this room");
+      }
+
       await tablesDB.deleteRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOMS_TABLE_ID,
@@ -66,7 +76,7 @@ export default async ({ req, res }) => {
       case "delete":
         await deleteRoom();
         break;
-      default: 
+      default:
         throw new Error('Invalid action')
     }
 
