@@ -79,6 +79,26 @@
             "entrypoint": "src/main.js",
             "commands": "npm install",
             "path": "functions/leaderboard-guard"
+        },
+        {
+            "$id": "6966ec4f00039df360a0",
+            "name": "rooms-guard",
+            "runtime": "node-22",
+            "specification": "s-0.5vcpu-512mb",
+            "execute": [
+                "any"
+            ],
+            "events": [],
+            "scopes": [
+                "users.read"
+            ],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "path": "functions/rooms-guard"
         }
     ],
     "tablesDB": [
