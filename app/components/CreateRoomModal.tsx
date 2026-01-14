@@ -1,6 +1,8 @@
+import { account } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
 import { createRoom } from "@/services/rooms.service";
-import React, { useState } from "react";
+import { useUser } from "@/store/useUser";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   Pressable,
@@ -19,6 +21,9 @@ const CreateRoomModal = ({
   visible: boolean;
   onClose: () => void;
 }) => {
+  const [userId, setUserId] = useState<string>("");
+  const username = useUser((s) => s.username) || "";
+
   const [createPostType, setCreatePostType] = useState<
     "teamInfo" | "matchInfo" | "roomSettings"
   >("teamInfo");
@@ -99,6 +104,8 @@ const CreateRoomModal = ({
       await createRoom({
         teams: [team1.trim(), team2.trim()],
         status,
+        authorId: userId,
+        authorName: username,
         startTime: startDate.toISOString(),
         endTime: endDate.toISOString(),
         matchType,
@@ -127,6 +134,14 @@ const CreateRoomModal = ({
       });
     }
   }
+
+  useEffect(() => {
+    async function fetchUserId() {
+      const user = await account.get();
+      setUserId(user.$id);
+    }
+    fetchUserId();
+  }, []);
 
   return (
     <Modal visible={visible} animationType="slide" transparent>
