@@ -1,10 +1,12 @@
 import { Room } from "@/interfaces/Room";
-import { tablesDB } from "@/libs/appwrite";
-import { ID, Query } from "react-native-appwrite";
+import { functions, tablesDB } from "@/libs/appwrite";
+import { Query } from "react-native-appwrite";
 
 const CRIC_TALK_DATABASE_ID =
   process.env.EXPO_PUBLIC_APPWRITE_CRIC_TALK_DATABASE_ID!;
 const ROOMS_TABLE_ID = process.env.EXPO_PUBLIC_APPWRITE_ROOMS_TABLE_ID!;
+const ROOMS_GUARD_FUNCTION_ID =
+  process.env.EXPO_PUBLIC_APPWRITE_ROOMS_GUARD_FUNCTION_ID!;
 
 export async function fetchRooms() {
   try {
@@ -19,56 +21,48 @@ export async function fetchRooms() {
   }
 }
 
-export async function createRoom({
+export async function executeRoom({
+  action,
+  roomId,
   teams,
   status,
-  authorId,
-  authorName,
   startTime,
+  endTime,
   matchType,
   isLocked,
-  endTime,
 }: {
+  action: "create" | "delete";
   teams: string[];
   status: "upcoming" | "live" | "finished";
-  authorId: string;
-  authorName: string;
   startTime: string;
   matchType: "ODI" | "TEST" | "T20";
   isLocked: boolean;
+  roomId?: string;
   endTime?: string;
 }) {
   try {
-    return await tablesDB.createRow<Room>({
-      databaseId: CRIC_TALK_DATABASE_ID,
-      tableId: ROOMS_TABLE_ID,
-      rowId: ID.unique(),
-      data: {
+    const execution = await functions.createExecution({
+      functionId: ROOMS_GUARD_FUNCTION_ID,
+      body: JSON.stringify({
+        action,
+        roomId,
         teams,
         status,
-        authorId,
-        authorName,
         startTime,
         endTime,
         matchType,
         isLocked,
-      },
+      }),
+      async: false,
     });
-  } catch (error) {
-    console.log(`Error while creating room ${error}`);
-    throw error;
-  }
-}
 
-export async function deleteRoom(roomId: string) {
-  try {
-    await tablesDB.deleteRow({
-      databaseId: CRIC_TALK_DATABASE_ID,
-      tableId: ROOMS_TABLE_ID,
-      rowId: roomId,
-    });
+    if (execution.status === "failed") {
+      throw new Error(execution.errors);
+    }
+
+    return execution;
   } catch (error) {
-    console.log(`Error while deleting the room ${error}`);
+    console.log(`Error while executing room ${action} action ${error}`);
     throw error;
   }
 }
