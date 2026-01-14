@@ -1,6 +1,6 @@
 import { account } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
-import { createRoom } from "@/services/rooms.service";
+import { executeRoom } from "@/services/rooms.service";
 import { useUser } from "@/store/useUser";
 import React, { useEffect, useState } from "react";
 import {
@@ -101,11 +101,10 @@ const CreateRoomModal = ({
     }
 
     try {
-      await createRoom({
+      await executeRoom({
+        action: "create",
         teams: [team1.trim(), team2.trim()],
         status,
-        authorId: userId,
-        authorName: username,
         startTime: startDate.toISOString(),
         endTime: endDate.toISOString(),
         matchType,
