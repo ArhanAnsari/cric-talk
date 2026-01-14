@@ -1,5 +1,4 @@
-import { Client, TablesDB, Users } from "node-appwrite";
-import { ID } from "react-native-appwrite";
+import { Client, ID, TablesDB, Users } from "node-appwrite";
 
 export default async ({ req, res }) => {
   try {
