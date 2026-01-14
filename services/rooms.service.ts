@@ -22,6 +22,8 @@ export async function fetchRooms() {
 export async function createRoom({
   teams,
   status,
+  authorId,
+  authorName,
   startTime,
   matchType,
   isLocked,
@@ -29,6 +31,8 @@ export async function createRoom({
 }: {
   teams: string[];
   status: "upcoming" | "live" | "finished";
+  authorId: string;
+  authorName: string;
   startTime: string;
   matchType: "ODI" | "TEST" | "T20";
   isLocked: boolean;
@@ -42,6 +46,8 @@ export async function createRoom({
       data: {
         teams,
         status,
+        authorId,
+        authorName,
         startTime,
         endTime,
         matchType,
