@@ -31,7 +31,7 @@ export default async ({ req, res }) => {
     const CRIC_TALK_DATABASE_ID = process.env.APPWRITE_CRIC_TALK_DATABASE_ID;
     const ROOMS_TABLE_ID = process.env.APPWRITE_ROOMS_TABLE_ID;
 
-    const user = users.get(userId);
+    const user = await users.get(userId);
     const authorName = user.name || user.email.split("@")[0];
 
     async function createRoom() {
