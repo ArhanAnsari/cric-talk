@@ -34,7 +34,7 @@ export default async ({ req, res }) => {
     const authorName = user.name || user.email.split("@")[0];
 
     async function createRoom() {
-      const result = await tablesDB.createRow({
+       await tablesDB.createRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOMS_TABLE_ID,
         rowId: ID.unique(),
@@ -49,16 +49,14 @@ export default async ({ req, res }) => {
           isLocked,
         },
       });
-      return res.json(result);
     }
 
     async function deleteRoom() {
-      const result = await tablesDB.deleteRow({
+      await tablesDB.deleteRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOMS_TABLE_ID,
         rowId: roomId,
       });
-      return res.json(result);
     }
 
     switch (action) {
@@ -71,6 +69,8 @@ export default async ({ req, res }) => {
       default: 
         throw new Error('Invalid action')
     }
+
+    return res.json({ success: true });
   } catch (error) {
     throw new Error(`Unable to process query ${error}`);
   }
