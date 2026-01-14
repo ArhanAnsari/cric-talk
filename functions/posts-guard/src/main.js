@@ -26,7 +26,7 @@ export default async ({ req, res }) => {
     const authorName = user.name || user.email.split("@")[0];
 
     async function createPost() {
-      await tablesDB.createRow({
+     return await tablesDB.createRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: POSTS_TABLE_ID,
         rowId: ID.unique(),
@@ -58,9 +58,11 @@ export default async ({ req, res }) => {
       const likedBy = post.likedBy || [];
       const viewedBy = post.viewedBy || [];
 
-      if (likedBy.includes(userId)) return;
+      if (likedBy.includes(userId)) {
+        return post;
+      }
 
-      await tablesDB.updateRow({
+      return await tablesDB.updateRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: POSTS_TABLE_ID,
         rowId: postId,
@@ -91,14 +93,18 @@ export default async ({ req, res }) => {
         tableId: POSTS_TABLE_ID,
         rowId: postId,
       });
+
+      return {deleted: true, postId}
     }
+
+    let result;
 
     switch (action) {
       case "create":
-        await createPost();
+        result = await createPost();
         break;
       case "update":
-        await updatePost();
+        result = await updatePost();
         break;
       case "delete":
         await deletePost();
@@ -107,7 +113,7 @@ export default async ({ req, res }) => {
         throw new Error("Invalid action");
     }
 
-    return res.json({ success: true });
+    return res.json({ success: true, data: result });
   } catch (error) {
     throw new Error(`Unable to process query ${error}`);
   }
