@@ -2,7 +2,7 @@ import { Client, ID, TablesDB, Users } from "node-appwrite";
 
 export default async ({ req, res }) => {
   try {
-    const userId = req.headers["x-appwrite-userId"];
+    const userId = req.headers["x-appwrite-user-id"];
 
     if (!userId) {
       throw new Error("Unauthorized: User is unauthorized");
@@ -72,6 +72,6 @@ export default async ({ req, res }) => {
         throw new Error('Invalid action')
     }
   } catch (error) {
-    throw new Error("Unable to process query");
+    throw new Error(`Unable to process query ${error}`);
   }
 };
