@@ -8,7 +8,7 @@ export default async ({ req, res }) => {
       throw new Error(`Unauthorized: User is not authorized`);
     }
 
-    const { action, postId, content, images, likes, views } = req.bodyJson;
+    const { action, postId, content, images } = req.bodyJson;
 
     const client = new Client()
       .setEndpoint(process.env.APPWRITE_ENDPOINT)
@@ -54,13 +54,6 @@ export default async ({ req, res }) => {
         throw new Error("Forbidden: You aren't author of this post");
       }
 
-      const likedBy = post.likedBy || [];
-      const viewedBy = post.viewedBy || [];
-
-      if (likedBy.includes(userId)) {
-        return post;
-      }
-
       return await tablesDB.updateRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: POSTS_TABLE_ID,
@@ -68,10 +61,6 @@ export default async ({ req, res }) => {
         data: {
           content,
           images,
-          likes,
-          likedBy: [...likedBy, userId],
-          views,
-          viewedBy: [...viewedBy, userId],
         },
       });
     }
