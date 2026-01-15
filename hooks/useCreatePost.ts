@@ -1,24 +1,16 @@
 import { Post } from "@/interfaces/Post";
-import { createPost } from "@/services/posts.service";
+import { executePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 
 const useCreatePost = () => {
   const addPost = usePosts((s) => s.addPost);
 
-  async function createNewPost({
-    content,
-    userId,
-    authorName,
-  }: {
-    content: string;
-    userId: string;
-    authorName: string;
-  }) {
-    const newPost: Post = await createPost({
-      content,
-      authorId: userId,
-      authorName,
-    });
+  async function createNewPost({ content }: { content: string }) {
+    const execution = await executePost({ action: "create", content });
+    const parsed = JSON.parse(execution.responseBody);
+
+    const newPost: Post = parsed.data;
+
     addPost(newPost);
     return newPost;
   }
