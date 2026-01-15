@@ -2,7 +2,7 @@ import useCreatePost from "@/hooks/useCreatePost";
 import useLikePost from "@/hooks/useLikePost";
 import { account } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
-import { fetchPosts, updatePost } from "@/services/posts.service";
+import { executePost, fetchPosts } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { useUser } from "@/store/useUser";
 import { Ionicons, Octicons } from "@expo/vector-icons";
@@ -45,17 +45,14 @@ const HomeScreen = () => {
   const SIDEBAR_WIDTH = Dimensions.get("window").width * 0.75;
 
   async function increamentView(postId: string) {
-    const post = posts.find((post) => post.$id === postId);
-    if (!post) return;
-
-    updatePostState({
-      $id: postId,
-      views: post.views + 1,
+    const execution = await executePost({
+      action: "view",
+      postId: postId,
     });
+    const parsed = JSON.parse(execution.responseBody);
 
-    await updatePost(postId, {
-      views: post.views + 1,
-    });
+    const updatedPost = parsed.data;
+    updatePostState(updatedPost);
   }
 
   const viewedPostsRef = useRef<Set<string>>(new Set());
@@ -66,6 +63,7 @@ const HomeScreen = () => {
         if (viewedPostsRef.current.has(item.$id)) return;
 
         viewedPostsRef.current.add(item.$id);
+
         increamentView(item.$id);
       });
     },
