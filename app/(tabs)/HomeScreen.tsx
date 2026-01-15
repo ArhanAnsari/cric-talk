@@ -1,5 +1,4 @@
 import useCreatePost from "@/hooks/useCreatePost";
-import useLikePost from "@/hooks/useLikePost";
 import { account } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
 import { executePost, fetchPosts } from "@/services/posts.service";
@@ -23,7 +22,6 @@ import ProfileDrawer from "../components/ProfileDrawer";
 
 const HomeScreen = () => {
   const [userId, setUserId] = useState<string>("");
-  const [authorName, setAuthorName] = useState<string>("");
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const seacrhQueryRef = useRef<TextInput>(null);
@@ -36,7 +34,6 @@ const HomeScreen = () => {
   const setPosts = usePosts((s) => s.setPosts);
   const updatePostState = usePosts((s) => s.updatePost);
   const { createNewPost } = useCreatePost();
-  const { likePost } = useLikePost();
 
   const username = useUser((s) => s.username);
 
@@ -75,7 +72,6 @@ const HomeScreen = () => {
       const name = user.name || user.email.split("@")[0];
 
       setUserId(user.$id);
-      setAuthorName(name);
     }
     fetchUserId();
 
