@@ -7,6 +7,7 @@ import Toast from "react-native-toast-message";
 import "../global.css";
 
 export default function RootLayout() {
+  const [ready, setReady] = useState(false);
   const [user, setUser] = useState<Models.User<Models.Preferences> | null>(
     null
   );
@@ -17,35 +18,39 @@ export default function RootLayout() {
   const setJoinDate = useUser((s) => s.setJoinDate);
 
   useEffect(() => {
-    let mounted: boolean = true;
+    let mounted = true;
 
-    async function fetchUser() {
+    (async () => {
       try {
         const userData = await account.get();
         if (!mounted) return;
-        setUser(userData);
 
-        if (!userData) return;
+        setUser(userData);
         setUsername(userData.name || userData.email.split("@")[0]);
-        setFavTeam(userData.prefs.favTeam || "None");
+        setFavTeam(userData.prefs?.favTeam || "None");
         setEmail(userData.email);
         setJoinDate(new Date(userData.$createdAt));
-      } catch (error) {
-        console.log("Error fetching user:", error);
-        throw error;
+      } catch {
+        try {
+          await account.createAnonymousSession();
+        } catch (e) {
+          console.log("Anonymous session failed:", e);
+        }
+      } finally {
+        if (mounted) setReady(true);
       }
-    }
-    fetchUser();
+    })();
 
     return () => {
       mounted = false;
     };
   }, []);
 
+  if (!ready) return null;
+
   return (
     <>
-      <Stack screenOptions={{ headerShown: false }}></Stack>
-
+      <Stack screenOptions={{ headerShown: false }} />
       <Toast />
     </>
   );
