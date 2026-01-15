@@ -104,20 +104,16 @@ export async function executePost({
   postId,
   content,
   images,
-  likes,
-  views,
 }: {
-  action: "create" | "update" | "delete";
+  action: "create" | "update" | "delete" | "like" | "view";
   content: string;
   postId?: string;
   images?: string[];
-  likes?: number;
-  views?: number;
 }) {
   try {
     const execution = await functions.createExecution({
       functionId: POSTS_GUARD_FUNCTION_ID,
-      body: JSON.stringify({ action, content, postId, images, likes, views }),
+      body: JSON.stringify({ action, content, postId, images }),
       async: false,
     });
 
