@@ -25,7 +25,7 @@ export default async ({ req, res }) => {
     const authorName = user.name || user.email.split("@")[0];
 
     async function createPost() {
-     return await tablesDB.createRow({
+      return await tablesDB.createRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: POSTS_TABLE_ID,
         rowId: ID.unique(),
@@ -82,7 +82,52 @@ export default async ({ req, res }) => {
         rowId: postId,
       });
 
-      return {deleted: true, postId}
+      return { deleted: true, postId };
+    }
+
+    async function likePost() {
+      const post = await tablesDB.getRow({
+        databaseId: CRIC_TALK_DATABASE_ID,
+        tableId: POSTS_TABLE_ID,
+        rowId: postId,
+      });
+
+      const likes = post.likes || 0;
+      const likedBy = post.likedBy || [];
+
+      const hasLiked = likedBy.includes(userId);
+
+      const updatedLikes = hasLiked ? likes - 1 : likes + 1;
+      const updatedLikedBy = hasLiked
+        ? likedBy.filter((id) => id !== userId)
+        : [...likedBy, userId];
+
+      return await tablesDB.updateRow({
+        databaseId: CRIC_TALK_DATABASE_ID,
+        tableId: POSTS_TABLE_ID,
+        rowId: postId,
+        data: { likes: updatedLikes, likedBy: updatedLikedBy },
+      });
+    }
+
+    async function viewPost() {
+      const post = await tablesDB.getRow({
+        databaseId: CRIC_TALK_DATABASE_ID,
+        tableId: POSTS_TABLE_ID,
+        rowId: postId,
+      });
+
+      const views = post.views;
+      const viewedBy = post.viewedBy;
+
+      if (viewedBy.includes(userId)) return;
+
+      return await tablesDB.updateRow({
+        databaseId: CRIC_TALK_DATABASE_ID,
+        tableId: POSTS_TABLE_ID,
+        rowId: postId,
+        data: { views: views + 1 },
+      });
     }
 
     let result;
@@ -96,6 +141,12 @@ export default async ({ req, res }) => {
         break;
       case "delete":
         await deletePost();
+        break;
+      case "like":
+        result = await likePost();
+        break;
+      case "view":
+        result = await viewPost();
         break;
       default:
         throw new Error("Invalid action");
