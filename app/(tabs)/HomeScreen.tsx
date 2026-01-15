@@ -102,7 +102,7 @@ const HomeScreen = () => {
         text: "Create",
         onPress: async () => {
           try {
-            await createNewPost({ content, userId, authorName });
+            await createNewPost({ content });
             setIsVisible(false);
             setContent("");
 
