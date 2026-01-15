@@ -69,7 +69,6 @@ const HomeScreen = () => {
     async function fetchUserId() {
       if (!mounted) return;
       const user = await account.get();
-      const name = user.name || user.email.split("@")[0];
 
       setUserId(user.$id);
     }
