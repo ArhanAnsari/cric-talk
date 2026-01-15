@@ -56,7 +56,7 @@ const PostCard = ({ userId, post }: Props) => {
       <View className="flex-row items-center justify-between mt-4">
         <Pressable
           className="flex-row items-center gap-2"
-          onPress={() => likePost({ postId: post.$id })}
+          onPress={() => likePost({ postId: post.$id, userId })}
         >
           <Octicons
             name={

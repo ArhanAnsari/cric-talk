@@ -7,9 +7,27 @@ const useLikePost = () => {
   const posts = usePosts((s) => s.posts);
   const updatePostState = usePosts((s) => s.updatePost);
 
-  async function likePost({ postId }: { postId: string }) {
+  async function likePost({
+    postId,
+    userId,
+  }: {
+    postId: string;
+    userId: string;
+  }) {
     const post = posts.find((p) => p.$id === postId);
     if (!post) return;
+
+    const hasLiked: boolean = post.likedBy.includes(userId);
+
+    const optimisticPost: Post = {
+      ...post,
+      likes: hasLiked ? post.likes - 1 : post.likes + 1,
+      likedBy: hasLiked
+        ? post.likedBy.filter((id) => id !== userId)
+        : [...post.likedBy, userId],
+    };
+
+    updatePostState(optimisticPost);
 
     try {
       const execution = await executePost({ action: "like", postId });
