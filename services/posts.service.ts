@@ -106,7 +106,7 @@ export async function executePost({
   images,
 }: {
   action: "create" | "update" | "delete" | "like" | "view";
-  content: string;
+  content?: string;
   postId?: string;
   images?: string[];
 }) {
