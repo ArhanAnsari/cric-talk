@@ -124,6 +124,8 @@ export async function executePost({
     if (execution.status === "failed") {
       throw new Error(`Post execution failed ${execution.errors}`);
     }
+
+    return execution;
   } catch (error) {
     console.log(`Error while executing post ${action} action ${error}`);
     throw error;
