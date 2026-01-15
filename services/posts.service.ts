@@ -1,10 +1,12 @@
 import { Post } from "@/interfaces/Post";
-import { tablesDB } from "@/libs/appwrite";
+import { functions, tablesDB } from "@/libs/appwrite";
 import { ID, Query } from "react-native-appwrite";
 
 const CRIC_TALK_DATABASE_ID =
   process.env.EXPO_PUBLIC_APPWRITE_CRIC_TALK_DATABASE_ID!;
 const POSTS_TABLES_ID = process.env.EXPO_PUBLIC_APPWRITE_POSTS_TABLE_ID!;
+const POSTS_GUARD_FUNCTION_ID =
+  process.env.EXPO_PUBLIC_APPWRITE_POSTS_GUARD_FUNCTION_ID!;
 
 export async function fetchPosts() {
   try {
@@ -93,6 +95,37 @@ export async function deletePost(postId: string) {
     });
   } catch (error) {
     console.log(`Error while deleting post ${error}`);
+    throw error;
+  }
+}
+
+export async function executePost({
+  action,
+  postId,
+  content,
+  images,
+  likes,
+  views,
+}: {
+  action: "create" | "update" | "delete";
+  content: string;
+  postId?: string;
+  images?: string[];
+  likes?: number;
+  views?: number;
+}) {
+  try {
+    const execution = await functions.createExecution({
+      functionId: POSTS_GUARD_FUNCTION_ID,
+      body: JSON.stringify({ action, content, postId, images, likes, views }),
+      async: false,
+    });
+
+    if (execution.status === "failed") {
+      throw new Error(`Post execution failed ${execution.errors}`);
+    }
+  } catch (error) {
+    console.log(`Error while executing post ${action} action ${error}`);
     throw error;
   }
 }
