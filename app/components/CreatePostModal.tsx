@@ -1,23 +1,48 @@
+import useCreatePost from "@/hooks/useCreatePost";
+import { showToast } from "@/libs/showToast";
 import { Ionicons } from "@expo/vector-icons";
-import React, { Dispatch, SetStateAction } from "react";
-import { Modal, Pressable, Text, TextInput, View } from "react-native";
+import React, { useState } from "react";
+import { Alert, Modal, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 type Props = {
   isVisible: boolean;
   onClose: () => void;
-  content: string;
-  setContent: Dispatch<SetStateAction<string>>;
-  handleCreatePost: () => void;
 };
 
-const CreatePostModal = ({
-  isVisible,
-  onClose,
-  content,
-  setContent,
-  handleCreatePost,
-}: Props) => {
+const CreatePostModal = ({ isVisible, onClose }: Props) => {
+  const [content, setContent] = useState<string>("");
+
+  const { createNewPost } = useCreatePost();
+
+  async function handleCreatePost() {
+    Alert.alert("Creating Post", "Are you sure you want to create this post?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Create",
+        onPress: async () => {
+          try {
+            await createNewPost({ content });
+            onClose();
+            setContent("");
+
+            showToast({
+              type: "success",
+              text1: "Post Created",
+              text2: "Your post has been created successfully.",
+            });
+          } catch (error) {
+            showToast({
+              type: "error",
+              text1: "Error",
+              text2: "Could not create post. Please try again later.",
+            });
+          }
+        },
+      },
+    ]);
+  }
+
   return (
     <Modal visible={isVisible} transparent animationType="slide">
       <View className="flex-1 bg-white">

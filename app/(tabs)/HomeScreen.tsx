@@ -1,20 +1,11 @@
-import useCreatePost from "@/hooks/useCreatePost";
 import { account } from "@/libs/appwrite";
-import { showToast } from "@/libs/showToast";
 import { executePost, fetchPosts } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { useUser } from "@/store/useUser";
 import { Octicons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { ViewToken } from "react-native";
-import {
-  Alert,
-  FlatList,
-  Pressable,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { FlatList, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CreatePostModal from "../components/CreatePostModal";
 import PostCard from "../components/PostCard";
@@ -28,12 +19,9 @@ const HomeScreen = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
-  const [content, setContent] = useState<string>("");
-
   const posts = usePosts((s) => s.posts);
   const setPosts = usePosts((s) => s.setPosts);
   const updatePostState = usePosts((s) => s.updatePost);
-  const { createNewPost } = useCreatePost();
 
   const username = useUser((s) => s.username);
 
@@ -85,34 +73,6 @@ const HomeScreen = () => {
       mounted = false;
     };
   }, []);
-
-  async function handleCreatePost() {
-    Alert.alert("Creating Post", "Are you sure you want to create this post?", [
-      { text: "Cancel", style: "cancel" },
-      {
-        text: "Create",
-        onPress: async () => {
-          try {
-            await createNewPost({ content });
-            setIsVisible(false);
-            setContent("");
-
-            showToast({
-              type: "success",
-              text1: "Post Created",
-              text2: "Your post has been created successfully.",
-            });
-          } catch (error) {
-            showToast({
-              type: "error",
-              text1: "Error",
-              text2: "Could not create post. Please try again later.",
-            });
-          }
-        },
-      },
-    ]);
-  }
 
   return (
     <View className="flex-1 bg-white">
@@ -183,9 +143,6 @@ const HomeScreen = () => {
       <CreatePostModal
         isVisible={isVisible}
         onClose={() => setIsVisible(false)}
-        content={content}
-        setContent={setContent}
-        handleCreatePost={handleCreatePost}
       />
 
       {/* PROFILE DRAWER OVERLAY */}
