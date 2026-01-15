@@ -1,35 +1,22 @@
+import { Post } from "@/interfaces/Post";
 import { showToast } from "@/libs/showToast";
-import { updatePost } from "@/services/posts.service";
+import { executePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 
 const useLikePost = () => {
   const posts = usePosts((s) => s.posts);
   const updatePostState = usePosts((s) => s.updatePost);
 
-  async function likePost({
-    postId,
-    userId,
-  }: {
-    postId: string;
-    userId: string;
-  }) {
+  async function likePost({ postId }: { postId: string }) {
     const post = posts.find((p) => p.$id === postId);
     if (!post) return;
 
-    const isLiked = post.likedBy.includes(userId);
-    const updatedPostData = {
-      likes: isLiked ? post.likes - 1 : post.likes + 1,
-      likedBy: isLiked
-        ? post.likedBy.filter((id) => id !== userId)
-        : [...post.likedBy, userId],
-    };
-
     try {
-      updatePostState({
-        $id: postId,
-        ...updatedPostData,
-      });
-      const updatedPost = await updatePost(postId, updatedPostData);
+      const execution = await executePost({ action: "like", postId });
+      const parsed = JSON.parse(execution.responseBody);
+
+      const updatedPost: Post = parsed.data;
+      updatePostState(updatedPost);
     } catch (error) {
       showToast({
         type: "error",
