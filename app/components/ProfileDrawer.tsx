@@ -18,7 +18,7 @@ const ProfileDrawer = ({
   onClose,
   searchQueryRef,
 }: Props) => {
-  const SIDEBAR_WIDTH = Dimensions.get("window").width * 0.75;
+  const SIDEBAR_WIDTH = Dimensions.get("window").width * 0.8;
 
   return (
     <Animated.View
