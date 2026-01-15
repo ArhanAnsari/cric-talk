@@ -26,14 +26,31 @@ const HomeScreen = () => {
   const username = useUser((s) => s.username);
 
   async function increamentView(postId: string) {
-    const execution = await executePost({
-      action: "view",
-      postId: postId,
-    });
-    const parsed = JSON.parse(execution.responseBody);
+    const post = posts.find((p) => p.$id === postId);
+    if (!post) return;
 
-    const updatedPost = parsed.data;
-    updatePostState(updatedPost);
+    if (post.viewedBy.includes(userId)) return;
+
+    const optimisticPost = {
+      ...post,
+      views: post.views + 1,
+      viewedBy: [...post.viewedBy, userId],
+    };
+
+    updatePostState(optimisticPost);
+
+    try {
+      const execution = await executePost({
+        action: "view",
+        postId: postId,
+      });
+      const parsed = JSON.parse(execution.responseBody);
+
+      const updatedPost = parsed.data;
+      updatePostState(updatedPost);
+    } catch (error) {
+      updatePostState(post);
+    }
   }
 
   const viewedPostsRef = useRef<Set<string>>(new Set());
