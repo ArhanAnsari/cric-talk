@@ -94,7 +94,7 @@ const HomeScreen = () => {
             <Text className="text-white text-xl font-semibold">CricTalk</Text>
 
             {/* NOTIFICATION ICON */}
-            <Pressable className="bg-orange-600 p-2 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
+            <Pressable className="bg-orange-600 w-10 h-10 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
               <Octicons name="bell-fill" size={18} color="white" />
             </Pressable>
           </View>
