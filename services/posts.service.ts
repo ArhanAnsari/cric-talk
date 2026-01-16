@@ -8,16 +8,29 @@ const POSTS_TABLES_ID = process.env.EXPO_PUBLIC_APPWRITE_POSTS_TABLE_ID!;
 const POSTS_GUARD_FUNCTION_ID =
   process.env.EXPO_PUBLIC_APPWRITE_POSTS_GUARD_FUNCTION_ID!;
 
-export async function fetchPosts() {
+export async function fetchPosts({
+  limit = 10,
+  offset = 0,
+  sort = "trending",
+}: {
+  limit?: number;
+  offset?: number;
+  sort?: "trending" | "popular" | "newest";
+} = {}) {
+  let sortQueries: string[] = [];
+  if (sort === "trending") {
+    sortQueries = [Query.orderDesc("views"), Query.orderDesc("likes")];
+  } else if (sort === "popular") {
+    sortQueries = [Query.orderDesc("likes"), Query.orderDesc("views")];
+  } else {
+    sortQueries = [Query.orderDesc("$createdAt")];
+  }
+
   try {
     return await tablesDB.listRows<Post>({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: POSTS_TABLES_ID,
-      queries: [
-        Query.orderDesc("views"),
-        Query.orderDesc("likes"),
-        Query.orderDesc("$createdAt"),
-      ],
+      queries: [...sortQueries, Query.limit(limit), Query.offset(offset)],
     });
   } catch (error) {
     console.log(`Error while fetching posts ${error}`);
