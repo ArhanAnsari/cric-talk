@@ -2,6 +2,7 @@ import useLikePost from "@/hooks/useLikePost";
 import { Post } from "@/interfaces/Post";
 import { usePosts } from "@/store/usePosts";
 import { Octicons } from "@expo/vector-icons";
+import { Image } from "expo-image";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
@@ -11,6 +12,29 @@ type Props = {
   userId: string;
   post: Post;
 };
+
+function timeAgo(dateString: string) {
+  const date = new Date(dateString);
+  const now = new Date();
+  const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+  let interval = seconds / 31536000;
+  if (interval > 1) return Math.floor(interval) + "y ago";
+
+  interval = seconds / 2592000;
+  if (interval > 1) return Math.floor(interval) + "mo ago";
+
+  interval = seconds / 86400;
+  if (interval > 1) return Math.floor(interval) + "d ago";
+
+  interval = seconds / 3600;
+  if (interval > 1) return Math.floor(interval) + "h ago";
+
+  interval = seconds / 60;
+  if (interval > 1) return Math.floor(interval) + "m ago";
+
+  return "Just now";
+}
 
 const PostCard = ({ userId, post }: Props) => {
   const posts = usePosts((s) => s.posts);
@@ -37,15 +61,8 @@ const PostCard = ({ userId, post }: Props) => {
             {post.authorName}
           </Text>
 
-          <Text className="text-sm">
-            ·{" "}
-            {Math.floor(
-              (Date.now() - new Date(post.$createdAt).getTime()) /
-                1000 /
-                60 /
-                60
-            )}
-            hr ago
+          <Text className="text-sm text-gray-500">
+            · {timeAgo(post.$createdAt)}
           </Text>
 
           {/* EDIT POST ICON */}
@@ -65,8 +82,19 @@ const PostCard = ({ userId, post }: Props) => {
         </View>
 
         {/* POST IMAGE */}
-        {post.image?.length !== 0 && (
-          <Pressable className="w-full aspect-video bg-gray-300 rounded-lg mt-4" />
+        {post.image && post.image.length > 0 && (
+          <Image
+            source={{ uri: post.image[0] }}
+            style={{
+              width: "100%",
+              aspectRatio: 16 / 9,
+              borderRadius: 8,
+              marginTop: 16,
+              backgroundColor: "#e5e7eb",
+            }}
+            contentFit="cover"
+            transition={300}
+          />
         )}
 
         {/* POST ACTIONS */}
