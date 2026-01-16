@@ -9,7 +9,7 @@ type Props = {
   initialContent: string;
 };
 
-const CreatePostModal = ({ isVisible, onClose, initialContent }: Props) => {
+const EditPostModal = ({ isVisible, onClose, initialContent }: Props) => {
   const [content, setContent] = useState<string>(initialContent);
 
   return (
@@ -56,4 +56,4 @@ const CreatePostModal = ({ isVisible, onClose, initialContent }: Props) => {
   );
 };
 
-export default CreatePostModal;
+export default EditPostModal;
