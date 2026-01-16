@@ -1,3 +1,7 @@
+import { Post } from "@/interfaces/Post";
+import { showToast } from "@/libs/showToast";
+import { executePost } from "@/services/posts.service";
+import { usePosts } from "@/store/usePosts";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Modal, Pressable, Text, TextInput, View } from "react-native";
@@ -18,6 +22,39 @@ const EditPostModal = ({
 }: Props) => {
   const [content, setContent] = useState<string>(initialContent);
 
+  const updatePostState = usePosts((s) => s.updatePost);
+
+  async function handleEditPost() {
+    if (
+      content.trim().length === 0 ||
+      content.trim().length > 512 ||
+      initialContent.trim() === content.trim()
+    ) {
+      return;
+    }
+
+    try {
+      const execution = await executePost({
+        action: "update",
+        postId,
+        content,
+      });
+      const parsed = JSON.parse(execution.responseBody);
+
+      const post: Post = parsed.data;
+      updatePostState(post);
+      onClose();
+      showToast({ type: "success", text1: "Post edited successfully" });
+    } catch (error) {
+      onClose();
+      showToast({
+        type: "error",
+        text1: "Failed editing the post",
+        text2: "Please try again later.",
+      });
+    }
+  }
+
   return (
     <Modal visible={isVisible} transparent animationType="slide">
       <View className="flex-1 bg-white">
@@ -31,7 +68,7 @@ const EditPostModal = ({
               onPress={onClose}
             />
 
-            <Pressable>
+            <Pressable onPress={handleEditPost}>
               <Ionicons name="save-outline" size={24} color="#0f172b" />
             </Pressable>
           </View>
