@@ -40,6 +40,7 @@ function timeAgo(dateString: string) {
 
 const PostCard = ({ userId, post }: Props) => {
   const posts = usePosts((s) => s.posts);
+  const deletePostState = usePosts((s) => s.deletePost);
 
   const { likePost } = useLikePost();
 
@@ -58,6 +59,7 @@ const PostCard = ({ userId, post }: Props) => {
               postId: post.$id,
             });
 
+            deletePostState(post.$id);
             showToast({ type: "success", text1: "Post deleted successfully" });
           } catch (error) {
             showToast({
