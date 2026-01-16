@@ -140,7 +140,7 @@ export default async ({ req, res }) => {
         result = await updatePost();
         break;
       case "delete":
-        await deletePost();
+        result = await deletePost();
         break;
       case "like":
         result = await likePost();
