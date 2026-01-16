@@ -113,6 +113,7 @@ const PostCard = ({ userId, post }: Props) => {
       <EditPostModal
         isVisible={isEditModalVisible}
         onClose={() => setIsEditModalVisible(false)}
+        postId={post.$id}
         initialContent={post.content}
       />
     </>

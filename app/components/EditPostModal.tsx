@@ -6,10 +6,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 type Props = {
   isVisible: boolean;
   onClose: () => void;
+  postId: string;
   initialContent: string;
 };
 
-const EditPostModal = ({ isVisible, onClose, initialContent }: Props) => {
+const EditPostModal = ({
+  isVisible,
+  onClose,
+  postId,
+  initialContent,
+}: Props) => {
   const [content, setContent] = useState<string>(initialContent);
 
   return (
