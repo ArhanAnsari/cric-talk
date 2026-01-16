@@ -90,6 +90,13 @@ const PostCard = ({ userId, post }: Props) => {
             {post.views} View{post.views === 1 ? "" : "s"}
           </Text>
         </Pressable>
+
+        {post.authorId === userId && (
+          <Pressable className="flex-row items-center gap-2">
+            <Octicons name="pencil" size={18} color="black" />
+            <Text>Edit</Text>
+          </Pressable>
+        )}
       </View>
     </Pressable>
   );
