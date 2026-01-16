@@ -1,11 +1,13 @@
 import useLikePost from "@/hooks/useLikePost";
 import { Post } from "@/interfaces/Post";
+import { showToast } from "@/libs/showToast";
+import { executePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { Octicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Alert, Pressable, Text, View } from "react-native";
 import EditPostModal from "./EditPostModal";
 
 type Props = {
@@ -43,6 +45,32 @@ const PostCard = ({ userId, post }: Props) => {
 
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
 
+  async function handleDeletePost() {
+    Alert.alert("Are you sure?", "Do you want to delete the post?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await executePost({
+              action: "delete",
+              postId: post.$id,
+            });
+
+            showToast({ type: "success", text1: "Post deleted successfully" });
+          } catch (error) {
+            showToast({
+              type: "error",
+              text1: "Failed to delete the post",
+              text2: "Please try again later.",
+            });
+          }
+        },
+      },
+    ]);
+  }
+
   return (
     <>
       <Pressable
@@ -76,7 +104,7 @@ const PostCard = ({ userId, post }: Props) => {
               </Pressable>
 
               {/* DELETE POST ICON */}
-              <Pressable>
+              <Pressable onPress={handleDeletePost}>
                 <Octicons name="trash" size={18} color="black" />
               </Pressable>
             </View>
