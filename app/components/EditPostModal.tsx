@@ -25,11 +25,41 @@ const EditPostModal = ({
   const updatePostState = usePosts((s) => s.updatePost);
 
   async function handleEditPost() {
-    if (
-      content.trim().length === 0 ||
-      content.trim().length > 512 ||
-      initialContent.trim() === content.trim()
-    ) {
+    const trimmedContent: string = content.trim();
+
+    if (trimmedContent.length === 0) {
+      onClose();
+
+      showToast({
+        type: "error",
+        text1: "Your post is empty",
+        text2: "Try writing something for community.",
+      });
+
+      return;
+    }
+
+    if (trimmedContent.length > 512) {
+      onClose();
+
+      showToast({
+        type: "error",
+        text1: "Character limit reached",
+        text2: "Content can't be longer than 512 characters.",
+      });
+
+      return;
+    }
+
+    if (initialContent.trim() === trimmedContent) {
+      onClose();
+
+      showToast({
+        type: "info",
+        text1: "Nothing to edit",
+        text2: "You haven't made any changes yet.",
+      });
+
       return;
     }
 
