@@ -99,7 +99,7 @@ const EditPostModal = ({
             />
 
             <Pressable onPress={handleEditPost}>
-              <Ionicons name="save-outline" size={24} color="#0f172b" />
+              <Ionicons name="checkmark" size={24} color="#0f172b" />
             </Pressable>
           </View>
 
