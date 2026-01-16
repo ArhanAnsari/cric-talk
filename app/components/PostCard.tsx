@@ -54,12 +54,15 @@ const PostCard = ({ userId, post }: Props) => {
         style: "destructive",
         onPress: async () => {
           try {
-            await executePost({
+            const execution = await executePost({
               action: "delete",
               postId: post.$id,
             });
+            const parsed = JSON.parse(execution.responseBody);
 
-            deletePostState(post.$id);
+            const deletedPostId = parsed.data.postId;
+
+            deletePostState(deletedPostId);
             showToast({ type: "success", text1: "Post deleted successfully" });
           } catch (error) {
             showToast({
