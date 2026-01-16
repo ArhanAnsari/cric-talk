@@ -1,11 +1,13 @@
 import useLikePost from "@/hooks/useLikePost";
 import { Post } from "@/interfaces/Post";
+import { showToast } from "@/libs/showToast";
+import { executePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { Octicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Alert, Pressable, Text, View } from "react-native";
 import EditPostModal from "./EditPostModal";
 
 type Props = {
@@ -38,10 +40,41 @@ function timeAgo(dateString: string) {
 
 const PostCard = ({ userId, post }: Props) => {
   const posts = usePosts((s) => s.posts);
+  const deletePostState = usePosts((s) => s.deletePost);
 
   const { likePost } = useLikePost();
 
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
+
+  async function handleDeletePost() {
+    Alert.alert("Are you sure?", "Do you want to delete the post?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            const execution = await executePost({
+              action: "delete",
+              postId: post.$id,
+            });
+            const parsed = JSON.parse(execution.responseBody);
+
+            const deletedPostId = parsed.data.postId;
+
+            deletePostState(deletedPostId);
+            showToast({ type: "success", text1: "Post deleted successfully" });
+          } catch (error) {
+            showToast({
+              type: "error",
+              text1: "Failed to delete the post",
+              text2: "Please try again later.",
+            });
+          }
+        },
+      },
+    ]);
+  }
 
   return (
     <>
@@ -49,7 +82,7 @@ const PostCard = ({ userId, post }: Props) => {
         className="mb-4 border-b border-gray-200 pb-4"
         onPress={() => router.push(`/(posts)/${post.$id}`)}
       >
-        {/* USER INFO + EDIT POST ICON */}
+        {/* USER INFO + POST ACTION ICON */}
         <View className="flex-row items-center gap-2">
           <Pressable className="w-10 h-10 bg-gray-200 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
             <Text className="text-slate-900 font-medium text-lg capitalize">
@@ -65,14 +98,21 @@ const PostCard = ({ userId, post }: Props) => {
             · {timeAgo(post.$createdAt)}
           </Text>
 
-          {/* EDIT POST ICON */}
           {post.authorId === userId && (
-            <Pressable
-              className="flex-row items-center gap-2 ml-auto"
-              onPress={() => setIsEditModalVisible(true)}
-            >
-              <Octicons name="pencil" size={18} color="black" />
-            </Pressable>
+            <View className="flex-row items-center gap-4 ml-auto">
+              {/* EDIT POST ICON */}
+              <Pressable
+                className="flex-row items-center"
+                onPress={() => setIsEditModalVisible(true)}
+              >
+                <Octicons name="pencil" size={18} color="black" />
+              </Pressable>
+
+              {/* DELETE POST ICON */}
+              <Pressable onPress={handleDeletePost}>
+                <Octicons name="trash" size={18} color="black" />
+              </Pressable>
+            </View>
           )}
         </View>
 

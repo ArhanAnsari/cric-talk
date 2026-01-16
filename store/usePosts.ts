@@ -6,6 +6,7 @@ type PostsType = {
   setPosts: (posts: Post[]) => void;
   addPost: (post: Post) => void;
   updatePost: (post: Partial<Post>) => void;
+  deletePost: (postId: string) => void;
 };
 
 export const usePosts = create<PostsType>((set) => ({
@@ -25,4 +26,6 @@ export const usePosts = create<PostsType>((set) => ({
         p.$id === postData.$id ? { ...p, ...postData } : p
       ),
     })),
+  deletePost: (postId) =>
+    set((s) => ({ posts: s.posts.filter((p) => p.$id !== postId) })),
 }));
