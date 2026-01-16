@@ -7,7 +7,6 @@ import Toast from "react-native-toast-message";
 import "../global.css";
 
 export default function RootLayout() {
-  const [ready, setReady] = useState(false);
   const [user, setUser] = useState<Models.User<Models.Preferences> | null>(
     null
   );
@@ -31,13 +30,7 @@ export default function RootLayout() {
         setEmail(userData.email);
         setJoinDate(new Date(userData.$createdAt));
       } catch {
-        try {
-          await account.createAnonymousSession();
-        } catch (e) {
-          console.log("Anonymous session failed:", e);
-        }
-      } finally {
-        if (mounted) setReady(true);
+        setUser(null);
       }
     })();
 
@@ -45,8 +38,6 @@ export default function RootLayout() {
       mounted = false;
     };
   }, []);
-
-  if (!ready) return null;
 
   return (
     <>
