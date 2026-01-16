@@ -25,7 +25,7 @@ const PostCard = ({ userId, post }: Props) => {
         className="mb-4 border-b border-gray-200 pb-4"
         onPress={() => router.push(`/(posts)/${post.$id}`)}
       >
-        {/* USER INFO */}
+        {/* USER INFO + EDIT POST ICON */}
         <View className="flex-row items-center gap-2">
           <Pressable className="w-10 h-10 bg-gray-200 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
             <Text className="text-slate-900 font-medium text-lg capitalize">
@@ -47,6 +47,16 @@ const PostCard = ({ userId, post }: Props) => {
             )}
             hr ago
           </Text>
+
+          {/* EDIT POST ICON */}
+          {post.authorId === userId && (
+            <Pressable
+              className="flex-row items-center gap-2 ml-auto"
+              onPress={() => setIsEditModalVisible(true)}
+            >
+              <Octicons name="pencil" size={18} color="black" />
+            </Pressable>
+          )}
         </View>
 
         {/* POST CONTENT */}
@@ -97,16 +107,6 @@ const PostCard = ({ userId, post }: Props) => {
               {post.views} View{post.views === 1 ? "" : "s"}
             </Text>
           </Pressable>
-
-          {post.authorId === userId && (
-            <Pressable
-              className="flex-row items-center gap-2"
-              onPress={() => setIsEditModalVisible(true)}
-            >
-              <Octicons name="pencil" size={18} color="black" />
-              <Text>Edit</Text>
-            </Pressable>
-          )}
         </View>
       </Pressable>
 
