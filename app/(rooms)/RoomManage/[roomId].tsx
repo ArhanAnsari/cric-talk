@@ -1,3 +1,4 @@
+import { Room } from "@/interfaces/Room";
 import { showToast } from "@/libs/showToast";
 import { executeRoom } from "@/services/rooms.service";
 import { useRooms } from "@/store/useRooms";
@@ -14,6 +15,8 @@ const RoomManage = () => {
 
   const rooms = useRooms((s) => s.rooms);
   const room = rooms.find((r) => r.$id === roomId);
+
+  const updateRoomState = useRooms((s) => s.updateRoom);
 
   const {
     teams: oldTeams = [],
@@ -69,7 +72,7 @@ const RoomManage = () => {
     }
 
     try {
-      await executeRoom({
+      const execution = await executeRoom({
         action: "update",
         roomId: room?.$id,
         teams: [team1 || oldTeams[0], team2 || oldTeams[1]],
@@ -79,6 +82,11 @@ const RoomManage = () => {
         matchType: matchType || oldMatchType,
         isLocked: isLocked ?? room?.isLocked,
       });
+      const parsed = JSON.parse(execution.responseBody);
+
+      const updatedRoom: Room = parsed.data;
+
+      updateRoomState({ ...updatedRoom });
 
       showToast({
         type: "success",
