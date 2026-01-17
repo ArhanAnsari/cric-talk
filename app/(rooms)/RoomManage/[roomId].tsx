@@ -181,6 +181,19 @@ const RoomManage = () => {
               <Text className="text-white font-medium">Save</Text>
             </Pressable>
           </View>
+
+          {/* IS LOCKED INPUT */}
+          <View className="gap-2">
+            <Text className="text-lg text-slate-900 font-medium">
+              Change chat options
+            </Text>
+
+            <Pressable className="w-full h-12 bg-orange-500 rounded-lg items-center justify-center px-6 py-3">
+              <Text className="text-white font-medium">
+                {room?.isLocked ? "Unlock chat" : "Lock chat"}
+              </Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </View>
