@@ -196,7 +196,7 @@ const RoomManage = () => {
             />
 
             <Pressable
-              disabled={isNewMatchType}
+              disabled={!isNewMatchType}
               className={`w-full ${isNewMatchType ? "bg-orange-500" : "bg-slate-500"} items-center justify-center px-6 py-2 rounded-lg h-12 transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85`}
             >
               <Text className="text-white font-medium">Save</Text>
