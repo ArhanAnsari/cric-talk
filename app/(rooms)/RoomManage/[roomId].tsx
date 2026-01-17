@@ -146,6 +146,7 @@ const RoomManage = () => {
             <Pressable
               disabled={!isNewTeam}
               className={`w-full ${isNewTeam ? "bg-orange-500" : "bg-slate-500"} items-center justify-center px-6 py-2 rounded-lg h-12 transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85`}
+              onPress={() => handleUpdateRoom("teams")}
             >
               <Text className=" text-white font-medium">Save</Text>
             </Pressable>
@@ -215,6 +216,7 @@ const RoomManage = () => {
             <Pressable
               disabled={!isNewTime}
               className={`w-full ${isNewTime ? "bg-orange-500" : "bg-slate-500"} items-center justify-center px-6 py-2 rounded-lg h-12 transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85`}
+              onPress={() => handleUpdateRoom("time")}
             >
               <Text className="text-white font-medium">Save</Text>
             </Pressable>
@@ -241,6 +243,7 @@ const RoomManage = () => {
             <Pressable
               disabled={!isNewMatchType}
               className={`w-full ${isNewMatchType ? "bg-orange-500" : "bg-slate-500"} items-center justify-center px-6 py-2 rounded-lg h-12 transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85`}
+              onPress={() => handleUpdateRoom("match type")}
             >
               <Text className="text-white font-medium">Save</Text>
             </Pressable>
@@ -253,7 +256,10 @@ const RoomManage = () => {
             </Text>
 
             <Pressable className="w-full h-12 bg-orange-500 rounded-lg items-center justify-center px-6 py-3 transition-all ease-in-out active:scale-[0.98] active:opacity-85">
-              <Text className="text-white font-medium">
+              <Text
+                className="text-white font-medium"
+                onPress={() => handleUpdateRoom("chat options")}
+              >
                 {room?.isLocked ? "Unlock chat" : "Lock chat"}
               </Text>
             </Pressable>
