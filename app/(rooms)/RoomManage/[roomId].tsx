@@ -21,8 +21,8 @@ const RoomManage = () => {
 
   const [team1, setTeam1] = useState<string>(oldTeams[0]);
   const [team2, setTeam2] = useState<string>(oldTeams[1]);
-  const [startTime, setStartTime] = useState<string>(oldStartTime);
-  const [endTime, setEndTime] = useState<string>(oldEndTime);
+  const [startTime, setStartTime] = useState<Date>(new Date(oldStartTime));
+  const [endTime, setEndTime] = useState<Date>(new Date(oldEndTime));
   const [matchType, setMatchType] = useState<"ODI" | "TEST" | "T20">(
     oldMatchType,
   );
