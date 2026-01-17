@@ -169,7 +169,10 @@ const RoomDiscussion = () => {
 
               {/* ROOM MANAGE ICON */}
               {room?.authorId === userId && (
-                <Pressable className="w-10 h-10 bg-orange-600 items-center justify-center rounded-full transition-all active:scale-[0.98] active:opacity-85">
+                <Pressable
+                  className="w-10 h-10 bg-orange-600 items-center justify-center rounded-full transition-all active:scale-[0.98] active:opacity-85"
+                  onPress={() => router.push(`/(rooms)/RoomManage/${roomId}`)}
+                >
                   <Ionicons name="settings-outline" size={18} color="white" />
                 </Pressable>
               )}
