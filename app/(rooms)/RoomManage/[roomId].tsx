@@ -172,6 +172,7 @@ const RoomManage = () => {
               data={matchTypeDropdown}
               labelField="label"
               valueField="value"
+              value={matchType}
               onChange={(item) => setMatchType(item.value)}
               style={styles.dropdown}
               containerStyle={styles.dropdownContainer}
