@@ -2,7 +2,8 @@ import { useRooms } from "@/store/useRooms";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -33,6 +34,12 @@ const RoomManage = () => {
     useState<boolean>(false);
   const [isEndTimePickerVisible, setIsEndTimePickerVisible] =
     useState<boolean>(false);
+
+  const matchTypeDropdown = [
+    { label: "ODI", value: "ODI" },
+    { label: "TEST", value: "TEST" },
+    { label: "T20", value: "T20" },
+  ];
 
   return (
     <View className="flex-1 bg-white">
@@ -152,10 +159,54 @@ const RoomManage = () => {
               <Text className="text-white font-medium">Save</Text>
             </Pressable>
           </View>
+
+          {/* MATCH TYPE INPUT */}
+          <View className="gap-2">
+            <Text className="text-lg text-slate-900 font-medium">
+              Change match type
+            </Text>
+
+            <Dropdown
+              data={matchTypeDropdown}
+              labelField="label"
+              valueField="value"
+              onChange={(item) => setMatchType(item.value)}
+              style={styles.dropdown}
+              containerStyle={styles.dropdownContainer}
+              placeholderStyle={styles.dropdownPlaceholderText}
+              selectedTextStyle={styles.dropdownSelectedText}
+            />
+
+            <Pressable className="w-full h-12 bg-orange-500 rounded-lg items-center justify-center px-6 py-3">
+              <Text className="text-white font-medium">Save</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  dropdown: {
+    borderWidth: 1,
+    borderColor: "#d1d5dc",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    height: 42,
+  },
+  dropdownContainer: {
+    marginTop: 4,
+    borderRadius: 8,
+  },
+  dropdownPlaceholderText: {
+    color: "#6a7282",
+    fontSize: 16,
+  },
+  dropdownSelectedText: {
+    color: "#0f172b",
+    fontSize: 16,
+  },
+});
 
 export default RoomManage;
