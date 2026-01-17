@@ -64,7 +64,7 @@ export default async ({ req, res }) => {
       if (room.status === 'finished')
         throw new Error("Error: Room data can't be updated once its finished");
 
-      return await tablesDB.updateRoom({
+      return await tablesDB.updateRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOMS_TABLE_ID,
         rowId: roomId,
