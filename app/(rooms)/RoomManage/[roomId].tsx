@@ -55,7 +55,7 @@ const RoomManage = () => {
   const isNewMatchType: boolean =
     oldMatchType.trim() !== matchType.trim() && !!matchType;
 
-  async function handleUpdateRoom(updateType: string) {
+  async function handleUpdateRoom(updateType: string, lockValue?: boolean) {
     let status = room?.status ?? "upcoming";
 
     if (updateType === "time") {
@@ -80,7 +80,7 @@ const RoomManage = () => {
         startTime: startTime.toISOString(),
         endTime: endTime.toISOString(),
         matchType: matchType || oldMatchType,
-        isLocked: isLocked ?? room?.isLocked,
+        isLocked: lockValue ?? isLocked,
       });
       const parsed = JSON.parse(execution.responseBody);
 
@@ -265,10 +265,14 @@ const RoomManage = () => {
 
             <Pressable
               className="w-full h-12 bg-orange-500 rounded-lg items-center justify-center px-6 py-3 transition-all ease-in-out active:scale-[0.98] active:opacity-85"
-              onPress={() => handleUpdateRoom("chat options")}
+              onPress={() => {
+                const next = !isLocked;
+                setIsLocked(next);
+                handleUpdateRoom("chat options", next);
+              }}
             >
               <Text className="text-white font-medium">
-                {room?.isLocked ? "Unlock chat" : "Lock chat"}
+                {isLocked ? "Unlock chat" : "Lock chat"}
               </Text>
             </Pressable>
           </View>
