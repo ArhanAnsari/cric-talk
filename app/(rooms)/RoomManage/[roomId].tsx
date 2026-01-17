@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
+import DateTimePicker from "react-native-modal-datetime-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const RoomManage = () => {
@@ -27,6 +28,11 @@ const RoomManage = () => {
     oldMatchType,
   );
   const [isLocked, setIsLocked] = useState<boolean>(oldIsLocked);
+
+  const [isStartTimePickerVisible, setIsStartTimePickerVisible] =
+    useState<boolean>(false);
+  const [isEndTimePickerVisible, setIsEndTimePickerVisible] =
+    useState<boolean>(false);
 
   return (
     <View className="flex-1 bg-white">
@@ -53,7 +59,7 @@ const RoomManage = () => {
       {/* CONTENT */}
       <View className="px-6 py-4">
         {/* INPUTS */}
-        <View>
+        <View className="gap-4">
           {/* TEAMS NAME INPUT */}
           <View className="gap-2">
             <Text className="text-lg font-medium text-slate-900">
@@ -80,6 +86,70 @@ const RoomManage = () => {
 
             <Pressable className="w-full bg-orange-500 items-center justify-center px-6 py-2 rounded-lg h-12">
               <Text className=" text-white font-medium">Save</Text>
+            </Pressable>
+          </View>
+
+          {/* START TIME AND END TIME INPUT */}
+          <View className="gap-2">
+            {/* START TIME INPUT */}
+            <View className="gap-2">
+              <Text className="text-slate-900 text-lg font-medium">
+                Change start time
+              </Text>
+
+              <Pressable
+                className="w-full h-12 border border-slate-300 rounded-lg pl-4 justify-center"
+                onPress={() => setIsStartTimePickerVisible(true)}
+              >
+                <Text>
+                  {startTime.toLocaleString("en-IN", {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  })}
+                </Text>
+              </Pressable>
+
+              <DateTimePicker
+                isVisible={isStartTimePickerVisible}
+                mode="datetime"
+                onConfirm={(date) => {
+                  setStartTime(date);
+                  setIsStartTimePickerVisible(false);
+                }}
+                onCancel={() => setIsStartTimePickerVisible(false)}
+                minimumDate={new Date()}
+              />
+            </View>
+
+            {/* END TIME INPUT */}
+            <View className="gap-2">
+              <Text className="text-slate-900 text-lg font-medium">
+                End time
+              </Text>
+
+              <Pressable className="w-full h-12 border border-slate-300 pl-4 justify-center rounded-lg">
+                <Text>
+                  {endTime.toLocaleString("en-IN", {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  })}
+                </Text>
+              </Pressable>
+
+              <DateTimePicker
+                isVisible={isEndTimePickerVisible}
+                mode="datetime"
+                onConfirm={(date) => {
+                  setEndTime(date);
+                  setIsEndTimePickerVisible(false);
+                }}
+                onCancel={() => setIsEndTimePickerVisible(false)}
+                minimumDate={startTime}
+              />
+            </View>
+
+            <Pressable className="w-full h-12 bg-orange-500 items-center justify-center rounded-lg px-6 py-3">
+              <Text className="text-white font-medium">Save</Text>
             </Pressable>
           </View>
         </View>
