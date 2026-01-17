@@ -41,6 +41,15 @@ const RoomManage = () => {
     { label: "T20", value: "T20" },
   ];
 
+  const isNewTeam: boolean =
+    (oldTeams[0].trim() !== team1.trim() && team1.trim() !== "") ||
+    (oldTeams[1].trim() !== team2.trim() && team2.trim() !== "");
+  const isNewTime: boolean =
+    (new Date(oldStartTime).getTime() !== startTime.getTime() && !!startTime) ||
+    (new Date(oldEndTime).getTime() !== endTime.getTime() && !!endTime);
+  const isNewMatchType: boolean =
+    oldMatchType.trim() !== matchType.trim() && !!matchType;
+
   return (
     <View className="flex-1 bg-white">
       <View className="w-full h-30 bg-orange-500">
@@ -91,7 +100,10 @@ const RoomManage = () => {
               />
             </View>
 
-            <Pressable className="w-full bg-orange-500 items-center justify-center px-6 py-2 rounded-lg h-12">
+            <Pressable
+              disabled={!isNewTeam}
+              className={`w-full ${isNewTeam ? "bg-orange-500" : "bg-slate-500"} items-center justify-center px-6 py-2 rounded-lg h-12`}
+            >
               <Text className=" text-white font-medium">Save</Text>
             </Pressable>
           </View>
@@ -157,7 +169,10 @@ const RoomManage = () => {
               />
             </View>
 
-            <Pressable className="w-full h-12 bg-orange-500 items-center justify-center rounded-lg px-6 py-3">
+            <Pressable
+              disabled={!isNewTime}
+              className={`w-full ${isNewTime ? "bg-orange-500" : "bg-slate-500"} items-center justify-center px-6 py-2 rounded-lg h-12`}
+            >
               <Text className="text-white font-medium">Save</Text>
             </Pressable>
           </View>
@@ -180,7 +195,10 @@ const RoomManage = () => {
               selectedTextStyle={styles.dropdownSelectedText}
             />
 
-            <Pressable className="w-full h-12 bg-orange-500 rounded-lg items-center justify-center px-6 py-3">
+            <Pressable
+              disabled={isNewMatchType}
+              className={`w-full ${isNewMatchType ? "bg-orange-500" : "bg-slate-500"} items-center justify-center px-6 py-2 rounded-lg h-12`}
+            >
               <Text className="text-white font-medium">Save</Text>
             </Pressable>
           </View>
