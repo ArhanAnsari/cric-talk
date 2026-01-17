@@ -1,6 +1,6 @@
 import { useRooms } from "@/store/useRooms";
 import { Ionicons } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,7 +17,10 @@ const RoomManage = () => {
         <SafeAreaView>
           {/* HEADER */}
           <View className="flex-row items-center px-6 py-4">
-            <Pressable className="w-10 h-10 bg-orange-600 items-center justify-center rounded-full transition-all active:scale-[0.98] active:opacity-85">
+            <Pressable
+              className="w-10 h-10 bg-orange-600 items-center justify-center rounded-full transition-all active:scale-[0.98] active:opacity-85"
+              onPress={() => router.back()}
+            >
               <Ionicons name="arrow-back" size={18} color="white" />
             </Pressable>
 
