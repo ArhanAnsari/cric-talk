@@ -199,7 +199,10 @@ const RoomManage = () => {
                 End time
               </Text>
 
-              <Pressable className="w-full h-12 border border-slate-300 pl-4 justify-center rounded-lg">
+              <Pressable
+                className="w-full h-12 border border-slate-300 pl-4 justify-center rounded-lg"
+                onPress={() => setIsEndTimePickerVisible(true)}
+              >
                 <Text>
                   {endTime.toLocaleString("en-IN", {
                     dateStyle: "medium",
