@@ -1,3 +1,5 @@
+import { showToast } from "@/libs/showToast";
+import { executeRoom } from "@/services/rooms.service";
 import { useRooms } from "@/store/useRooms";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
@@ -49,6 +51,47 @@ const RoomManage = () => {
     (new Date(oldEndTime).getTime() !== endTime.getTime() && !!endTime);
   const isNewMatchType: boolean =
     oldMatchType.trim() !== matchType.trim() && !!matchType;
+
+  async function handleUpdateRoom(updateType: string) {
+    let status = room?.status ?? "upcoming";
+
+    if (updateType === "time") {
+      if (startTime.getTime() < Date.now()) {
+        status = "finished";
+      } else if (startTime.getTime() > Date.now()) {
+        status = "upcoming";
+      } else if (
+        startTime.getTime() < Date.now() &&
+        endTime.getTime() > startTime.getTime()
+      ) {
+        status = "live";
+      }
+    }
+
+    try {
+      await executeRoom({
+        action: "update",
+        roomId: room?.$id,
+        teams: [team1 || oldTeams[0], team2 || oldTeams[1]],
+        status: status,
+        startTime: startTime.toISOString(),
+        endTime: endTime.toISOString(),
+        matchType: matchType || oldMatchType,
+        isLocked: isLocked ?? room?.isLocked,
+      });
+
+      showToast({
+        type: "success",
+        text1: `Room ${updateType} updated successfully`,
+      });
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: `Failed to change ${updateType}`,
+        text2: "Please try again later.",
+      });
+    }
+  }
 
   return (
     <View className="flex-1 bg-white">
