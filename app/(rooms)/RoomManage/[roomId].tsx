@@ -1,3 +1,4 @@
+import { useRooms } from "@/store/useRooms";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
@@ -6,6 +7,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const RoomManage = () => {
   const { roomId } = useLocalSearchParams();
+
+  const rooms = useRooms((s) => s.rooms);
+  const room = rooms.find((r) => r.$id === roomId);
 
   return (
     <View className="flex-1 bg-white">
