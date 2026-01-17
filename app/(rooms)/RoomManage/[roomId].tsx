@@ -35,6 +35,8 @@ const RoomManage = () => {
   );
   const [isLocked, setIsLocked] = useState<boolean>(oldIsLocked);
 
+  const [isLockUpdating, setIsLockUpdating] = useState<boolean>(false);
+
   const [isStartTimePickerVisible, setIsStartTimePickerVisible] =
     useState<boolean>(false);
   const [isEndTimePickerVisible, setIsEndTimePickerVisible] =
@@ -267,15 +269,29 @@ const RoomManage = () => {
             </Text>
 
             <Pressable
-              className="w-full h-12 bg-orange-500 rounded-lg items-center justify-center px-6 py-3 transition-all ease-in-out active:scale-[0.98] active:opacity-85"
-              onPress={() => {
+              disabled={isLockUpdating}
+              className={`w-full h-12 ${!isLockUpdating ? "bg-orange-500" : "bg-slate-500"} rounded-lg items-center justify-center px-6 py-3 transition-all ease-in-out active:scale-[0.98] active:opacity-85`}
+              onPress={async () => {
                 const next = !isLocked;
                 setIsLocked(next);
-                handleUpdateRoom("chat options", next);
+                setIsLockUpdating(true);
+
+                try {
+                  await handleUpdateRoom("chat options", next);
+                  setIsLockUpdating(false);
+                } catch (error) {
+                  setIsLockUpdating(false);
+                }
               }}
             >
               <Text className="text-white font-medium">
-                {isLocked ? "Unlock chat" : "Lock chat"}
+                {isLockUpdating
+                  ? isLocked
+                    ? "Unlocking..."
+                    : "Locking..."
+                  : isLocked
+                    ? "Lock"
+                    : "Unlock"}
               </Text>
             </Pressable>
           </View>
