@@ -119,6 +119,7 @@ const RoomManage = () => {
               <DateTimePicker
                 isVisible={isStartTimePickerVisible}
                 mode="datetime"
+                date={new Date(oldStartTime)}
                 onConfirm={(date) => {
                   setStartTime(date);
                   setIsStartTimePickerVisible(false);
@@ -146,6 +147,7 @@ const RoomManage = () => {
               <DateTimePicker
                 isVisible={isEndTimePickerVisible}
                 mode="datetime"
+                date={new Date(oldEndTime)}
                 onConfirm={(date) => {
                   setEndTime(date);
                   setIsEndTimePickerVisible(false);
