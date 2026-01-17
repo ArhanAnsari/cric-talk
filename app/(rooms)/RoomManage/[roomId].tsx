@@ -2,7 +2,7 @@ import { useRooms } from "@/store/useRooms";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const RoomManage = () => {
@@ -48,6 +48,41 @@ const RoomManage = () => {
             </View>
           </View>
         </SafeAreaView>
+      </View>
+
+      {/* CONTENT */}
+      <View className="px-6 py-4">
+        {/* INPUTS */}
+        <View>
+          {/* TEAMS NAME INPUT */}
+          <View className="gap-2">
+            <Text className="text-lg font-medium text-slate-900">
+              Change teams name
+            </Text>
+
+            <View className="flex-row gap-2 items-center">
+              <TextInput
+                value={team1}
+                onChangeText={setTeam1}
+                placeholder="Team 1"
+                className="border border-slate-300 rounded-lg pl-4 h-12 flex-1"
+              />
+
+              <Text className="text-slate-500 text-sm">vs</Text>
+
+              <TextInput
+                value={team2}
+                onChangeText={setTeam2}
+                placeholder="Text 2"
+                className="border border-slate-300 rounded-lg pl-4 h-12 flex-1"
+              />
+            </View>
+
+            <Pressable className="w-full bg-orange-500 items-center justify-center px-6 py-2 rounded-lg h-12">
+              <Text className=" text-white font-medium">Save</Text>
+            </Pressable>
+          </View>
+        </View>
       </View>
     </View>
   );
