@@ -102,7 +102,7 @@ const RoomManage = () => {
 
             <Pressable
               disabled={!isNewTeam}
-              className={`w-full ${isNewTeam ? "bg-orange-500" : "bg-slate-500"} items-center justify-center px-6 py-2 rounded-lg h-12`}
+              className={`w-full ${isNewTeam ? "bg-orange-500" : "bg-slate-500"} items-center justify-center px-6 py-2 rounded-lg h-12 transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85`}
             >
               <Text className=" text-white font-medium">Save</Text>
             </Pressable>
@@ -171,7 +171,7 @@ const RoomManage = () => {
 
             <Pressable
               disabled={!isNewTime}
-              className={`w-full ${isNewTime ? "bg-orange-500" : "bg-slate-500"} items-center justify-center px-6 py-2 rounded-lg h-12`}
+              className={`w-full ${isNewTime ? "bg-orange-500" : "bg-slate-500"} items-center justify-center px-6 py-2 rounded-lg h-12 transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85`}
             >
               <Text className="text-white font-medium">Save</Text>
             </Pressable>
@@ -197,7 +197,7 @@ const RoomManage = () => {
 
             <Pressable
               disabled={isNewMatchType}
-              className={`w-full ${isNewMatchType ? "bg-orange-500" : "bg-slate-500"} items-center justify-center px-6 py-2 rounded-lg h-12`}
+              className={`w-full ${isNewMatchType ? "bg-orange-500" : "bg-slate-500"} items-center justify-center px-6 py-2 rounded-lg h-12 transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85`}
             >
               <Text className="text-white font-medium">Save</Text>
             </Pressable>
@@ -209,7 +209,7 @@ const RoomManage = () => {
               Change chat options
             </Text>
 
-            <Pressable className="w-full h-12 bg-orange-500 rounded-lg items-center justify-center px-6 py-3">
+            <Pressable className="w-full h-12 bg-orange-500 rounded-lg items-center justify-center px-6 py-3 transition-all ease-in-out active:scale-[0.98] active:opacity-85">
               <Text className="text-white font-medium">
                 {room?.isLocked ? "Unlock chat" : "Lock chat"}
               </Text>
