@@ -73,7 +73,7 @@ export default async ({ req, res }) => {
           status: status || room.status,
           startTime: startTime || room.startTime,
           endTime: endTime || room.endTime,
-          matchType: matchType || room.isLocked,
+          matchType: matchType || room.matchType,
           isLocked: isLocked ?? room.isLocked,
         },
       });
