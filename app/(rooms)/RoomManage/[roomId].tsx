@@ -148,7 +148,7 @@ const RoomManage = () => {
               <TextInput
                 value={team2}
                 onChangeText={setTeam2}
-                placeholder="Text 2"
+                placeholder="Team 2"
                 className="border border-slate-300 rounded-lg pl-4 h-12 flex-1"
               />
             </View>
