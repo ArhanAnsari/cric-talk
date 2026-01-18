@@ -61,13 +61,16 @@ const RoomManage = () => {
     let status = room?.status ?? "upcoming";
 
     if (updateType === "time") {
-      if (startTime.getTime() < Date.now()) {
+      if (startTime.getTime() < Date.now() && endTime.getTime() < Date.now()) {
         status = "finished";
-      } else if (startTime.getTime() > Date.now()) {
+      } else if (
+        startTime.getTime() > Date.now() &&
+        endTime.getTime() > startTime.getTime()
+      ) {
         status = "upcoming";
       } else if (
         startTime.getTime() < Date.now() &&
-        endTime.getTime() > startTime.getTime()
+        endTime.getTime() > Date.now()
       ) {
         status = "live";
       }
