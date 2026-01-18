@@ -26,8 +26,10 @@ const RoomManage = () => {
     isLocked: oldIsLocked = false,
   } = room || {};
 
-  const [team1, setTeam1] = useState<string>(oldTeams[0]);
-  const [team2, setTeam2] = useState<string>(oldTeams[1]);
+  const [oldTeam1, oldTeam2] = oldTeams;
+
+  const [team1, setTeam1] = useState<string>(oldTeam1);
+  const [team2, setTeam2] = useState<string>(oldTeam2);
   const [startTime, setStartTime] = useState<Date>(new Date(oldStartTime));
   const [endTime, setEndTime] = useState<Date>(new Date(oldEndTime));
   const [matchType, setMatchType] = useState<"ODI" | "TEST" | "T20">(
@@ -49,8 +51,8 @@ const RoomManage = () => {
   ];
 
   const isNewTeam: boolean =
-    (oldTeams[0].trim() !== team1.trim() && team1.trim() !== "") ||
-    (oldTeams[1].trim() !== team2.trim() && team2.trim() !== "");
+    (oldTeam1.trim() !== team1.trim() && team1.trim() !== "") ||
+    (oldTeam2.trim() !== team2.trim() && team2.trim() !== "");
   const isNewTime: boolean =
     (new Date(oldStartTime).getTime() !== startTime.getTime() && !!startTime) ||
     (new Date(oldEndTime).getTime() !== endTime.getTime() && !!endTime);
@@ -78,7 +80,7 @@ const RoomManage = () => {
       const execution = await executeRoom({
         action: "update",
         roomId: room?.$id,
-        teams: [team1 || oldTeams[0], team2 || oldTeams[1]],
+        teams: [team1 || oldTeam1, team2 || oldTeam2],
         status: status,
         startTime: startTime.toISOString(),
         endTime: endTime.toISOString(),
