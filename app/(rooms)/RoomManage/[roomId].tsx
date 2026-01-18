@@ -288,11 +288,11 @@ const RoomManage = () => {
               <Text className="text-white font-medium">
                 {isLockUpdating
                   ? isLocked
-                    ? "Unlocking..."
-                    : "Locking..."
+                    ? "Locking..."
+                    : "Unlocking..."
                   : isLocked
-                    ? "Lock"
-                    : "Unlock"}
+                    ? "Unlock"
+                    : "Lock"}
               </Text>
             </Pressable>
           </View>
