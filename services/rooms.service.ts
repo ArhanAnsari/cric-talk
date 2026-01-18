@@ -31,7 +31,7 @@ export async function executeRoom({
   matchType,
   isLocked,
 }: {
-  action: "create" | "delete";
+  action: "create" | "update" | "delete";
   teams: string[];
   status: "upcoming" | "live" | "finished";
   startTime: string;

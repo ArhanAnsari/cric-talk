@@ -111,7 +111,7 @@ const RoomDiscussion = () => {
             setRoomMessages((prev) =>
               prev.some((msg) => msg.$id === payload.$id)
                 ? prev
-                : [payload, ...prev]
+                : [payload, ...prev],
             );
           }
         }
@@ -121,7 +121,7 @@ const RoomDiscussion = () => {
 
           if (payload.roomId === roomId) {
             setRoomMessages((prev) =>
-              prev.map((m) => (m.$id === payload.$id ? payload : m))
+              prev.map((m) => (m.$id === payload.$id ? payload : m)),
             );
           }
         }
@@ -131,11 +131,11 @@ const RoomDiscussion = () => {
 
           if (payload.roomId === roomId) {
             setRoomMessages((prev) =>
-              prev.filter((m) => m.$id !== payload.$id)
+              prev.filter((m) => m.$id !== payload.$id),
             );
           }
         }
-      }
+      },
     );
 
     return () => unsubscribe();
@@ -154,16 +154,28 @@ const RoomDiscussion = () => {
                 <Ionicons name="arrow-back" size={18} color="white" />
               </Pressable>
 
-              <Text className="text-white font-semibold text-lg text-center flex-1 -ml-6">
+              <Text
+                className={`text-white font-semibold text-lg text-center flex-1 ${room?.authorId === userId ? "-mr-10" : "-ml-6"}`}
+              >
                 {room?.teams && `${room?.teams[0]} vs ${room?.teams[1]}`}
               </Text>
 
               <Pressable
-                className="w-10 h-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 active:scale-[0.98] active:opacity-85 absolute right-6"
+                className={`w-10 h-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 active:scale-[0.98] active:opacity-85 ${room?.authorId === userId ? "mr-2" : ""}`}
                 onPress={() => setIsRoomDetailsVisible(true)}
               >
                 <Ionicons name="information" size={18} color="white" />
               </Pressable>
+
+              {/* ROOM MANAGE ICON */}
+              {room?.authorId === userId && (
+                <Pressable
+                  className="w-10 h-10 bg-orange-600 items-center justify-center rounded-full transition-all active:scale-[0.98] active:opacity-85"
+                  onPress={() => router.push(`/(rooms)/RoomManage/${roomId}`)}
+                >
+                  <Ionicons name="settings-outline" size={18} color="white" />
+                </Pressable>
+              )}
             </View>
           </SafeAreaView>
         </View>
@@ -183,8 +195,8 @@ const RoomDiscussion = () => {
                 {room?.status === "upcoming"
                   ? "The room hasn't started yet"
                   : room?.status === "finished"
-                  ? "The room has finished"
-                  : ""}
+                    ? "The room has finished"
+                    : ""}
               </Text>
 
               <Text className="text-sm text-slate-600 text-center">
@@ -192,8 +204,8 @@ const RoomDiscussion = () => {
                 {room?.status === "upcoming"
                   ? "is upcoming."
                   : room?.status == "finished"
-                  ? "has been finished."
-                  : ""}
+                    ? "has been finished."
+                    : ""}
               </Text>
             </View>
           )}

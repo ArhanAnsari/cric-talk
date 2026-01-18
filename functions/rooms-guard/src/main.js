@@ -51,6 +51,34 @@ export default async ({ req, res }) => {
       });
     }
 
+    async function updateRoom() {
+      const room = await tablesDB.getRow({
+        databaseId: CRIC_TALK_DATABASE_ID,
+        tableId: ROOMS_TABLE_ID,
+        rowId: roomId,
+      });
+
+      if (room.authorId !== userId)
+        throw new Error("Forbidden: You aren't the room owner");
+
+      if (room.status === 'finished')
+        throw new Error("Error: Room data can't be updated once its finished");
+
+      return await tablesDB.updateRow({
+        databaseId: CRIC_TALK_DATABASE_ID,
+        tableId: ROOMS_TABLE_ID,
+        rowId: roomId,
+        data: {
+          teams: teams || room.teams,
+          status: status || room.status,
+          startTime: startTime || room.startTime,
+          endTime: endTime || room.endTime,
+          matchType: matchType || room.matchType,
+          isLocked: isLocked ?? room.isLocked,
+        },
+      });
+    }
+
     async function deleteRoom() {
       const room = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
@@ -76,6 +104,9 @@ export default async ({ req, res }) => {
     switch (action) {
       case 'create':
         result = await createRoom();
+        break;
+      case 'update':
+        result = await updateRoom();
         break;
       case 'delete':
         result = await deleteRoom();
