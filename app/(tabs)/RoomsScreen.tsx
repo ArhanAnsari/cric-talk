@@ -7,34 +7,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { FlatList, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CreateRoomModal from "../components/CreateRoomModal";
+import FilterChip from "../components/FilterChip";
 import MatchRoomCard from "../components/MatchRoomCard";
-
-type FilterChipProps = {
-  label: string;
-  selected: boolean;
-  onPress: () => void;
-};
-
-const FilterChip = ({ label, selected, onPress }: FilterChipProps) => {
-  return (
-    <Pressable
-      className={`${
-        selected ? "bg-orange-500" : "bg-transparent border border-orange-500"
-      } px-4 py-2 rounded-full ${
-        label === "all" || label === "live" ? "w-20" : "w-max"
-      } items-center transition-all duration-300 ease-in-out active:scale-[0.97] active:opacity-85`}
-      onPress={onPress}
-    >
-      <Text
-        className={`${
-          selected ? "text-white" : "text-orange-500"
-        } font-medium capitalize`}
-      >
-        {label}
-      </Text>
-    </Pressable>
-  );
-};
 
 const RoomsScreen = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
