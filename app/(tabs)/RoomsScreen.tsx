@@ -87,6 +87,7 @@ const RoomsScreen = () => {
               label={label}
               selected={selectedFilter === label}
               onPress={() => setSelectedFilter(label as any)}
+              width={label === "all" || label === "live" ? "20" : ""}
             />
           ))}
         </ScrollView>
