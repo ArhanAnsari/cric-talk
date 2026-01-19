@@ -94,7 +94,7 @@ const HomeScreen = () => {
   return (
     <View className="flex-1 bg-white">
       {/* HEADER */}
-      <View className="w-full h-30 bg-orange-500">
+      <View className="w-full h-30 bg-linear-to-br from-orange-600 to-orange-500">
         <SafeAreaView>
           <View className="px-6 py-4 flex-row items-center justify-between w-full">
             {/* USER AVATAR */}
