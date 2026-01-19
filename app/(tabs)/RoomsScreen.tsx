@@ -88,11 +88,9 @@ const RoomsScreen = () => {
               <Ionicons name="arrow-back" size={18} color="white" />
             </Pressable>
 
-            <Text className="text-white text-xl font-semibold">Rooms</Text>
-
-            <Pressable className="bg-orange-600 h-10 p-2 rounded-full items-center justify-center transition-all duration-300 active:scale-[0.98] active:opacity-85">
-              <Ionicons name="settings-outline" size={18} color="white" />
-            </Pressable>
+            <View className="absolute left-0 right-0 items-center">
+              <Text className="text-white text-xl font-semibold">Rooms</Text>
+            </View>
           </View>
         </SafeAreaView>
       </View>
