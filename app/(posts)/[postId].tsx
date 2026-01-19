@@ -156,7 +156,7 @@ const PostDetails = () => {
           <SafeAreaView>
             <View className="px-6 py-4 flex-row items-center">
               <Pressable
-                className="h-10 w-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 ease-in-out active:[scale-0.98] active:opacity-85"
+                className="size-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 ease-in-out active:[scale-0.98] active:opacity-85"
                 onPress={() => router.back()}
               >
                 <Ionicons name="arrow-back" size={18} color="white" />
@@ -198,7 +198,7 @@ const PostDetails = () => {
                       {/* AUTHOR INFO */}
                       <View className="flex-row items-center gap-2">
                         {/* AUTHOR PROFILE IMAGE + DELETE */}
-                        <Pressable className="bg-gray-300 h-10 w-10 items-center justify-center rounded-full">
+                        <Pressable className="bg-gray-300 size-10 items-center justify-center rounded-full">
                           <Text className="text-lg font-semibold capitalize text-slate-950">
                             {item.authorId[0]}
                           </Text>

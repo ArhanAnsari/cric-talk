@@ -60,7 +60,7 @@ const PostCard = ({ userId, post }: Props) => {
       >
         {/* USER INFO + POST ACTION ICON */}
         <View className="flex-row items-center gap-2">
-          <Pressable className="w-10 h-10 bg-gray-200 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
+          <Pressable className="size-10 bg-gray-200 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
             <Text className="text-slate-900 font-medium text-lg capitalize">
               {post.authorName.charAt(0)}
             </Text>
@@ -76,7 +76,7 @@ const PostCard = ({ userId, post }: Props) => {
               (Date.now() - new Date(post.$createdAt).getTime()) /
                 1000 /
                 60 /
-                60
+                60,
             )}
             hr ago
           </Text>

@@ -65,7 +65,7 @@ const HomeScreen = () => {
         increamentView(item.$id);
       });
     },
-    [posts]
+    [posts],
   );
 
   useEffect(() => {
@@ -99,7 +99,7 @@ const HomeScreen = () => {
           <View className="px-6 py-4 flex-row items-center justify-between w-full">
             {/* USER AVATAR */}
             <Pressable
-              className="w-10 h-10 bg-gray-200 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85"
+              className="size-10 bg-gray-200 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85"
               onPress={() => setIsDrawerOpen(true)}
             >
               <Text className="text-slate-900 font-medium text-lg capitalize">
@@ -111,7 +111,7 @@ const HomeScreen = () => {
             <Text className="text-white text-xl font-semibold">CricTalk</Text>
 
             {/* NOTIFICATION ICON */}
-            <Pressable className="bg-orange-600 w-10 h-10 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
+            <Pressable className="bg-orange-600 size-10 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
               <Octicons name="bell-fill" size={18} color="white" />
             </Pressable>
           </View>

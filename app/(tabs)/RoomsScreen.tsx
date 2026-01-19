@@ -82,7 +82,7 @@ const RoomsScreen = () => {
         <SafeAreaView>
           <View className="px-6 py-4 flex-row items-center justify-between">
             <Pressable
-              className="bg-orange-600 h-10 w-10 rounded-full items-center justify-center transition-all duration-300 active:scale-[0.98] active:opacity-85"
+              className="bg-orange-600 size-10 rounded-full items-center justify-center transition-all duration-300 active:scale-[0.98] active:opacity-85"
               onPress={() => router.back()}
             >
               <Ionicons name="arrow-back" size={18} color="white" />
