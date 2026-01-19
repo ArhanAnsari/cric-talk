@@ -87,18 +87,21 @@ const LeaderboardScreen = () => {
         </SafeAreaView>
       </View>
 
-      <View className="mt-6 px-6">
-        {/* LEADERBOARD LIST */}
-        <FlatList
-          data={userStatsLeaderboard.slice(3, 3 + 7)}
-          keyExtractor={(item) => item.$id}
-          contentContainerStyle={{ paddingBottom: 80 }}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item, index }) => (
-            <LeaderboardUserRow user={item} rank={index + 1} />
-          )}
-        />
-      </View>
+      {/* LEADERBOARD LIST */}
+
+      <FlatList
+        data={userStatsLeaderboard.slice(3, 3 + 7)}
+        keyExtractor={(item) => item.$id}
+        contentContainerStyle={{
+          paddingBottom: 40,
+          paddingHorizontal: 24,
+          paddingVertical: 16,
+        }}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item, index }) => (
+          <LeaderboardUserRow user={item} rank={index + 1} />
+        )}
+      />
     </View>
   );
 };
