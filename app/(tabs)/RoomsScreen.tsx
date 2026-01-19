@@ -107,7 +107,6 @@ const RoomsScreen = () => {
             alignItems: "center",
             gap: 8,
             paddingHorizontal: 24,
-            paddingBottom: 16,
           }}
         >
           {["all", "live", "upcoming", "finished"].map((label, index) => (
@@ -124,7 +123,7 @@ const RoomsScreen = () => {
         <FlatList
           data={filteredRooms}
           keyExtractor={(item) => item.$id}
-          contentContainerStyle={{ paddingTop: 4, paddingBottom: 140 }}
+          contentContainerStyle={{ paddingTop: 20, paddingBottom: 140 }}
           renderItem={({ item }) => <MatchRoomCard room={item} />}
         />
       </SafeAreaView>
