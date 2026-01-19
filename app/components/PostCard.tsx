@@ -3,7 +3,7 @@ import { Post } from "@/interfaces/Post";
 import { showToast } from "@/libs/showToast";
 import { executePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
-import { Octicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Pressable, Text, View } from "react-native";
@@ -88,12 +88,12 @@ const PostCard = ({ userId, post }: Props) => {
                 className="flex-row items-center"
                 onPress={() => setIsEditModalVisible(true)}
               >
-                <Octicons name="pencil" size={18} color="black" />
+                <Ionicons name="pencil-outline" size={18} color="black" />
               </Pressable>
 
               {/* DELETE POST ICON */}
               <Pressable onPress={handleDeletePost}>
-                <Octicons name="trash" size={18} color="black" />
+                <Ionicons name="trash-outline" size={18} color="black" />
               </Pressable>
             </View>
           )}
@@ -115,11 +115,11 @@ const PostCard = ({ userId, post }: Props) => {
             className="flex-row items-center gap-2"
             onPress={() => likePost({ postId: post.$id, userId })}
           >
-            <Octicons
+            <Ionicons
               name={
                 posts.find((p) => p.$id === post.$id)?.likedBy.includes(userId)
-                  ? "heart-fill"
-                  : "heart"
+                  ? "heart-sharp"
+                  : "heart-outline"
               }
               size={18}
               color={
@@ -134,7 +134,7 @@ const PostCard = ({ userId, post }: Props) => {
           </Pressable>
 
           <Pressable className="flex-row items-center gap-2">
-            <Octicons name="comment-discussion" size={18} color="black" />
+            <Ionicons name="chatbox-ellipses-outline" size={18} color="black" />
             <Text>
               {post.commentCount} Comment
               {post.commentCount === 1 ? "" : "s"}
@@ -142,7 +142,7 @@ const PostCard = ({ userId, post }: Props) => {
           </Pressable>
 
           <Pressable className="flex-row items-center gap-2">
-            <Octicons name="eye" size={18} color="black" />
+            <Ionicons name="eye-outline" size={18} color="black" />
             <Text>
               {post.views} View{post.views === 1 ? "" : "s"}
             </Text>

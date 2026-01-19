@@ -3,7 +3,7 @@ import {
   createUserWithEmailAndPassword,
   loginUserWithEmailAndPassword,
 } from "@/services/auth.service";
-import { Octicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { usePreventScreenCapture } from "expo-screen-capture";
 import React, { useState } from "react";
@@ -82,8 +82,8 @@ const SignupScreen = () => {
               className="border border-orange-500 rounded-md p-2 mt-2 h-12 pl-4"
             />
 
-            <Octicons
-              name={isPasswordHidden ? "eye-closed" : "eye"}
+            <Ionicons
+              name={isPasswordHidden ? "eye-off-outline" : "eye-outline"}
               size={24}
               color="#0f172b"
               style={{ position: "absolute", right: 10, top: 16 }}

@@ -2,7 +2,7 @@ import { account } from "@/libs/appwrite";
 import { executePost, fetchPosts } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { useUser } from "@/store/useUser";
-import { Octicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { ViewToken } from "react-native";
 import { FlatList, Pressable, Text, TextInput, View } from "react-native";
@@ -112,7 +112,7 @@ const HomeScreen = () => {
 
             {/* NOTIFICATION ICON */}
             <Pressable className="bg-orange-600 size-10 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
-              <Octicons name="bell-fill" size={18} color="white" />
+              <Ionicons name="notifications" size={18} color="white" />
             </Pressable>
           </View>
         </SafeAreaView>
@@ -130,7 +130,7 @@ const HomeScreen = () => {
           />
 
           <Pressable className="bg-orange-500 w-12 h-12 rounded-lg items-center justify-center">
-            <Octicons name="filter" size={24} color="white" />
+            <Ionicons name="filter" size={24} color="white" />
           </Pressable>
         </View>
 
@@ -153,7 +153,7 @@ const HomeScreen = () => {
         className="w-16 h-16 bg-orange-500 rounded-full items-center justify-center absolute bottom-6 right-6 shadow-md elevation-xs"
         onPress={() => setIsVisible(true)}
       >
-        <Octicons name="plus" size={24} color="white" />
+        <Ionicons name="add" size={24} color="white" />
       </Pressable>
 
       {/* CREATE POST MODAL */}

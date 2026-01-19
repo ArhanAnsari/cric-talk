@@ -1,7 +1,7 @@
 import { showToast } from "@/libs/showToast";
 import { fetchRooms } from "@/services/rooms.service";
 import { useRooms } from "@/store/useRooms";
-import { Ionicons, Octicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { FlatList, Pressable, ScrollView, Text, View } from "react-native";
@@ -134,7 +134,7 @@ const RoomsScreen = () => {
         className="w-16 h-16 bg-orange-500 rounded-full items-center justify-center absolute bottom-6 right-6 shadow-md elevation-xs"
         onPress={() => setIsVisible(!isVisible)}
       >
-        <Octicons name="plus" size={24} color="white" />
+        <Ionicons name="add" size={24} color="white" />
       </Pressable>
 
       {/* CREATE ROOM MODAL */}
