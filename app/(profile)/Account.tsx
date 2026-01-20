@@ -126,7 +126,7 @@ const Account = () => {
                 onChangeText={setNewUsername}
                 placeholder="Change your username"
                 placeholderTextColor="gray"
-                className="border border-slate-300 rounded-lg h-12 text-slate-900 flex-1"
+                className="border border-slate-300 rounded-lg h-12 text-slate-900 flex-1 pl-4"
               />
 
               <Pressable
@@ -157,7 +157,7 @@ const Account = () => {
                 onChangeText={setNewEmail}
                 placeholder="Change your email address"
                 placeholderTextColor="gray"
-                className="border border-slate-300 rounded-lg h-12 text-slate-900 flex-1"
+                className="border border-slate-300 rounded-lg h-12 text-slate-900 flex-1 pl-4"
               />
 
               <Pressable
