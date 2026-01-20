@@ -156,7 +156,7 @@ const PostDetails = () => {
           <SafeAreaView>
             <View className="px-6 py-4 flex-row items-center">
               <Pressable
-                className="size-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 ease-in-out active:[scale-0.98] active:opacity-85"
+                className="size-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85"
                 onPress={() => router.back()}
               >
                 <Ionicons name="arrow-back" size={18} color="white" />
