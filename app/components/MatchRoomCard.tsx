@@ -34,8 +34,8 @@ const MatchRoomCard = ({ room }: { room: Room }) => {
           room.status === "live"
             ? "bg-green-500"
             : room.status === "upcoming"
-            ? "bg-yellow-500"
-            : "bg-red-500"
+              ? "bg-yellow-500"
+              : "bg-red-500"
         } mx-auto py-1 px-3 rounded-full`}
       >
         <Text className="text-white text-xs uppercase font-semibold">

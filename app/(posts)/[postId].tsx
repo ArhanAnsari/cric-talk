@@ -198,7 +198,7 @@ const PostDetails = () => {
                       {/* AUTHOR INFO */}
                       <View className="flex-row items-center gap-2">
                         {/* AUTHOR PROFILE IMAGE + DELETE */}
-                        <Pressable className="bg-gray-300 size-10 items-center justify-center rounded-full">
+                        <Pressable className="bg-slate-300 size-10 items-center justify-center rounded-full">
                           <Text className="text-lg font-semibold capitalize text-slate-950">
                             {item.authorId[0]}
                           </Text>
