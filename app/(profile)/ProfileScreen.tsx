@@ -20,7 +20,7 @@ const ProfileScreen = () => {
   const MAX_CHARS = 16;
 
   const [activeTab, setActiveTab] = useState<"posts" | "rooms" | "stats">(
-    "posts"
+    "posts",
   );
 
   const [userPosts, setUserPosts] = useState<Post[]>([]);
@@ -28,7 +28,7 @@ const ProfileScreen = () => {
 
   const messageCount = userStats.reduce(
     (acc, stat) => acc + stat.messageCount,
-    0
+    0,
   );
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const ProfileScreen = () => {
         <SafeAreaView>
           <View className="px-6 py-4 flex-row items-center justify-between">
             <Pressable
-              className="h-10 w-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85"
+              className="size-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85"
               onPress={() => router.back()}
             >
               <Ionicons name="arrow-back" size={18} color="white" />
@@ -71,7 +71,7 @@ const ProfileScreen = () => {
                 : username}
             </Text>
 
-            <Pressable className="h-10 w-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85">
+            <Pressable className="size-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85">
               <Ionicons name="settings-outline" size={18} color="white" />
             </Pressable>
           </View>

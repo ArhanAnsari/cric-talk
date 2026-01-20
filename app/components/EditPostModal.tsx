@@ -113,6 +113,7 @@ const EditPostModal = ({
               value={content}
               onChangeText={setContent}
               placeholder="Write anything about cricket..."
+              placeholderTextColor="gray"
               multiline
               numberOfLines={8}
               maxLength={512}

@@ -148,7 +148,7 @@ const RoomDiscussion = () => {
           <SafeAreaView>
             <View className="flex-row items-center px-6 py-4 relative">
               <Pressable
-                className="w-10 h-10 bg-orange-600 rounded-full items-center justify-center transition-all duration-300 active:scale-[0.98] active:opacity-85"
+                className="size-10 bg-orange-600 rounded-full items-center justify-center transition-all duration-300 active:scale-[0.98] active:opacity-85"
                 onPress={() => router.back()}
               >
                 <Ionicons name="arrow-back" size={18} color="white" />
@@ -161,7 +161,7 @@ const RoomDiscussion = () => {
               </Text>
 
               <Pressable
-                className={`w-10 h-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 active:scale-[0.98] active:opacity-85 ${room?.authorId === userId ? "mr-2" : ""}`}
+                className={`size-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 active:scale-[0.98] active:opacity-85 ${room?.authorId === userId ? "mr-2" : ""}`}
                 onPress={() => setIsRoomDetailsVisible(true)}
               >
                 <Ionicons name="information" size={18} color="white" />
@@ -170,7 +170,7 @@ const RoomDiscussion = () => {
               {/* ROOM MANAGE ICON */}
               {room?.authorId === userId && (
                 <Pressable
-                  className="w-10 h-10 bg-orange-600 items-center justify-center rounded-full transition-all active:scale-[0.98] active:opacity-85"
+                  className="size-10 bg-orange-600 items-center justify-center rounded-full transition-all active:scale-[0.98] active:opacity-85"
                   onPress={() => router.push(`/(rooms)/RoomManage/${roomId}`)}
                 >
                   <Ionicons name="settings-outline" size={18} color="white" />
@@ -251,7 +251,8 @@ const RoomDiscussion = () => {
               value={messageContent}
               onChangeText={setMessageContent}
               placeholder="Comment"
-              className="border border-gray-300 rounded-lg pl-4 h-12 flex-1 mr-4"
+              placeholderTextColor="gray"
+              className="border border-gray-300 rounded-lg pl-4 h-12 flex-1 mr-4 text-slate-900"
             />
 
             {/* MESSAGE ADD BUTTON */}
@@ -293,7 +294,8 @@ const RoomDiscussion = () => {
               value={editMessageContent}
               onChangeText={setEditMessageContent}
               placeholder="Edit your message"
-              className="border border-gray-300 rounded-lg h-24 mt-2 pl-4"
+              placeholderTextColor="gray"
+              className="border border-gray-300 rounded-lg h-24 mt-2 pl-4 text-slate-900"
               textAlignVertical="top"
               multiline
             />

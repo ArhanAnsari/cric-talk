@@ -102,7 +102,7 @@ const LoginSecurity = () => {
             }
           },
         },
-      ]
+      ],
     );
   }
 
@@ -113,7 +113,7 @@ const LoginSecurity = () => {
           {/* HEADER */}
           <View className="px-6 py-4 flex-row items-center">
             <Pressable
-              className="w-10 h-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85"
+              className="size-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85"
               onPress={() => router.back()}
             >
               <Ionicons name="arrow-back" size={18} color="white" />
@@ -145,7 +145,8 @@ const LoginSecurity = () => {
                   value={oldPassword}
                   onChangeText={setOldPassword}
                   placeholder="Enter your old password"
-                  className="border border-slate-300 rounded-lg"
+                  placeholderTextColor="gray"
+                  className="border border-slate-300 rounded-lg text-slate-900 pl-4 h-12"
                   secureTextEntry={isPasswordHidden}
                 />
                 <Pressable onPress={() => setPasswordHidden(!isPasswordHidden)}>
@@ -166,7 +167,8 @@ const LoginSecurity = () => {
                   value={newPassword}
                   onChangeText={setNewPassword}
                   placeholder="Enter your new password"
-                  className="border border-slate-300 rounded-lg"
+                  placeholderTextColor="gray"
+                  className="border border-slate-300 rounded-lg text-slate-900 pl-4 h-12"
                   secureTextEntry={isPasswordHidden}
                 />
                 <Pressable onPress={() => setPasswordHidden(!isPasswordHidden)}>

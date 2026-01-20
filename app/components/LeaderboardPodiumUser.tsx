@@ -11,7 +11,7 @@ const LeaderboardPodiumUser = ({ userStat, rank }: Props) => {
     <View className="items-center">
       <View
         className={`${
-          rank === 1 ? "bg-gray-200 w-24 h-24" : "bg-gray-300 h-20 w-20"
+          rank === 1 ? "bg-slate-200 w-24 h-24" : "bg-slate-300 h-20 w-20"
         } rounded-full items-center justify-center`}
       >
         <Text className="text-slate-900 capitalize font-medium text-3xl">

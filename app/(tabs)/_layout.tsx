@@ -1,4 +1,4 @@
-import { Ionicons, Octicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
 
@@ -12,8 +12,8 @@ const TabsLayout = () => {
         options={{
           title: "Home",
           tabBarIcon: ({ size, color, focused }) => (
-            <Octicons
-              name={focused ? "home-fill" : "home"}
+            <Ionicons
+              name={focused ? "home" : "home-outline"}
               size={size}
               color={color}
             />

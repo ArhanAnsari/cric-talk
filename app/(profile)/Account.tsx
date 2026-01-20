@@ -88,7 +88,7 @@ const Account = () => {
         <SafeAreaView>
           <View className="px-6 py-4 flex-row items-center">
             <Pressable
-              className="w-10 h-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85"
+              className="size-10 bg-orange-600 items-center justify-center rounded-full transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85"
               onPress={() => router.back()}
             >
               <Ionicons name="arrow-back" size={18} color="white" />
@@ -109,8 +109,8 @@ const Account = () => {
             {username[0]}
           </Text>
 
-          <Pressable className="absolute bottom-4 right-3 bg-slate-300 p-1 shadow-sm elevation-xs rounded-full transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85">
-            <Ionicons name="create-outline" size={18} color="#45556c" />
+          <Pressable className="absolute bottom-4 right-3 bg-slate-200 p-2.5 items-center justify-center shadow-md elevation-xs rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85">
+            <Ionicons name="pencil-outline" size={18} color="black" />
           </Pressable>
         </View>
 
@@ -125,7 +125,8 @@ const Account = () => {
                 value={newUsername}
                 onChangeText={setNewUsername}
                 placeholder="Change your username"
-                className="border border-slate-300 rounded-lg h-12 text-slate-900 flex-1"
+                placeholderTextColor="gray"
+                className="border border-slate-300 rounded-lg h-12 text-slate-900 flex-1 pl-4"
               />
 
               <Pressable
@@ -155,7 +156,8 @@ const Account = () => {
                 value={newEmail}
                 onChangeText={setNewEmail}
                 placeholder="Change your email address"
-                className="border border-slate-300 rounded-lg h-12 text-slate-900 flex-1"
+                placeholderTextColor="gray"
+                className="border border-slate-300 rounded-lg h-12 text-slate-900 flex-1 pl-4"
               />
 
               <Pressable
@@ -200,7 +202,8 @@ const Account = () => {
               value={password}
               onChangeText={setPassword}
               placeholder="Enter your password"
-              className="border border-slate-300 rounded-lg mt-2 pl-4"
+              placeholderTextColor="gray"
+              className="border border-slate-300 rounded-lg mt-2 pl-4 text-slate-900"
             />
 
             <View className="flex-row mt-auto ml-auto gap-6 items-center">

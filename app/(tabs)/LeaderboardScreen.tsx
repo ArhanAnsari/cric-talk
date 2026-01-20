@@ -11,7 +11,7 @@ import LeaderboardUserRow from "../components/LeaderboardUserRow";
 
 const LeaderboardScreen = () => {
   const [userStatsLeaderboard, setUserStatsLeaderboard] = useState<UserStats[]>(
-    []
+    [],
   );
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const LeaderboardScreen = () => {
           {/* HEADER */}
           <View className="px-6 py-4 flex-row items-center">
             <Pressable
-              className="w-10 h-10 bg-orange-600 rounded-full items-center justify-center transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85"
+              className="size-10 bg-orange-600 rounded-full items-center justify-center transition-all duration-300 ease-in-out active:scale-[0.98] active:opacity-85"
               onPress={() => router.push("/(tabs)/RoomsScreen")}
             >
               <Ionicons name="arrow-back" size={18} color="white" />
@@ -87,18 +87,21 @@ const LeaderboardScreen = () => {
         </SafeAreaView>
       </View>
 
-      <View className="mt-6 px-6">
-        {/* LEADERBOARD LIST */}
-        <FlatList
-          data={userStatsLeaderboard.slice(3, 3 + 7)}
-          keyExtractor={(item) => item.$id}
-          contentContainerStyle={{ paddingBottom: 80 }}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item, index }) => (
-            <LeaderboardUserRow user={item} rank={index + 1} />
-          )}
-        />
-      </View>
+      {/* LEADERBOARD LIST */}
+
+      <FlatList
+        data={userStatsLeaderboard.slice(3, 3 + 7)}
+        keyExtractor={(item) => item.$id}
+        contentContainerStyle={{
+          paddingBottom: 40,
+          paddingHorizontal: 24,
+          paddingVertical: 16,
+        }}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item, index }) => (
+          <LeaderboardUserRow user={item} rank={index + 1} />
+        )}
+      />
     </View>
   );
 };

@@ -113,7 +113,7 @@ const RoomManage = () => {
           {/* HEADER */}
           <View className="flex-row items-center px-6 py-4">
             <Pressable
-              className="w-10 h-10 bg-orange-600 items-center justify-center rounded-full transition-all active:scale-[0.98] active:opacity-85"
+              className="size-10 bg-orange-600 items-center justify-center rounded-full transition-all active:scale-[0.98] active:opacity-85"
               onPress={() => router.back()}
             >
               <Ionicons name="arrow-back" size={18} color="white" />
@@ -143,7 +143,8 @@ const RoomManage = () => {
                 value={team1}
                 onChangeText={setTeam1}
                 placeholder="Team 1"
-                className="border border-slate-300 rounded-lg pl-4 h-12 flex-1"
+                placeholderTextColor="gray"
+                className="border border-slate-300 rounded-lg pl-4 h-12 flex-1 text-slate-900"
               />
 
               <Text className="text-slate-500 text-sm">vs</Text>
@@ -152,7 +153,8 @@ const RoomManage = () => {
                 value={team2}
                 onChangeText={setTeam2}
                 placeholder="Team 2"
-                className="border border-slate-300 rounded-lg pl-4 h-12 flex-1"
+                placeholderTextColor="gray"
+                className="border border-slate-300 rounded-lg pl-4 h-12 flex-1 text-slate-900"
               />
             </View>
 

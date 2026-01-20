@@ -2,7 +2,7 @@ import { account } from "@/libs/appwrite";
 import { executePost, fetchPosts } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { useUser } from "@/store/useUser";
-import { Octicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { ViewToken } from "react-native";
 import { FlatList, Pressable, Text, TextInput, View } from "react-native";
@@ -65,7 +65,7 @@ const HomeScreen = () => {
         increamentView(item.$id);
       });
     },
-    [posts]
+    [posts],
   );
 
   useEffect(() => {
@@ -94,12 +94,12 @@ const HomeScreen = () => {
   return (
     <View className="flex-1 bg-white">
       {/* HEADER */}
-      <View className="w-full h-30 bg-orange-500">
+      <View className="w-full h-30 bg-linear-to-br from-orange-600 to-orange-500">
         <SafeAreaView>
           <View className="px-6 py-4 flex-row items-center justify-between w-full">
             {/* USER AVATAR */}
             <Pressable
-              className="w-10 h-10 bg-gray-200 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85"
+              className="size-10 bg-gray-200 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85"
               onPress={() => setIsDrawerOpen(true)}
             >
               <Text className="text-slate-900 font-medium text-lg capitalize">
@@ -111,8 +111,8 @@ const HomeScreen = () => {
             <Text className="text-white text-xl font-semibold">CricTalk</Text>
 
             {/* NOTIFICATION ICON */}
-            <Pressable className="bg-orange-600 w-10 h-10 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
-              <Octicons name="bell-fill" size={18} color="white" />
+            <Pressable className="bg-orange-600 size-10 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
+              <Ionicons name="notifications" size={18} color="white" />
             </Pressable>
           </View>
         </SafeAreaView>
@@ -126,11 +126,12 @@ const HomeScreen = () => {
             onChangeText={setSearchQuery}
             ref={seacrhQueryRef}
             placeholder="Search anything..."
-            className="border border-gray-300 rounded-lg pl-4 flex-1 mr-4 h-12"
+            placeholderTextColor="gray"
+            className="border border-gray-300 rounded-lg pl-4 flex-1 mr-4 h-12 text-slate-900"
           />
 
           <Pressable className="bg-orange-500 w-12 h-12 rounded-lg items-center justify-center">
-            <Octicons name="filter" size={24} color="white" />
+            <Ionicons name="filter" size={24} color="white" />
           </Pressable>
         </View>
 
@@ -153,7 +154,7 @@ const HomeScreen = () => {
         className="w-16 h-16 bg-orange-500 rounded-full items-center justify-center absolute bottom-6 right-6 shadow-md elevation-xs"
         onPress={() => setIsVisible(true)}
       >
-        <Octicons name="plus" size={24} color="white" />
+        <Ionicons name="add" size={24} color="white" />
       </Pressable>
 
       {/* CREATE POST MODAL */}
