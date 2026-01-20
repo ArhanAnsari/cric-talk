@@ -110,7 +110,7 @@ const Account = () => {
           </Text>
 
           <Pressable className="absolute bottom-4 right-3 bg-slate-200 p-2.5 items-center justify-center shadow-md elevation-xs rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85">
-            <Ionicons name="pencil" size={18} color="black" />
+            <Ionicons name="pencil-outline" size={18} color="black" />
           </Pressable>
         </View>
 
