@@ -50,7 +50,7 @@ const ProfileDrawer = ({
           {/* USER INFO */}
           <Pressable className="flex-row items-center gap-2">
             <View className="w-8 h-8 bg-slate-400 rounded-full items-center justify-center">
-              <Text className="uppercase text-lg font-medium text-slate-800">
+              <Text className="uppercase text-lg font-medium text-slate-900">
                 {username?.charAt(0)}
               </Text>
             </View>
