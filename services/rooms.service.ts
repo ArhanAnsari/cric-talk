@@ -17,9 +17,8 @@ export async function fetchRooms() {
     });
 
     const rooms: Room[] = data.rows;
-    const iteratedRooms: Room[] = [];
 
-    rooms.forEach((item: Room) => {
+    return rooms.map((item: Room) => {
       let status: "upcoming" | "live" | "finished" = "upcoming";
       const now = Date.now();
       const start = new Date(item.startTime).getTime();
@@ -33,12 +32,8 @@ export async function fetchRooms() {
         status = "live";
       }
 
-      item.status = status;
-
-      iteratedRooms.push(item);
+      return { ...item, status };
     });
-
-    return iteratedRooms;
   } catch (error) {
     console.log(`Error while fetching rhe rooms ${error}`);
     throw error;
