@@ -59,7 +59,8 @@ const LoginScreen = () => {
             value={email || ""}
             onChangeText={setEmail}
             placeholder="Enter your email"
-            className="border border-orange-500 rounded-md p-2 mt-2 h-12 pl-4"
+            placeholderTextColor="gray"
+            className="border border-orange-500 rounded-md p-2 mt-2 h-12 pl-4 text-slate-900"
           />
         </View>
 
@@ -75,7 +76,8 @@ const LoginScreen = () => {
               onChangeText={setPassword}
               secureTextEntry={isPasswordHidden}
               placeholder="Enter your password"
-              className="border border-orange-500 rounded-md p-2 mt-2 h-12 pl-4"
+              placeholderTextColor="gray"
+              className="border border-orange-500 rounded-md p-2 mt-2 h-12 pl-4 text-slate-900"
             />
 
             <Ionicons
