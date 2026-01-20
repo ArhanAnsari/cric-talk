@@ -19,7 +19,7 @@ export async function fetchRooms() {
     const rooms: Room[] = data.rows;
 
     return rooms.map((item: Room) => {
-      let status: "upcoming" | "live" | "finished" = "upcoming";
+      let status: "upcoming" | "live" | "finished";
       const now = Date.now();
       const start = new Date(item.startTime).getTime();
       const end = new Date(item.endTime || "").getTime();
