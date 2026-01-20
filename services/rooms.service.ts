@@ -44,7 +44,6 @@ export async function executeRoom({
   action,
   roomId,
   teams,
-  status,
   startTime,
   endTime,
   matchType,
@@ -52,7 +51,6 @@ export async function executeRoom({
 }: {
   action: "create" | "update" | "delete";
   teams: string[];
-  status: "upcoming" | "live" | "finished";
   startTime: string;
   matchType: "ODI" | "TEST" | "T20";
   isLocked: boolean;
@@ -66,7 +64,6 @@ export async function executeRoom({
         action,
         roomId,
         teams,
-        status,
         startTime,
         endTime,
         matchType,
