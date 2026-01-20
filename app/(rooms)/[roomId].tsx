@@ -60,7 +60,7 @@ const RoomDiscussion = () => {
       if (!mounted) return;
 
       const data = await fetchRooms();
-      const roomDetails = data.rows.find((room) => room.$id === roomId);
+      const roomDetails = data.find((room) => room.$id === roomId);
       setRoom(roomDetails || null);
     }
 

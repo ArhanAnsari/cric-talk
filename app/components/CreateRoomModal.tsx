@@ -92,23 +92,10 @@ const CreateRoomModal = ({
   async function handleCreateRoom() {
     if (!startDate || !endDate) return;
 
-    const now = new Date();
-    let status: "upcoming" | "live" | "finished";
-
-    if (startDate > now) {
-      status = "upcoming";
-    } else if (startDate < now && endDate > now) {
-      status = "live";
-    } else {
-      status = "finished";
-      setIsLocked(true);
-    }
-
     try {
       const execution = await executeRoom({
         action: "create",
         teams: [team1.trim(), team2.trim()],
-        status,
         startTime: startDate.toISOString(),
         endTime: endDate.toISOString(),
         matchType,

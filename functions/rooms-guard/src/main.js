@@ -8,16 +8,8 @@ export default async ({ req, res }) => {
       throw new Error('Unauthorized: User is unauthorized');
     }
 
-    const {
-      action,
-      roomId,
-      teams,
-      status,
-      startTime,
-      endTime,
-      matchType,
-      isLocked,
-    } = req.bodyJson;
+    const { action, roomId, teams, startTime, endTime, matchType, isLocked } =
+      req.bodyJson;
 
     const client = new Client()
       .setEndpoint(process.env.APPWRITE_ENDPOINT)
@@ -34,15 +26,29 @@ export default async ({ req, res }) => {
     const authorName = user.name || user.email.split('@')[0];
 
     async function createRoom() {
+      let status;
+
+      const now = Date.now();
+      const start = new Date(startTime);
+      const end = new Date(endTime);
+
+      if (end < now) {
+        status = 'finished';
+      } else if (start > now) {
+        status = 'upcoming';
+      } else {
+        status = 'live';
+      }
+
       return await tablesDB.createRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOMS_TABLE_ID,
         rowId: ID.unique(),
         data: {
           teams,
-          status,
           authorId: userId,
           authorName,
+          status,
           startTime,
           endTime,
           matchType,
@@ -61,7 +67,21 @@ export default async ({ req, res }) => {
       if (room.authorId !== userId)
         throw new Error("Forbidden: You aren't the room owner");
 
-      if (room.status === 'finished')
+      let status;
+
+      const now = Date.now();
+      const start = new Date(startTime || room.startTime).getTime();
+      const end = new Date(endTime || room.endTime).getTime();
+
+      if (end < now) {
+        status = 'finished';
+      } else if (start > now) {
+        status = 'upcoming';
+      } else {
+        status = 'live';
+      }
+
+      if (status === 'finished')
         throw new Error("Error: Room data can't be updated once its finished");
 
       return await tablesDB.updateRow({
@@ -70,7 +90,6 @@ export default async ({ req, res }) => {
         rowId: roomId,
         data: {
           teams: teams || room.teams,
-          status: status || room.status,
           startTime: startTime || room.startTime,
           endTime: endTime || room.endTime,
           matchType: matchType || room.matchType,

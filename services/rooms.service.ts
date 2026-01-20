@@ -10,10 +10,29 @@ const ROOMS_GUARD_FUNCTION_ID =
 
 export async function fetchRooms() {
   try {
-    return await tablesDB.listRows<Room>({
+    const data = await tablesDB.listRows<Room>({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: ROOMS_TABLE_ID,
       queries: [Query.orderDesc("startTime"), Query.limit(20)],
+    });
+
+    const rooms: Room[] = data.rows;
+
+    return rooms.map((item: Room) => {
+      let status: "upcoming" | "live" | "finished";
+      const now = Date.now();
+      const start = new Date(item.startTime).getTime();
+      const end = new Date(item.endTime || "").getTime();
+
+      if (end < now) {
+        status = "finished";
+      } else if (start > now) {
+        status = "upcoming";
+      } else {
+        status = "live";
+      }
+
+      return { ...item, status };
     });
   } catch (error) {
     console.log(`Error while fetching rhe rooms ${error}`);
@@ -25,7 +44,6 @@ export async function executeRoom({
   action,
   roomId,
   teams,
-  status,
   startTime,
   endTime,
   matchType,
@@ -33,7 +51,6 @@ export async function executeRoom({
 }: {
   action: "create" | "update" | "delete";
   teams: string[];
-  status: "upcoming" | "live" | "finished";
   startTime: string;
   matchType: "ODI" | "TEST" | "T20";
   isLocked: boolean;
@@ -47,7 +64,6 @@ export async function executeRoom({
         action,
         roomId,
         teams,
-        status,
         startTime,
         endTime,
         matchType,
