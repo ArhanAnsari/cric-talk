@@ -26,6 +26,20 @@ export default async ({ req, res }) => {
     const authorName = user.name || user.email.split('@')[0];
 
     async function createRoom() {
+      let status;
+
+      const now = Date.now();
+      const start = new Date(startTime);
+      const end = new Date(endTime);
+
+      if (end < now) {
+        status = 'finished';
+      } else if (start > now) {
+        status = 'upcoming';
+      } else {
+        status = 'live';
+      }
+
       return await tablesDB.createRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOMS_TABLE_ID,
@@ -34,6 +48,7 @@ export default async ({ req, res }) => {
           teams,
           authorId: userId,
           authorName,
+          status,
           startTime,
           endTime,
           matchType,
