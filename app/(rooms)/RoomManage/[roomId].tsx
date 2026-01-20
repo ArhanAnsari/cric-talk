@@ -60,28 +60,11 @@ const RoomManage = () => {
     oldMatchType.trim() !== matchType.trim() && !!matchType;
 
   async function handleUpdateRoom(updateType: string, lockValue?: boolean) {
-    let status = room?.status ?? "upcoming";
-
-    if (updateType === "time") {
-      const now = Date.now();
-      const start = new Date(startTime).getTime();
-      const end = new Date(endTime).getTime();
-
-      if (end < now) {
-        status = "finished";
-      } else if (start > now) {
-        status = "upcoming";
-      } else {
-        status = "live";
-      }
-    }
-
     try {
       const execution = await executeRoom({
         action: "update",
         roomId: room?.$id,
         teams: [team1 || oldTeam1, team2 || oldTeam2],
-        status: status,
         startTime: startTime.toISOString(),
         endTime: endTime.toISOString(),
         matchType: matchType || oldMatchType,
