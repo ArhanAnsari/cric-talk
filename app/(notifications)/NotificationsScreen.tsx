@@ -26,6 +26,44 @@ const NotificationsScreen = () => {
           </View>
         </SafeAreaView>
       </View>
+
+      {/* CONTENT */}
+      <View className="px-6 py-4">
+        {/* NEW NOTIFICATIONS TOTAL */}
+        <Text className="text-slate-900 font-medium">
+          You have 5 new notifications
+        </Text>
+
+        {/* NOTIFICATION CARD */}
+        <Pressable className="bg-white p-4 rounded-xl shadow-md elevation-xs border border-slate-300 mt-6 transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85">
+          {/* TITLE */}
+          <View className="flex-row items-center gap-3">
+            <View className="bg-slate-100 size-10 items-center justify-center rounded-full">
+              <Ionicons
+                name="notifications-outline"
+                size={18}
+                color="#0f172b"
+              />
+            </View>
+
+            <Text className="font-medium text-slate-900">New message</Text>
+
+            <View className="ml-auto bg-slate-100 px-2 py-0.5 rounded-full">
+              <Text className="text-sm text-slate-600 font-mediumW">
+                5 hr ago
+              </Text>
+            </View>
+          </View>
+
+          {/* CONTENT */}
+          <View>
+            <Text className="mt-2 text-sm leading-6 text-slate-700">
+              Hey you have a new message in your room India vs Australia. Tap to
+              open.
+            </Text>
+          </View>
+        </Pressable>
+      </View>
     </View>
   );
 };
