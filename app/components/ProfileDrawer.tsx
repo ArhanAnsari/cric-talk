@@ -29,7 +29,6 @@ const ProfileDrawer = ({
         top: 0,
         bottom: 0,
         left: isDrawerOpen ? 0 : -320,
-        shadowColor: "black",
         transitionProperty: "all",
         transitionDuration: 250,
         transitionTimingFunction: "ease-in",
