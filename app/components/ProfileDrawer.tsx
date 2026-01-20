@@ -48,7 +48,7 @@ const ProfileDrawer = ({
       <SafeAreaView>
         <View className="px-6 py-4">
           {/* USER INFO */}
-          <Pressable className="flex-row items-center gap-2 text-slate-50">
+          <Pressable className="flex-row items-center gap-2">
             <View className="w-8 h-8 bg-slate-400 rounded-full items-center justify-center">
               <Text className="uppercase text-lg font-medium text-slate-800">
                 {username?.charAt(0)}
