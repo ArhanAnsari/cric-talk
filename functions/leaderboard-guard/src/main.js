@@ -1,14 +1,14 @@
-import { Client, Query, TablesDB } from "node-appwrite";
+import { Client, Query, TablesDB } from 'node-appwrite';
 
 export default async ({ req, res }) => {
-  const userId = req.headers["x-appwrite-user-id"];
+  const userId = req.headers['x-appwrite-user-id'];
 
-  if (!userId) throw new Error("Unauthorized: User is not authenticated");
+  if (!userId) throw new Error('Unauthorized: User is not authenticated');
 
   const client = new Client()
     .setEndpoint(process.env.APPWRITE_ENDPOINT)
     .setProject(process.env.APPWRITE_PROJECT_ID)
-    .setKey(req.headers["x-appwrite-key"]);
+    .setKey(req.headers['x-appwrite-key']);
 
   const tablesDb = new TablesDB(client);
 
@@ -21,11 +21,11 @@ export default async ({ req, res }) => {
     const data = await tablesDb.listRows({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: USERS_TABLE_ID,
-      queries: [Query.orderDesc("messageCount"), Query.limit(LIMIT)],
+      queries: [Query.orderDesc('messageCount'), Query.limit(LIMIT)],
     });
 
     return res.json(data);
   } catch (error) {
-    throw new Error(`Error occured: ${error}`);
+    throw new Error(`Error occurred: ${error}`);
   }
 };
