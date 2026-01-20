@@ -35,7 +35,7 @@ export async function fetchRooms() {
       return { ...item, status };
     });
   } catch (error) {
-    console.log(`Error while fetching rhe rooms ${error}`);
+    console.log(`Error while fetching the rooms ${error}`);
     throw error;
   }
 }
