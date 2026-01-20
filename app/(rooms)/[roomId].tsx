@@ -251,7 +251,8 @@ const RoomDiscussion = () => {
               value={messageContent}
               onChangeText={setMessageContent}
               placeholder="Comment"
-              className="border border-gray-300 rounded-lg pl-4 h-12 flex-1 mr-4"
+              placeholderTextColor="gray"
+              className="border border-gray-300 rounded-lg pl-4 h-12 flex-1 mr-4 text-slate-900"
             />
 
             {/* MESSAGE ADD BUTTON */}
@@ -293,7 +294,8 @@ const RoomDiscussion = () => {
               value={editMessageContent}
               onChangeText={setEditMessageContent}
               placeholder="Edit your message"
-              className="border border-gray-300 rounded-lg h-24 mt-2 pl-4"
+              placeholderTextColor="gray"
+              className="border border-gray-300 rounded-lg h-24 mt-2 pl-4 text-slate-900"
               textAlignVertical="top"
               multiline
             />

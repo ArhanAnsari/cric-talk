@@ -260,7 +260,8 @@ const PostDetails = () => {
             value={comment}
             onChangeText={setComment}
             placeholder="Comment"
-            className="border border-gray-300 rounded-lg pl-4 h-12 flex-1 mr-4"
+            placeholderTextColor="gray"
+            className="border border-gray-300 rounded-lg pl-4 h-12 flex-1 mr-4 text-slate-900"
           />
 
           {/* COMMENT ADD BUTTON */}

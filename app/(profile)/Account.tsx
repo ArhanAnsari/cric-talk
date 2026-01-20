@@ -125,6 +125,7 @@ const Account = () => {
                 value={newUsername}
                 onChangeText={setNewUsername}
                 placeholder="Change your username"
+                placeholderTextColor="gray"
                 className="border border-slate-300 rounded-lg h-12 text-slate-900 flex-1"
               />
 
@@ -155,6 +156,7 @@ const Account = () => {
                 value={newEmail}
                 onChangeText={setNewEmail}
                 placeholder="Change your email address"
+                placeholderTextColor="gray"
                 className="border border-slate-300 rounded-lg h-12 text-slate-900 flex-1"
               />
 
@@ -200,7 +202,8 @@ const Account = () => {
               value={password}
               onChangeText={setPassword}
               placeholder="Enter your password"
-              className="border border-slate-300 rounded-lg mt-2 pl-4"
+              placeholderTextColor="gray"
+              className="border border-slate-300 rounded-lg mt-2 pl-4 text-slate-900"
             />
 
             <View className="flex-row mt-auto ml-auto gap-6 items-center">

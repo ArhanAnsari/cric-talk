@@ -174,7 +174,8 @@ const CreateRoomModal = ({
                   value={team1}
                   onChangeText={setTeam1}
                   placeholder="Enter team name"
-                  className="border border-gray-300 rounded-lg pl-4"
+                  placeholderTextColor="gray"
+                  className="border border-gray-300 rounded-lg pl-4 text-slate-900"
                 />
               </View>
 
@@ -184,7 +185,8 @@ const CreateRoomModal = ({
                   value={team2}
                   onChangeText={setTeam2}
                   placeholder="Enter team name"
-                  className="border border-gray-300 rounded-lg pl-4"
+                  placeholderTextColor="gray"
+                  className="border border-gray-300 rounded-lg pl-4 text-slate-900"
                 />
               </View>
             </>

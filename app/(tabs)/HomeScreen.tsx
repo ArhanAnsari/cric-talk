@@ -126,7 +126,8 @@ const HomeScreen = () => {
             onChangeText={setSearchQuery}
             ref={seacrhQueryRef}
             placeholder="Search anything..."
-            className="border border-gray-300 rounded-lg pl-4 flex-1 mr-4 h-12"
+            placeholderTextColor="gray"
+            className="border border-gray-300 rounded-lg pl-4 flex-1 mr-4 h-12 text-slate-900"
           />
 
           <Pressable className="bg-orange-500 w-12 h-12 rounded-lg items-center justify-center">

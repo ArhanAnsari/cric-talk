@@ -143,7 +143,8 @@ const RoomManage = () => {
                 value={team1}
                 onChangeText={setTeam1}
                 placeholder="Team 1"
-                className="border border-slate-300 rounded-lg pl-4 h-12 flex-1"
+                placeholderTextColor="gray"
+                className="border border-slate-300 rounded-lg pl-4 h-12 flex-1 text-slate-900"
               />
 
               <Text className="text-slate-500 text-sm">vs</Text>
@@ -152,7 +153,8 @@ const RoomManage = () => {
                 value={team2}
                 onChangeText={setTeam2}
                 placeholder="Team 2"
-                className="border border-slate-300 rounded-lg pl-4 h-12 flex-1"
+                placeholderTextColor="gray"
+                className="border border-slate-300 rounded-lg pl-4 h-12 flex-1 text-slate-900"
               />
             </View>
 

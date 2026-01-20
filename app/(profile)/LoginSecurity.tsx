@@ -145,7 +145,8 @@ const LoginSecurity = () => {
                   value={oldPassword}
                   onChangeText={setOldPassword}
                   placeholder="Enter your old password"
-                  className="border border-slate-300 rounded-lg"
+                  placeholderTextColor="gray"
+                  className="border border-slate-300 rounded-lg text-slate-900"
                   secureTextEntry={isPasswordHidden}
                 />
                 <Pressable onPress={() => setPasswordHidden(!isPasswordHidden)}>
@@ -166,7 +167,8 @@ const LoginSecurity = () => {
                   value={newPassword}
                   onChangeText={setNewPassword}
                   placeholder="Enter your new password"
-                  className="border border-slate-300 rounded-lg"
+                  placeholderTextColor="gray"
+                  className="border border-slate-300 rounded-lg text-slate-900"
                   secureTextEntry={isPasswordHidden}
                 />
                 <Pressable onPress={() => setPasswordHidden(!isPasswordHidden)}>

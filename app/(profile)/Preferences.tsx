@@ -66,7 +66,8 @@ const Preferences = () => {
               value={favTeam}
               onChangeText={setFavTeam}
               placeholder="Change your favourite team"
-              className="border border-slate-300 rounded-lg pl-4 h-12 flex-1"
+              placeholderTextColor="gray"
+              className="border border-slate-300 rounded-lg pl-4 h-12 flex-1 text-slate-900"
             />
 
             <Pressable
