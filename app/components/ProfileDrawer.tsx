@@ -29,6 +29,16 @@ const ProfileDrawer = ({
         top: 0,
         bottom: 0,
         left: isDrawerOpen ? 0 : -320,
+
+        // ios shadow
+        shadowColor: "#000",
+        shadowOffset: { width: 8, height: 0 },
+        shadowOpacity: 0.8,
+        shadowRadius: 10,
+
+        // android shadow
+        elevation: 12,
+
         transitionProperty: "all",
         transitionDuration: 250,
         transitionTimingFunction: "ease-in",
