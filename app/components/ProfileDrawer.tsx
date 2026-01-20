@@ -24,7 +24,7 @@ const ProfileDrawer = ({
     <Animated.View
       style={{
         width: SIDEBAR_WIDTH,
-        backgroundColor: "#0f172b",
+        backgroundColor: "#f8fafc",
         position: "absolute",
         top: 0,
         bottom: 0,
@@ -39,14 +39,14 @@ const ProfileDrawer = ({
       <SafeAreaView>
         <View className="px-6 py-4">
           {/* USER INFO */}
-          <Pressable className="flex-row items-center gap-2">
+          <Pressable className="flex-row items-center gap-2 text-slate-50">
             <View className="w-8 h-8 bg-slate-400 rounded-full items-center justify-center">
               <Text className="uppercase text-lg font-medium text-slate-800">
                 {username?.charAt(0)}
               </Text>
             </View>
 
-            <Text className="text-white text-base">{username}</Text>
+            <Text className="text-wslate-900 hite text-base">{username}</Text>
           </Pressable>
 
           {/* PROFILE CONTENTS */}
@@ -55,8 +55,10 @@ const ProfileDrawer = ({
               className="flex-row items-center gap-2"
               onPress={() => router.push("/(profile)/ProfileScreen")}
             >
-              <Ionicons name="person-outline" size={24} color="white" />
-              <Text className="text-white font-medium text-xl">Profile</Text>
+              <Ionicons name="person-outline" size={24} color="black" />
+              <Text className="text-slate-900 font-medium text-xl">
+                Profile
+              </Text>
             </Pressable>
 
             <Pressable
@@ -66,8 +68,10 @@ const ProfileDrawer = ({
                 searchQueryRef.current?.focus();
               }}
             >
-              <Ionicons name="search-outline" size={24} color="white" />
-              <Text className="text-white font-medium text-xl">Explore</Text>
+              <Ionicons name="search-outline" size={24} color="black" />
+              <Text className="text-slate-900 font-medium text-xl">
+                Explore
+              </Text>
             </Pressable>
 
             <Pressable
@@ -80,17 +84,19 @@ const ProfileDrawer = ({
               <Ionicons
                 name="chatbubble-ellipses-outline"
                 size={24}
-                color="white"
+                color="black"
               />
-              <Text className="text-white font-medium text-xl">Rooms</Text>
+              <Text className="text-slate-900 font-medium text-xl">Rooms</Text>
             </Pressable>
 
             <Pressable
               className="flex-row items-center gap-2"
               onPress={() => router.push("/(profile)/SettingsScreen")}
             >
-              <Ionicons name="settings-outline" size={24} color="white" />
-              <Text className="text-white font-medium text-xl">Settings</Text>
+              <Ionicons name="settings-outline" size={24} color="black" />
+              <Text className="text-slate-900 font-medium text-xl">
+                Settings
+              </Text>
             </Pressable>
           </View>
         </View>
