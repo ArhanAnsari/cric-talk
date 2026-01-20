@@ -10,11 +10,35 @@ const ROOMS_GUARD_FUNCTION_ID =
 
 export async function fetchRooms() {
   try {
-    return await tablesDB.listRows<Room>({
+    const data = await tablesDB.listRows<Room>({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: ROOMS_TABLE_ID,
       queries: [Query.orderDesc("startTime"), Query.limit(20)],
     });
+
+    const rooms: Room[] = data.rows;
+    const iteratedRooms: Room[] = [];
+
+    rooms.forEach((item: Room) => {
+      let status: "upcoming" | "live" | "finished" = "upcoming";
+      const now = Date.now();
+      const start = new Date(item.startTime).getTime();
+      const end = new Date(item.endTime || "").getTime();
+
+      if (end < now) {
+        status = "finished";
+      } else if (start > now) {
+        status = "upcoming";
+      } else {
+        status = "live";
+      }
+
+      item.status = status;
+
+      iteratedRooms.push(item);
+    });
+
+    return iteratedRooms;
   } catch (error) {
     console.log(`Error while fetching rhe rooms ${error}`);
     throw error;

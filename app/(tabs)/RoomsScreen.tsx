@@ -33,7 +33,7 @@ const RoomsScreen = () => {
 
       try {
         const data = await fetchRooms();
-        setRooms(data.rows);
+        setRooms(data);
       } catch (error) {
         showToast({
           type: "error",
