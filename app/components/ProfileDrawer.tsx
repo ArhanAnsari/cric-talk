@@ -55,7 +55,7 @@ const ProfileDrawer = ({
               </Text>
             </View>
 
-            <Text className="text-wslate-900 hite text-base">{username}</Text>
+            <Text className="text-slate-900 text-base">{username}</Text>
           </Pressable>
 
           {/* PROFILE CONTENTS */}
