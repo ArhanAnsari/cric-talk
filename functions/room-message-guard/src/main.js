@@ -19,6 +19,7 @@ export default async ({ req, res }) => {
     const ROOMS_TABLE_ID = process.env.ROOMS_TABLE_ID;
     const ROOM_MESSAGE_TABLE_ID = process.env.ROOM_MESSAGE_TABLE_ID;
     const USERS_TABLE_ID = process.env.USERS_TABLE_ID;
+    const NOTIFICATIONS_TABLE_ID = process.env.APPWRITE_NOTIFICATIONS_TABLE_ID;
 
     const tablesDB = new TablesDB(client);
     const users = new Users(client);
@@ -58,9 +59,11 @@ export default async ({ req, res }) => {
       });
       const authorPushTokens = userData.pushTokens;
 
+      let pushMessage;
+
       // send push notification to all tokens associated with the room author
       authorPushTokens.forEach(async (token) => {
-        const pushMessage = {
+        pushMessage = {
           to: token,
           sound: 'default',
           title: 'New message',
@@ -81,6 +84,18 @@ export default async ({ req, res }) => {
         } catch (error) {
           throw new Error('Error while sending push notifications');
         }
+      });
+
+      // store notification in db
+      await tablesDB.createRow({
+        databaseId: CRIC_TALK_DATABASE_ID,
+        tableId: NOTIFICATIONS_TABLE_ID,
+        rowId: ID.unique(),
+        data: {
+          userId,
+          title: pushMessage.title,
+          content: pushMessage.body,
+        },
       });
 
       await tablesDB.incrementRowColumn({
