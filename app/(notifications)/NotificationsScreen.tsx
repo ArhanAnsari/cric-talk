@@ -53,7 +53,7 @@ const NotificationsScreen = () => {
       const execution = await executeNotification({ action: "fetchByUserId" });
       const parsed = JSON.parse(execution.responseBody);
 
-      const notificationsData: Notification[] = parsed.data;
+      const notificationsData: Notification[] = parsed.data.rows;
       setNotifcationsList(notificationsData);
     }
     fetchNotifications();
