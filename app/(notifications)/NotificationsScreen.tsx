@@ -1,3 +1,4 @@
+import { executePushToken } from "@/services/pushToken.service";
 import { registerForPushNotificationsAsync } from "@/utils/registerForPushNotificationsAsync";
 import { Ionicons } from "@expo/vector-icons";
 import * as Notifications from "expo-notifications";
@@ -13,9 +14,20 @@ const NotificationsScreen = () => {
   >(undefined);
 
   useEffect(() => {
-    registerForPushNotificationsAsync()
-      .then((token) => setExpoPushToken(token ?? ""))
-      .catch((error) => setExpoPushToken(error));
+    async function setupPushToken() {
+      try {
+        const token: string = (await registerForPushNotificationsAsync()) ?? "";
+
+        if (!token) return;
+
+        setExpoPushToken(token);
+        await executePushToken({ action: "send", pushToken: token });
+      } catch (error) {
+        console.log("Error while setting up token");
+        return;
+      }
+    }
+    setupPushToken();
 
     const notificationListener = Notifications.addNotificationReceivedListener(
       (notification) => setNotifcation(notification),
