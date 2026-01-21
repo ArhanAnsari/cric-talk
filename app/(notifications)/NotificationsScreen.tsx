@@ -1,10 +1,37 @@
+import { registerForPushNotificationsAsync } from "@/utils/registerForPushNotificationsAsync";
 import { Ionicons } from "@expo/vector-icons";
+import * as Notifications from "expo-notifications";
 import { router } from "expo-router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const NotificationsScreen = () => {
+  const [expoPushToken, setExpoPushToken] = useState<string>("");
+  const [notification, setNotifcation] = useState<
+    Notifications.Notification | undefined
+  >(undefined);
+
+  useEffect(() => {
+    registerForPushNotificationsAsync()
+      .then((token) => setExpoPushToken(token ?? ""))
+      .catch((error) => setExpoPushToken(error));
+
+    const notificationListener = Notifications.addNotificationReceivedListener(
+      (notification) => setNotifcation(notification),
+    );
+
+    const responseListener =
+      Notifications.addNotificationResponseReceivedListener((response) =>
+        console.log(response),
+      );
+
+    return () => {
+      notificationListener.remove();
+      responseListener.remove();
+    };
+  }, []);
+
   return (
     <View className="flex-1 bg-white">
       <View className="w-full h-30 bg-orange-500">
