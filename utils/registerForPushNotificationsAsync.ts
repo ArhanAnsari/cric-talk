@@ -38,7 +38,8 @@ export async function registerForPushNotificationsAsync() {
 
   // get push token
   try {
-    const pushToken = (await Notifications.getExpoPushTokenAsync()).data;
+    const pushToken = (await Notifications.getExpoPushTokenAsync({ projectId }))
+      .data;
     console.log(pushToken);
     return pushToken;
   } catch (e: unknown) {
