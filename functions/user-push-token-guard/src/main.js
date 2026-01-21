@@ -36,5 +36,21 @@ export default async ({ req, res }) => {
       rowId: userId,
       data: { pushTokens: Operator.arrayRemove(pushToken) },
     });
+
+    return { deleted: true, userId };
   }
+
+  let result;
+
+  switch (action) {
+    case 'send':
+      result = await sendPushToken();
+      break;
+    case 'delete':
+      result = await deletePushToken();
+    default:
+      throw new Error('Invalid actione');
+  }
+
+  return res.json({ success: true, data: result });
 };
