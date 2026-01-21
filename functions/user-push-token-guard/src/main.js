@@ -28,7 +28,13 @@ export default async ({ req, res }) => {
     });
 
     async function sendPushToken() {
-      const updatedPushTokens = [...data.pushTokens, pushToken];
+      let updatedPushTokens;
+
+      if (data.pushTokens.includes(pushToken)) {
+        updatedPushTokens = data.pushTokens;
+      } else {
+        updatedPushTokens = [...data.pushTokens, pushToken];
+      }
 
       return await tablesDB.upsertRow({
         databaseId: CRIC_TALK_DATABASE_ID,
