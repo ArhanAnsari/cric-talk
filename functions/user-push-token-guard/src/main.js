@@ -34,7 +34,11 @@ export default async ({ req, res }) => {
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: USERS_TABLE_ID,
         rowId: userId,
-        data: { pushTokens: updatedPushTokens },
+        data: {
+          username: data.username,
+          messageCount: data.messageCount,
+          pushTokens: updatedPushTokens,
+        },
       });
     }
 
