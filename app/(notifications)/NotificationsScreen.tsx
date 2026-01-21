@@ -1,3 +1,5 @@
+import { Notification } from "@/interfaces/Notification";
+import { executeNotification } from "@/services/notifications.service";
 import { executePushToken } from "@/services/pushToken.service";
 import { registerForPushNotificationsAsync } from "@/utils/registerForPushNotificationsAsync";
 import { Ionicons } from "@expo/vector-icons";
@@ -12,6 +14,7 @@ const NotificationsScreen = () => {
   const [notification, setNotifcation] = useState<
     Notifications.Notification | undefined
   >(undefined);
+  const [notificationsList, setNotifcationsList] = useState<Notification[]>([]);
 
   useEffect(() => {
     async function setupPushToken() {
@@ -42,6 +45,18 @@ const NotificationsScreen = () => {
       notificationListener.remove();
       responseListener.remove();
     };
+  }, []);
+
+  // fetch notifications list
+  useEffect(() => {
+    async function fetchNotifications() {
+      const execution = await executeNotification({ action: "fetchByUserId" });
+      const parsed = JSON.parse(execution.responseBody);
+
+      const notificationsData: Notification[] = parsed.data;
+      setNotifcationsList(notificationsData);
+    }
+    fetchNotifications();
   }, []);
 
   return (
