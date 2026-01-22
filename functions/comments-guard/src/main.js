@@ -21,7 +21,7 @@ export default async ({ req, res }) => {
 
     async function addComment() {
       return await tablesDB.createRow({
-        datbaseId: CRIC_TALK_DATABASE_ID,
+        databaseId: CRIC_TALK_DATABASE_ID,
         tableId: COMMENTS_TABLE_ID,
         rowId: ID.unique(),
         data: {
