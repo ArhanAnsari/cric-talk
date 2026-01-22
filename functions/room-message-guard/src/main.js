@@ -62,17 +62,15 @@ export default async ({ req, res }) => {
         });
         const authorPushTokens = userData.pushTokens;
 
-        let pushMessage;
+        let pushMessage = {
+          to: token,
+          sound: 'default',
+          title: 'New message',
+          body: `You have a new message in your ${room.teams[0]} vs ${room.teams[1]} room. Tap to check.`,
+        };
 
         // send push notification to all tokens associated with the room author
         authorPushTokens.forEach(async (token) => {
-          pushMessage = {
-            to: token,
-            sound: 'default',
-            title: 'New message',
-            body: `You have a new message in your ${room.teams[0]} vs ${room.teams[1]} room. Tap to check.`,
-          };
-
           // send push notification
           try {
             await fetch('https://exp.host/--/api/v2/push/send', {
