@@ -28,12 +28,13 @@ export default async ({ req, res }) => {
           postId,
           authorId: userId,
           content,
+          isEdited: false,
         },
       });
     }
 
     async function deleteComment() {
-      const comment = tablesDB.getRow({
+      const comment = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: COMMENTS_TABLE_ID,
         rowId: commentId,
