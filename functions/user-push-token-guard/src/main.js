@@ -5,7 +5,7 @@ export default async ({ req, res }) => {
     const userId = req.headers['x-appwrite-user-id'];
     if (!userId) {
       throw new Error(
-        'Unauthorized: The user is not authrozied to perform this action'
+        'Unauthorized: The user is not authorized to perform this action'
       );
     }
 
