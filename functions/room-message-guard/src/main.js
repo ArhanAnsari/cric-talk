@@ -70,22 +70,24 @@ export default async ({ req, res }) => {
         };
 
         // send push notification to all tokens associated with the room author
-        authorPushTokens.forEach(async (token) => {
-          // send push notification
-          try {
-            await fetch('https://exp.host/--/api/v2/push/send', {
-              method: 'post',
-              headers: {
-                Accept: 'application/json',
-                'Accept-encoding': 'gzip, deflated',
-                'Content-type': 'application/json',
-              },
-              body: JSON.stringify(pushMessage),
-            });
-          } catch (error) {
-            throw new Error('Error while sending push notifications');
-          }
-        });
+        await Promise.all(
+          authorPushTokens.map(async (token) => {
+            // send push notification
+            try {
+              await fetch('https://exp.host/--/api/v2/push/send', {
+                method: 'post',
+                headers: {
+                  Accept: 'application/json',
+                  'Accept-encoding': 'gzip, deflated',
+                  'Content-type': 'application/json',
+                },
+                body: JSON.stringify(pushMessage),
+              });
+            } catch (error) {
+              throw new Error('Error while sending push notifications');
+            }
+          })
+        );
 
         // store notification in db
         await tablesDB.createRow({
