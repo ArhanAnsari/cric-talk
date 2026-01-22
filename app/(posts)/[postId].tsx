@@ -1,11 +1,8 @@
 import useKeyboardHeight from "@/hooks/useKeyboardHeight";
+import { CommentType } from "@/interfaces/Post";
 import { account } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
-import {
-  addComment,
-  deleteComment,
-  fetchComments,
-} from "@/services/comments.service";
+import { executeComment, fetchComments } from "@/services/comments.service";
 import { updatePost } from "@/services/posts.service";
 import { useComments } from "@/store/useComments";
 import { usePosts } from "@/store/usePosts";
@@ -93,8 +90,15 @@ const PostDetails = () => {
     }
 
     try {
-      const newComment = await addComment(postId as string, userId, comment);
+      const execution = await executeComment({
+        action: "add",
+        postId: postId as string,
+        content: comment,
+      });
+      const parsed = JSON.parse(execution?.responseBody || "");
+      if (!parsed) throw new Error("Error while executing add comment");
 
+      const newComment: CommentType = parsed.data;
       addCommentState(newComment);
 
       await updatePost(postId as string, {
@@ -126,8 +130,14 @@ const PostDetails = () => {
         style: "destructive",
         onPress: async () => {
           try {
-            await deleteComment(commentId);
-            deleteCommentState(commentId);
+            const execution = await executeComment({
+              action: "delete",
+              commentId,
+            });
+            const parsed = JSON.parse(execution?.responseBody || "");
+
+            const deletedCommentId = parsed.data.commentId;
+            deleteCommentState(deletedCommentId);
 
             await updatePost(postId as string, {
               commentCount: (post?.commentCount || 0) - 1,
