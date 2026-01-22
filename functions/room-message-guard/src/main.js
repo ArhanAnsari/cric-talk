@@ -82,7 +82,7 @@ export default async ({ req, res }) => {
                   'Accept-encoding': 'gzip, deflated',
                   'Content-type': 'application/json',
                 },
-                body: JSON.stringify(pushMessage),
+                body: JSON.stringify(updatedPushMessage),
               });
             } catch (error) {
               throw new Error('Error while sending push notifications');
