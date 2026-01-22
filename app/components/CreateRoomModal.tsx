@@ -4,6 +4,7 @@ import { showToast } from "@/libs/showToast";
 import { executeRoom } from "@/services/rooms.service";
 import { useRooms } from "@/store/useRooms";
 import { useUser } from "@/store/useUser";
+import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import {
   Modal,
@@ -89,6 +90,16 @@ const CreateRoomModal = ({
     }
   }
 
+  function handleBackButton() {
+    if (createPostType === "teamInfo") {
+      onClose();
+    } else if (createPostType === "matchInfo") {
+      setCreatePostType("teamInfo");
+    } else if (createPostType === "roomSettings") {
+      setCreatePostType("matchInfo");
+    }
+  }
+
   async function handleCreateRoom() {
     if (!startDate || !endDate) return;
 
@@ -148,9 +159,23 @@ const CreateRoomModal = ({
 
         {/* MODAL CONTENT */}
         <View className="bg-white w-80 h-120 shadow-sm elevation-sm rounded-lg px-6 py-4">
-          <Text className="text-slate-900 font-semibold text-center text-lg">
-            Create Room
-          </Text>
+          {/* HEADER */}
+          <View className="flex-row items-center">
+            <Text className="text-slate-900 font-semibold absolute left-0 right-0 text-center">
+              Create Room
+            </Text>
+
+            <Pressable
+              className={createPostType === "teamInfo" ? "ml-auto" : "mr-auto"}
+              onPress={handleBackButton}
+            >
+              <Ionicons
+                name={createPostType === "teamInfo" ? "close" : "arrow-back"}
+                size={18}
+                color="#0f172b"
+              />
+            </Pressable>
+          </View>
 
           {/* FORM CONTENT */}
           {createPostType === "teamInfo" && (
