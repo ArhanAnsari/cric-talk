@@ -69,6 +69,7 @@ export default async ({ req, res }) => {
         break;
       case 'delete':
         result = await deletePushToken();
+        break;
       default:
         throw new Error('Invalid actione');
     }
