@@ -20,7 +20,7 @@ const NotificationCard = ({ notification }: { notification: Props }) => {
         <Text className="font-medium text-slate-900">{notification.title}</Text>
 
         <View className="ml-auto bg-slate-100 px-2 py-0.5 rounded-full">
-          <Text className="text-sm text-slate-600 font-mediumW">
+          <Text className="text-sm text-slate-600 font-medium">
             {Math.floor(
               (Date.now() - new Date(notification.$createdAt).getTime()) /
                 1000 /
