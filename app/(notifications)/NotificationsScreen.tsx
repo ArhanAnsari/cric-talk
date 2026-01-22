@@ -15,7 +15,9 @@ const NotificationsScreen = () => {
   const [notification, setNotification] = useState<
     Notifications.Notification | undefined
   >(undefined);
-  const [notificationsList, setNotifcationsList] = useState<Notification[]>([]);
+  const [notificationsList, setNotificationsList] = useState<Notification[]>(
+    [],
+  );
 
   useEffect(() => {
     async function setupPushToken() {
@@ -55,7 +57,7 @@ const NotificationsScreen = () => {
       const parsed = JSON.parse(execution.responseBody);
 
       const notificationsData: Notification[] = parsed.data.rows;
-      setNotifcationsList(notificationsData);
+      setNotificationsList(notificationsData);
     }
     fetchNotifications();
   }, []);
