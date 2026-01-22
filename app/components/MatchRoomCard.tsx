@@ -4,6 +4,20 @@ import React from "react";
 import { Pressable, Text, View } from "react-native";
 
 const MatchRoomCard = ({ room }: { room: Room }) => {
+  let status;
+
+  const now = Date.now();
+  const start = new Date(room.startTime).getTime();
+  const end = new Date(room.endTime ?? "").getTime();
+
+  if (end < now) {
+    status = "finished";
+  } else if (start > now) {
+    status = "upcoming";
+  } else {
+    status = "live";
+  }
+
   return (
     <View className="mx-6 px-6 py-4 bg-white shadow-sm elevation-sm rounded-lg transition-all duration-300 active:scale-[0.97] active:opacity-85 mb-6">
       {/* TEAMS */}
@@ -31,15 +45,15 @@ const MatchRoomCard = ({ room }: { room: Room }) => {
       {/* MATCH STATUS */}
       <View
         className={`${
-          room.status === "live"
+          status === "live"
             ? "bg-green-500"
-            : room.status === "upcoming"
+            : status === "upcoming"
               ? "bg-yellow-500"
               : "bg-red-500"
         } mx-auto py-1 px-3 rounded-full`}
       >
         <Text className="text-white text-xs uppercase font-semibold">
-          {room.status}
+          {status}
         </Text>
       </View>
 
