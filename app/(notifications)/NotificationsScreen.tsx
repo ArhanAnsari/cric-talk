@@ -12,7 +12,7 @@ import NotificationCard from "../components/NotificationCard";
 
 const NotificationsScreen = () => {
   const [expoPushToken, setExpoPushToken] = useState<string>("");
-  const [notification, setNotifcation] = useState<
+  const [notification, setNotification] = useState<
     Notifications.Notification | undefined
   >(undefined);
   const [notificationsList, setNotifcationsList] = useState<Notification[]>([]);
@@ -34,7 +34,7 @@ const NotificationsScreen = () => {
     setupPushToken();
 
     const notificationListener = Notifications.addNotificationReceivedListener(
-      (notification) => setNotifcation(notification),
+      (notification) => setNotification(notification),
     );
 
     const responseListener =
