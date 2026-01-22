@@ -34,7 +34,20 @@ export default async ({ req, res }) => {
         rowId: roomId,
       });
 
-      if (room.status !== 'live') {
+      let status = 'upcoming';
+      const now = Date.now();
+      const start = new Date(room.startTime).getTime();
+      const end = new Date(room.endTime).getTime();
+
+      if (end < now) {
+        status = 'finished';
+      } else if (start > now) {
+        status = 'upcoming';
+      } else {
+        status = 'live';
+      }
+
+      if (status !== 'live') {
         throw new Error('Unauthorized: room is not live');
       }
 
