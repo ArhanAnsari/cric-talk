@@ -40,5 +40,6 @@ export async function executeComment({
     });
   } catch (error) {
     console.log(`Error while executing comment ${action} action`);
+    throw error;
   }
 }
