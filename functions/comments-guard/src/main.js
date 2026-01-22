@@ -37,6 +37,9 @@ export default async ({ req, res }) => {
     }
 
     async function deleteComment() {
+      if (!commentId)
+        throw new Error('Error: Comment ID is required to delete a comment');
+
       const comment = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: COMMENTS_TABLE_ID,
