@@ -3,6 +3,7 @@ import { executePost, fetchPosts } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { useUser } from "@/store/useUser";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { ViewToken } from "react-native";
 import { FlatList, Pressable, Text, TextInput, View } from "react-native";
@@ -111,7 +112,12 @@ const HomeScreen = () => {
             <Text className="text-white text-xl font-semibold">CricTalk</Text>
 
             {/* NOTIFICATION ICON */}
-            <Pressable className="bg-orange-600 size-10 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85">
+            <Pressable
+              className="bg-orange-600 size-10 rounded-full items-center justify-center transition-all ease-in-out duration-300 active:scale-[0.98] active:opacity-85"
+              onPress={() =>
+                router.push("/(notifications)/NotificationsScreen")
+              }
+            >
               <Ionicons name="notifications" size={18} color="white" />
             </Pressable>
           </View>

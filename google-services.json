@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "889158004765",
+    "project_id": "cric-talk-e9bbe",
+    "storage_bucket": "cric-talk-e9bbe.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889158004765:android:d6894df89bd021414416f4",
+        "android_client_info": {
+          "package_name": "com.swapnasahoo.crictalk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9fiizJzKvr3uMfp7CQKZtp3a66obPr30"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

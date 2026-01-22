@@ -19,6 +19,7 @@ export default async ({ req, res }) => {
     const ROOMS_TABLE_ID = process.env.ROOMS_TABLE_ID;
     const ROOM_MESSAGE_TABLE_ID = process.env.ROOM_MESSAGE_TABLE_ID;
     const USERS_TABLE_ID = process.env.USERS_TABLE_ID;
+    const NOTIFICATIONS_TABLE_ID = process.env.APPWRITE_NOTIFICATIONS_TABLE_ID;
 
     const tablesDB = new TablesDB(client);
     const users = new Users(client);
@@ -49,6 +50,59 @@ export default async ({ req, res }) => {
           isEdited: false,
         },
       });
+
+      async function executePushNotification() {
+        if (room.authorId === userId) return;
+
+        // find the room author in users table for sending push notifications
+        const userData = await tablesDB.getRow({
+          databaseId: CRIC_TALK_DATABASE_ID,
+          tableId: USERS_TABLE_ID,
+          rowId: room.authorId,
+        });
+        const authorPushTokens = userData.pushTokens;
+
+        let pushMessage = {
+          sound: 'default',
+          title: 'New message',
+          body: `You have a new message in your ${room.teams[0]} vs ${room.teams[1]} room. Tap to check.`,
+        };
+
+        // send push notification to all tokens associated with the room author
+        await Promise.all(
+          authorPushTokens.map(async (token) => {
+            const updatedPushMessage = { ...pushMessage, to: token };
+
+            // send push notification
+            try {
+              await fetch('https://exp.host/--/api/v2/push/send', {
+                method: 'post',
+                headers: {
+                  Accept: 'application/json',
+                  'Accept-Encoding': 'gzip, deflate',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedPushMessage),
+              });
+            } catch (error) {
+              throw new Error('Error while sending push notifications');
+            }
+          })
+        );
+
+        // store notification in db
+        await tablesDB.createRow({
+          databaseId: CRIC_TALK_DATABASE_ID,
+          tableId: NOTIFICATIONS_TABLE_ID,
+          rowId: ID.unique(),
+          data: {
+            userId: room.authorId,
+            title: pushMessage.title,
+            content: pushMessage.body,
+          },
+        });
+      }
+      await executePushNotification();
 
       await tablesDB.incrementRowColumn({
         databaseId: CRIC_TALK_DATABASE_ID,

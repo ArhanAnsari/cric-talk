@@ -1,5 +1,6 @@
 import { account } from "@/libs/appwrite";
 import { useUser } from "@/store/useUser";
+import * as Notifications from "expo-notifications";
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { Models } from "react-native-appwrite";
@@ -8,7 +9,7 @@ import "../global.css";
 
 export default function RootLayout() {
   const [user, setUser] = useState<Models.User<Models.Preferences> | null>(
-    null
+    null,
   );
 
   const setUsername = useUser((s) => s.setUsername);
@@ -38,6 +39,16 @@ export default function RootLayout() {
       mounted = false;
     };
   }, []);
+
+  // notifications handler
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+      shouldShowBanner: true,
+      shouldShowList: true,
+    }),
+  });
 
   return (
     <>
