@@ -79,8 +79,8 @@ export default async ({ req, res }) => {
                 method: 'post',
                 headers: {
                   Accept: 'application/json',
-                  'Accept-encoding': 'gzip, deflate',
-                  'Content-type': 'application/json',
+                  'Accept-Encoding': 'gzip, deflate',
+                  'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(updatedPushMessage),
               });
