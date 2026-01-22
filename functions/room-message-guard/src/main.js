@@ -52,6 +52,8 @@ export default async ({ req, res }) => {
       });
 
       async function executePushNotification() {
+        if (room.authorId === userId) return;
+
         // find the room author in users table for sending push notifications
         const userData = await tablesDB.getRow({
           databaseId: CRIC_TALK_DATABASE_ID,
