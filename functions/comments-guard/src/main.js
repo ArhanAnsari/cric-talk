@@ -54,7 +54,20 @@ export default async ({ req, res }) => {
       return { deleted: true, commentId };
     }
 
-    return res.json({ success: true });
+    let result;
+
+    switch (action) {
+      case 'add':
+        result = await addComment();
+        break;
+      case 'delete':
+        result = await deleteComment();
+        break;
+      default:
+        throw new Error('Invalid action');
+    }
+
+    return res.json({ success: true, data: result });
   } catch (error) {
     throw new Error(`Unable to process query: ${error}`);
   }
