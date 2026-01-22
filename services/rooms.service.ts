@@ -18,7 +18,7 @@ export async function fetchRooms() {
 
     const rooms: Room[] = data.rows;
 
-    return rooms.map((item: Room) => {
+    const updatedRooms: Room[] = rooms.map((item: Room) => {
       let status: "upcoming" | "live" | "finished";
       const now = Date.now();
       const start = new Date(item.startTime).getTime();
@@ -33,6 +33,15 @@ export async function fetchRooms() {
       }
 
       return { ...item, status };
+    });
+
+    const priority = { live: 0, upcoming: 1, finished: 2 };
+
+    return updatedRooms.sort((a, b) => {
+      if (priority[a.status] !== priority[b.status]) {
+        return priority[a.status] - priority[b.status];
+      }
+      return new Date(b.startTime).getTime() - new Date(a.startTime).getTime();
     });
   } catch (error) {
     console.log(`Error while fetching the rooms ${error}`);
