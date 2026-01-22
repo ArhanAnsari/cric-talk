@@ -51,52 +51,55 @@ export default async ({ req, res }) => {
         },
       });
 
-      // find the room author in users table for sending push notifications
-      const userData = await tablesDB.getRow({
-        databaseId: CRIC_TALK_DATABASE_ID,
-        tableId: USERS_TABLE_ID,
-        rowId: room.authorId,
-      });
-      const authorPushTokens = userData.pushTokens;
+      async function executePushNotification() {
+        // find the room author in users table for sending push notifications
+        const userData = await tablesDB.getRow({
+          databaseId: CRIC_TALK_DATABASE_ID,
+          tableId: USERS_TABLE_ID,
+          rowId: room.authorId,
+        });
+        const authorPushTokens = userData.pushTokens;
 
-      let pushMessage;
+        let pushMessage;
 
-      // send push notification to all tokens associated with the room author
-      authorPushTokens.forEach(async (token) => {
-        pushMessage = {
-          to: token,
-          sound: 'default',
-          title: 'New message',
-          body: `You have a new message in your ${room.teams[0]} vs ${room.teams[1]} room. Tap to check.`,
-        };
+        // send push notification to all tokens associated with the room author
+        authorPushTokens.forEach(async (token) => {
+          pushMessage = {
+            to: token,
+            sound: 'default',
+            title: 'New message',
+            body: `You have a new message in your ${room.teams[0]} vs ${room.teams[1]} room. Tap to check.`,
+          };
 
-        // send push notification
-        try {
-          await fetch('https://exp.host/--/api/v2/push/send', {
-            method: 'post',
-            headers: {
-              Accept: 'application/json',
-              'Accept-encoding': 'gzip, deflated',
-              'Content-type': 'application/json',
-            },
-            body: JSON.stringify(pushMessage),
-          });
-        } catch (error) {
-          throw new Error('Error while sending push notifications');
-        }
-      });
+          // send push notification
+          try {
+            await fetch('https://exp.host/--/api/v2/push/send', {
+              method: 'post',
+              headers: {
+                Accept: 'application/json',
+                'Accept-encoding': 'gzip, deflated',
+                'Content-type': 'application/json',
+              },
+              body: JSON.stringify(pushMessage),
+            });
+          } catch (error) {
+            throw new Error('Error while sending push notifications');
+          }
+        });
 
-      // store notification in db
-      await tablesDB.createRow({
-        databaseId: CRIC_TALK_DATABASE_ID,
-        tableId: NOTIFICATIONS_TABLE_ID,
-        rowId: ID.unique(),
-        data: {
-          userId,
-          title: pushMessage.title,
-          content: pushMessage.body,
-        },
-      });
+        // store notification in db
+        await tablesDB.createRow({
+          databaseId: CRIC_TALK_DATABASE_ID,
+          tableId: NOTIFICATIONS_TABLE_ID,
+          rowId: ID.unique(),
+          data: {
+            userId,
+            title: pushMessage.title,
+            content: pushMessage.body,
+          },
+        });
+      }
+      executePushNotification();
 
       await tablesDB.incrementRowColumn({
         databaseId: CRIC_TALK_DATABASE_ID,
