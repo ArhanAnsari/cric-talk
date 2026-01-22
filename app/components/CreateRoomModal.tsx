@@ -318,6 +318,10 @@ const CreateRoomModal = ({
                   <Text className="text-white font-medium text-center">No</Text>
                 </Pressable>
               </View>
+
+              <Text className="text-sm text-center mt-2">
+                Room is now {isLocked ? "locked" : "unlocked"}.
+              </Text>
             </View>
           )}
 
