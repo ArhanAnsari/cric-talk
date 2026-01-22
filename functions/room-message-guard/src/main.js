@@ -99,7 +99,7 @@ export default async ({ req, res }) => {
           },
         });
       }
-      executePushNotification();
+      await executePushNotification();
 
       await tablesDB.incrementRowColumn({
         databaseId: CRIC_TALK_DATABASE_ID,
