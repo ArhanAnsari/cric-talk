@@ -20,31 +20,36 @@ export default async ({ req, res }) => {
     const COMMENTS_TABLE_ID = process.env.APPWRITE_COMMENTS_TABLE_ID;
 
     async function addComment() {
-      if (!content.trim()) throw new Error("Error: Comment can't be empty");
-      if (!postId.trim())
+      if (typeof content !== 'string' || !content.trim())
+        throw new Error("Error: Comment can't be empty");
+      if (typeof postId !== 'string' || !postId.trim())
         throw new Error('Error: Post ID is required to add comment');
+
+      const cleanedContent = content.trim();
+      const cleanedPostId = postId.trim();
 
       return await tablesDB.createRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: COMMENTS_TABLE_ID,
         rowId: ID.unique(),
         data: {
-          postId,
+          postId: cleanedPostId,
           authorId: userId,
-          content,
+          content: cleanedContent,
           isEdited: false,
         },
       });
     }
 
     async function deleteComment() {
-      if (!commentId.trim())
+      if (typeof commentId !== 'string' || !commentId.trim())
         throw new Error('Error: Comment ID is required to delete a comment');
+      const cleanedCommentId = commentId.trim();
 
       const comment = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: COMMENTS_TABLE_ID,
-        rowId: commentId,
+        rowId: cleanedCommentId,
       });
 
       if (comment.authorId !== userId) {
