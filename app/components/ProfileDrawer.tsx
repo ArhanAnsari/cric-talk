@@ -28,7 +28,7 @@ const ProfileDrawer = ({
         position: "absolute",
         top: 0,
         bottom: 0,
-        left: isDrawerOpen ? 0 : -320,
+        left: isDrawerOpen ? 0 : -SIDEBAR_WIDTH,
 
         // ios shadow
         shadowColor: "#000",
