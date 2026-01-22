@@ -93,7 +93,7 @@ export default async ({ req, res }) => {
           tableId: NOTIFICATIONS_TABLE_ID,
           rowId: ID.unique(),
           data: {
-            userId,
+            userId: room.authorId,
             title: pushMessage.title,
             content: pushMessage.body,
           },
