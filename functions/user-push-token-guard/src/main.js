@@ -1,4 +1,4 @@
-import { Client, TablesDB, Users } from 'node-appwrite';
+import { Client, TablesDB } from 'node-appwrite';
 
 export default async ({ req, res }) => {
   try {
@@ -16,7 +16,6 @@ export default async ({ req, res }) => {
       .setProject(process.env.APPWRITE_PROJECT_ID)
       .setKey(req.headers['x-appwrite-key']);
     const tablesDB = new TablesDB(client);
-    const users = new Users(client);
 
     const CRIC_TALK_DATABASE_ID = process.env.APPWRITE_CRIC_TALK_DATABASE_ID;
     const USERS_TABLE_ID = process.env.APPWRITE_USERS_TABLE_ID;
