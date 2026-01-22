@@ -4,7 +4,7 @@ import { Platform } from "react-native";
 
 export async function registerForPushNotificationsAsync() {
   // if device is android then set notifications channel
-  if (Platform.OS === "ios") {
+  if (Platform.OS === "android") {
     await Notifications.setNotificationChannelAsync("default", {
       name: "default",
       importance: Notifications.AndroidImportance.MAX,
