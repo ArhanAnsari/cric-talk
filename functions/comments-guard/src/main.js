@@ -1,4 +1,4 @@
-import { Client, TablesDB } from 'node-appwrite';
+import { Client, ID, TablesDB } from 'node-appwrite';
 
 export default async ({ req, res }) => {
   const userId = req.headers['x-appwrite-user-id'];
@@ -17,4 +17,37 @@ export default async ({ req, res }) => {
 
   const CRIC_TALK_DATABASE_ID = process.env.APPWRITE_CRIC_TALK_DATABASE_ID;
   const COMMENTS_TABLE_ID = process.env.APPWRITE_COMMENTS_TABLE_ID;
+
+  async function addComment() {
+    return await tablesDB.createRow({
+      datbaseId: CRIC_TALK_DATABASE_ID,
+      tableId: COMMENTS_TABLE_ID,
+      rowId: ID.unique(),
+      data: {
+        postId,
+        authorId: userId,
+        content,
+      },
+    });
+  }
+
+  async function deleteComment() {
+    const comment = tablesDB.getRow({
+      databaseId: CRIC_TALK_DATABASE_ID,
+      tableId: COMMENTS_TABLE_ID,
+      rowId: commentId,
+    });
+
+    if (comment.authorId !== userId) {
+      throw new Error("Forbidden: You aren't allowed to delete this comment.");
+    }
+
+    await tablesDB.deleteRow({
+      databaseId: CRIC_TALK_DATABASE_ID,
+      tableId: COMMENTS_TABLE_ID,
+      rowId: commentId,
+    });
+
+    return { deleted: true, commentId };
+  }
 };
