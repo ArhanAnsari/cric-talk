@@ -50,8 +50,8 @@ const PostDetails = () => {
   const [comment, setComment] = useState<string>("");
   const [oldComment, setOldComment] = useState<string>("");
   const [newComment, setNewComment] = useState<string>("");
-  const isNewComment =
-    oldComment.trim() !== newComment.trim() && newComment.trim();
+  const isNewComment: boolean =
+    oldComment.trim() !== newComment.trim() && newComment.trim() !== "";
 
   const [selectedCommentId, setSelectedCommentId] = useState<string>("");
 
