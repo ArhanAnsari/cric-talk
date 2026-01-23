@@ -351,7 +351,10 @@ const PostDetails = () => {
                 Edit comment
               </Text>
 
-              <Pressable className="ml-auto">
+              <Pressable
+                className="ml-auto"
+                onPress={() => setIsEditCommentVisible(false)}
+              >
                 <Ionicons name="close" size={18} color="#0f172b" />
               </Pressable>
             </View>
