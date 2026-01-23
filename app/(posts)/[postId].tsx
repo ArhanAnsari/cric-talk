@@ -12,7 +12,6 @@ import React, { useEffect, useState } from "react";
 import {
   Alert,
   FlatList,
-  Modal,
   Pressable,
   ScrollView,
   Text,
@@ -21,6 +20,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CommentCard from "../components/CommentCard";
+import EditCommentModal from "../components/EditCommentModal";
 import PostCard from "../components/PostCard";
 
 const PostDetails = () => {
@@ -283,57 +283,14 @@ const PostDetails = () => {
         </View>
       </SafeAreaView>
 
-      {/* EDIT COMMENT MODAL */}
-      <Modal visible={isEditCommentVisible} transparent animationType="slide">
-        {/* OVERLAY */}
-        <Pressable
-          className="bg-gray-900/40 absolute inset-0"
-          onPress={() => setIsEditCommentVisible(false)}
-        />
-
-        {/* CONTENT */}
-        <View className="flex-1 items-center justify-center">
-          <View className="bg-white w-80 h-60 rounded-lg px-6 py-4">
-            {/* HEADER */}
-            <View className="flex-row items-center">
-              <Text className="text-slate-900 font-semibold absolute left-0 right-0 text-center">
-                Edit comment
-              </Text>
-
-              <Pressable
-                className="ml-auto"
-                onPress={() => setIsEditCommentVisible(false)}
-              >
-                <Ionicons name="close" size={18} color="#0f172b" />
-              </Pressable>
-            </View>
-
-            {/* EDIT COMMENT INPUT */}
-            <TextInput
-              value={newComment}
-              onChangeText={setNewComment}
-              placeholder="Edit comment"
-              placeholderTextColor="gray"
-              className="border border-slate-300 rounded-lg text-slate-900 h-12 mt-4 pl-4"
-            />
-
-            {/* CONTROL BUTTONS */}
-            <View className="flex-row items-center mt-auto ml-auto gap-4">
-              <Pressable onPress={() => setIsEditCommentVisible(false)}>
-                <Text className="text-slate-900">Cancel</Text>
-              </Pressable>
-
-              <Pressable
-                disabled={!isNewComment}
-                className={`${isNewComment ? "bg-orange-500" : "bg-slate-500"} px-4 py-2 rounded-lg transition-all duration-300 active:scale-[0.95] active:opacity-85`}
-                onPress={() => handleUpdateComment(selectedCommentId)}
-              >
-                <Text className="font-medium text-white">Save</Text>
-              </Pressable>
-            </View>
-          </View>
-        </View>
-      </Modal>
+      <EditCommentModal
+        visible={isEditCommentVisible}
+        onClose={() => setIsEditCommentVisible(false)}
+        newComment={newComment}
+        setNewComment={setNewComment}
+        isNewComment={isNewComment}
+        onUpdatePress={() => handleUpdateComment(selectedCommentId)}
+      />
     </View>
   );
 };
