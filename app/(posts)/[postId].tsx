@@ -220,16 +220,25 @@ const PostDetails = () => {
                         </Text>
 
                         {item.authorId === userId && (
-                          <Pressable
-                            className="ml-auto"
-                            onPress={() => handleDeleteComment(item.$id)}
-                          >
-                            <Ionicons
-                              name="trash-outline"
-                              size={18}
-                              color="gray"
-                            />
-                          </Pressable>
+                          <View className="flex-row items-center ml-auto gap-2">
+                            <Pressable>
+                              <Ionicons
+                                name="pencil-outline"
+                                size={18}
+                                color="gray"
+                              />
+                            </Pressable>
+
+                            <Pressable
+                              onPress={() => handleDeleteComment(item.$id)}
+                            >
+                              <Ionicons
+                                name="trash-outline"
+                                size={18}
+                                color="gray"
+                              />
+                            </Pressable>
+                          </View>
                         )}
                       </View>
 
