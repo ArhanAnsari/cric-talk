@@ -19,7 +19,7 @@ export const useComments = create<CommentsStateType>((set) => ({
   updateComment: (comment) =>
     set((s) => ({
       commentList: s.commentList.map((c) =>
-        c.$id === comment.$id ? { ...c, comment } : c,
+        c.$id === comment.$id ? { ...c, ...comment } : c,
       ),
     })),
   deleteComment: (commentId) =>
