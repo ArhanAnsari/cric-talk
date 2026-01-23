@@ -20,6 +20,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import CommentCard from "../components/CommentCard";
 import PostCard from "../components/PostCard";
 
 const PostDetails = () => {
@@ -238,69 +239,17 @@ const PostDetails = () => {
                   keyExtractor={(item) => item.$id}
                   contentContainerStyle={{ paddingBottom: 20 }}
                   renderItem={({ item }) => (
-                    <View className="border-b border-gray-300 pb-4 mt-4">
-                      {/* AUTHOR INFO */}
-                      <View className="flex-row items-center gap-2">
-                        {/* AUTHOR PROFILE IMAGE + DELETE */}
-                        <Pressable className="bg-slate-300 size-10 items-center justify-center rounded-full">
-                          <Text className="text-lg font-semibold capitalize text-slate-950">
-                            {item.authorId[0]}
-                          </Text>
-                        </Pressable>
-
-                        {/* AUTHOR NAME */}
-                        <Text className="text-lg font-medium text-slate-900">
-                          {item.authorId}
-                        </Text>
-
-                        {item.authorId === userId && (
-                          <View className="flex-row items-center ml-auto gap-2">
-                            <Pressable
-                              onPress={() => {
-                                setSelectedCommentId(item.$id);
-                                setOldComment(item.content);
-                                setNewComment(item.content);
-                                setIsEditCommentVisible(true);
-                              }}
-                            >
-                              <Ionicons
-                                name="pencil-outline"
-                                size={18}
-                                color="gray"
-                              />
-                            </Pressable>
-
-                            <Pressable
-                              onPress={() => handleDeleteComment(item.$id)}
-                            >
-                              <Ionicons
-                                name="trash-outline"
-                                size={18}
-                                color="gray"
-                              />
-                            </Pressable>
-                          </View>
-                        )}
-                      </View>
-
-                      {/* COMMENT CONTENT */}
-                      <View className="mt-4">
-                        <Text className="leading-6 text-slate-800">
-                          {item.content}
-                        </Text>
-                      </View>
-
-                      {/* PUBLISH DATE */}
-                      <Text className="text-sm text-slate-600 ml-auto">
-                        {new Date(item.$createdAt).toLocaleDateString("en-IN", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                          hour: "numeric",
-                          minute: "numeric",
-                        })}
-                      </Text>
-                    </View>
+                    <CommentCard
+                      userId={userId}
+                      comment={item}
+                      onEditPress={() => {
+                        setSelectedCommentId(item.$id);
+                        setOldComment(item.content);
+                        setNewComment(item.content);
+                        setIsEditCommentVisible(true);
+                      }}
+                      onDeletePress={() => handleDeleteComment(item.$id)}
+                    />
                   )}
                 />
               </View>
