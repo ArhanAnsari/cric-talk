@@ -187,7 +187,7 @@ const PostDetails = () => {
       showToast({
         type: "error",
         text1: "Error",
-        text2: "Couldn't edit comment. Please try again later.",
+        text2: "Could not edit comment. Please try again later.",
       });
     }
   }
