@@ -67,7 +67,7 @@ export default async ({ req, res }) => {
           postId: comment.postId,
           authorId: comment.authorId,
           content: cleanedContent,
-          isEdited: comment.isEdited,
+          isEdited: true,
         },
       });
     }
