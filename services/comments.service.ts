@@ -27,7 +27,7 @@ export async function executeComment({
   commentId,
   content,
 }: {
-  action: "add" | "delete";
+  action: "add" | "update" | "delete";
   postId?: string;
   commentId?: string;
   content?: string;
