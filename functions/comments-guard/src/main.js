@@ -41,6 +41,37 @@ export default async ({ req, res }) => {
       });
     }
 
+    async function updateComment() {
+      if (typeof content !== 'string' || !content.trim())
+        throw new Error("Error: Comment can't be empty to update");
+      if (typeof commentId !== 'string' || !commentId.trim())
+        throw new Error("Error: Comment ID can't be empty to update");
+
+      const cleanedContent = content.trim();
+      const cleanedCommentId = commentId.trim();
+
+      const comment = await tablesDB.getRow({
+        databaseId: CRIC_TALK_DATABASE_ID,
+        tableId: COMMENTS_TABLE_ID,
+        rowId: cleanedCommentId,
+      });
+
+      if (comment.authorId !== userId)
+        throw new Error("Forbidden: You aren't owner of this comment");
+
+      return await tablesDB.updateRow({
+        databaseId: CRIC_TALK_DATABASE_ID,
+        tableId: COMMENTS_TABLE_ID,
+        rowId: cleanedCommentId,
+        data: {
+          postId: comment.postId,
+          authorId: comment.authorId,
+          content: cleanedContent,
+          isEdited: true,
+        },
+      });
+    }
+
     async function deleteComment() {
       if (typeof commentId !== 'string' || !commentId.trim())
         throw new Error('Error: Comment ID is required to delete a comment');
@@ -75,6 +106,9 @@ export default async ({ req, res }) => {
         break;
       case 'delete':
         result = await deleteComment();
+        break;
+      case 'update':
+        result = await updateComment();
         break;
       default:
         throw new Error('Invalid action');

@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import {
   Alert,
   FlatList,
+  Modal,
   Pressable,
   ScrollView,
   Text,
@@ -38,6 +39,7 @@ const PostDetails = () => {
   }
 
   const updatePostState = usePosts((s) => s.updatePost);
+  const updateCommentState = useComments((s) => s.updateComment);
 
   const commentList = useComments((s) => s.commentList);
   const setCommentList = useComments((s) => s.setComments);
@@ -45,6 +47,15 @@ const PostDetails = () => {
   const deleteCommentState = useComments((s) => s.deleteComment);
 
   const [comment, setComment] = useState<string>("");
+  const [oldComment, setOldComment] = useState<string>("");
+  const [newComment, setNewComment] = useState<string>("");
+  const isNewComment =
+    oldComment.trim() !== newComment.trim() && newComment.trim();
+
+  const [selectedCommentId, setSelectedCommentId] = useState<string>("");
+
+  const [isEditCommentVisible, setIsEditCommentVisible] =
+    useState<boolean>(false);
 
   const keyboardHeight = useKeyboardHeight();
 
@@ -158,6 +169,29 @@ const PostDetails = () => {
     ]);
   }
 
+  async function handleUpdateComment(commentId: string) {
+    try {
+      const execution = await executeComment({
+        action: "update",
+        commentId,
+        content: newComment,
+      });
+      const parsed = JSON.parse(execution.responseBody);
+
+      const comment: CommentType = parsed.data;
+
+      updateCommentState({ ...comment });
+      setIsEditCommentVisible(false);
+      showToast({ type: "success", text1: "Comment edited successfully" });
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error",
+        text2: "Could not edit comment. Please try again later.",
+      });
+    }
+  }
+
   return (
     <View className="flex-1 bg-white">
       <View className="flex-1">
@@ -220,16 +254,32 @@ const PostDetails = () => {
                         </Text>
 
                         {item.authorId === userId && (
-                          <Pressable
-                            className="ml-auto"
-                            onPress={() => handleDeleteComment(item.$id)}
-                          >
-                            <Ionicons
-                              name="trash-outline"
-                              size={18}
-                              color="gray"
-                            />
-                          </Pressable>
+                          <View className="flex-row items-center ml-auto gap-2">
+                            <Pressable
+                              onPress={() => {
+                                setSelectedCommentId(item.$id);
+                                setOldComment(item.content);
+                                setNewComment(item.content);
+                                setIsEditCommentVisible(true);
+                              }}
+                            >
+                              <Ionicons
+                                name="pencil-outline"
+                                size={18}
+                                color="gray"
+                              />
+                            </Pressable>
+
+                            <Pressable
+                              onPress={() => handleDeleteComment(item.$id)}
+                            >
+                              <Ionicons
+                                name="trash-outline"
+                                size={18}
+                                color="gray"
+                              />
+                            </Pressable>
+                          </View>
                         )}
                       </View>
 
@@ -283,6 +333,58 @@ const PostDetails = () => {
           </Pressable>
         </View>
       </SafeAreaView>
+
+      {/* EDIT COMMENT MODAL */}
+      <Modal visible={isEditCommentVisible} transparent animationType="slide">
+        {/* OVERLAY */}
+        <Pressable
+          className="bg-gray-900/40 absolute inset-0"
+          onPress={() => setIsEditCommentVisible(false)}
+        />
+
+        {/* CONTENT */}
+        <View className="flex-1 items-center justify-center">
+          <View className="bg-white w-80 h-60 rounded-lg px-6 py-4">
+            {/* HEADER */}
+            <View className="flex-row items-center">
+              <Text className="text-slate-900 font-semibold absolute left-0 right-0 text-center">
+                Edit comment
+              </Text>
+
+              <Pressable
+                className="ml-auto"
+                onPress={() => setIsEditCommentVisible(false)}
+              >
+                <Ionicons name="close" size={18} color="#0f172b" />
+              </Pressable>
+            </View>
+
+            {/* EDIT COMMENT INPUT */}
+            <TextInput
+              value={newComment}
+              onChangeText={setNewComment}
+              placeholder="Edit comment"
+              placeholderTextColor="gray"
+              className="border border-slate-300 rounded-lg text-slate-900 h-12 mt-4 pl-4"
+            />
+
+            {/* CONTROL BUTTONS */}
+            <View className="flex-row items-center mt-auto ml-auto gap-4">
+              <Pressable onPress={() => setIsEditCommentVisible(false)}>
+                <Text className="text-slate-900">Cancel</Text>
+              </Pressable>
+
+              <Pressable
+                disabled={!isNewComment}
+                className={`${isNewComment ? "bg-orange-500" : "bg-slate-500"} px-4 py-2 rounded-lg transition-all duration-300 active:scale-[0.95] active:opacity-85`}
+                onPress={() => handleUpdateComment(selectedCommentId)}
+              >
+                <Text className="font-medium text-white">Save</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
