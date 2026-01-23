@@ -182,7 +182,7 @@ const PostDetails = () => {
 
       updateCommentState({ ...comment });
       setIsEditCommentVisible(false);
-      showToast({ type: "success", text1: "Commenr edited successfully" });
+      showToast({ type: "success", text1: "Comment edited successfully" });
     } catch (error) {
       showToast({
         type: "error",
