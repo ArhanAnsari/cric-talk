@@ -39,6 +39,7 @@ const PostDetails = () => {
   }
 
   const updatePostState = usePosts((s) => s.updatePost);
+  const updateCommentState = useComments((s) => s.updateComment);
 
   const commentList = useComments((s) => s.commentList);
   const setCommentList = useComments((s) => s.setComments);
@@ -50,6 +51,8 @@ const PostDetails = () => {
   const [newComment, setNewComment] = useState<string>("");
   const isNewComment =
     oldComment.trim() !== newComment.trim() && newComment.trim();
+
+  const [selectedCommentId, setSelectedCommentId] = useState<string>("");
 
   const [isEditCommentVisible, setIsEditCommentVisible] =
     useState<boolean>(false);
@@ -166,6 +169,29 @@ const PostDetails = () => {
     ]);
   }
 
+  async function handleUpdateComment(commentId: string) {
+    try {
+      const execution = await executeComment({
+        action: "update",
+        commentId,
+        content: newComment,
+      });
+      const parsed = JSON.parse(execution.responseBody);
+
+      const comment: CommentType = parsed.data;
+
+      updateCommentState({ ...comment });
+      setIsEditCommentVisible(false);
+      showToast({ type: "success", text1: "Commenr edited successfully" });
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error",
+        text2: "Couldn't edit comment. Please try again later.",
+      });
+    }
+  }
+
   return (
     <View className="flex-1 bg-white">
       <View className="flex-1">
@@ -231,6 +257,7 @@ const PostDetails = () => {
                           <View className="flex-row items-center ml-auto gap-2">
                             <Pressable
                               onPress={() => {
+                                setSelectedCommentId(item.$id);
                                 setOldComment(item.content);
                                 setNewComment(item.content);
                                 setIsEditCommentVisible(true);
@@ -347,6 +374,7 @@ const PostDetails = () => {
               <Pressable
                 disabled={!isNewComment}
                 className={`${isNewComment ? "bg-orange-500" : "bg-slate-500"} px-4 py-2 rounded-lg transition-all duration-300 active:scale-[0.95] active:opacity-85`}
+                onPress={() => handleUpdateComment(selectedCommentId)}
               >
                 <Text className="font-medium text-white">Save</Text>
               </Pressable>
