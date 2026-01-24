@@ -3,7 +3,7 @@ import { showToast } from "@/libs/showToast";
 import { executeComment } from "@/services/comments.service";
 import { useComments } from "@/store/useComments";
 import { Ionicons } from "@expo/vector-icons";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Pressable, Text, TextInput, View } from "react-native";
 
 type Props = {
