@@ -22,7 +22,7 @@ const EditCommentModal = ({
   const updateCommentState = useComments((s) => s.updateComment);
 
   const [newComment, setNewComment] = useState<string>("");
-  const isNewComment: boolean =
+  const isCommentModified: boolean =
     initialComment.trim() !== newComment.trim() && newComment.trim() !== "";
 
   async function handleUpdateComment(commentId: string) {
@@ -86,8 +86,8 @@ const EditCommentModal = ({
             </Pressable>
 
             <Pressable
-              disabled={!isNewComment}
-              className={`${isNewComment ? "bg-orange-500" : "bg-slate-500"} px-4 py-2 rounded-lg transition-all duration-300 active:scale-[0.95] active:opacity-85`}
+              disabled={!isCommentModified}
+              className={`${isCommentModified ? "bg-orange-500" : "bg-slate-500"} px-4 py-2 rounded-lg transition-all duration-300 active:scale-[0.95] active:opacity-85`}
               onPress={() => handleUpdateComment(selectedCommentId)}
             >
               <Text className="font-medium text-white">Save</Text>
