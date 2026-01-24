@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import { Modal, Pressable, Text, TextInput, View } from "react-native";
 
 type Props = {
-  visible: boolean;
+  isVisible: boolean;
   onClose: () => void;
   newComment: string;
   setNewComment: Dispatch<SetStateAction<string>>;
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const EditCommentModal = ({
-  visible,
+  isVisible,
   onClose,
   newComment,
   setNewComment,
@@ -21,7 +21,7 @@ const EditCommentModal = ({
 }: Props) => {
   return (
     // EDIT COMMENT MODAL
-    <Modal visible={visible} transparent animationType="slide">
+    <Modal visible={isVisible} transparent animationType="slide">
       {/* OVERLAY */}
       <Pressable
         className="bg-gray-900/40 absolute inset-0"

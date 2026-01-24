@@ -284,7 +284,7 @@ const PostDetails = () => {
       </SafeAreaView>
 
       <EditCommentModal
-        visible={isEditCommentVisible}
+        isVisible={isEditCommentVisible}
         onClose={() => setIsEditCommentVisible(false)}
         newComment={newComment}
         setNewComment={setNewComment}
