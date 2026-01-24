@@ -1,4 +1,4 @@
-import { CommentType } from "@/interfaces/Post";
+import { CommentType } from "@/interfaces/CommentType";
 import { functions, tablesDB } from "@/libs/appwrite";
 import { Query } from "react-native-appwrite";
 

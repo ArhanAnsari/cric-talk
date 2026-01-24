@@ -1,4 +1,4 @@
-import { CommentType } from "@/interfaces/Post";
+import { CommentType } from "@/interfaces/CommentType";
 import { create } from "zustand";
 
 type CommentsStateType = {

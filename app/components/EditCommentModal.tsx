@@ -1,4 +1,4 @@
-import { CommentType } from "@/interfaces/Post";
+import { CommentType } from "@/interfaces/CommentType";
 import { showToast } from "@/libs/showToast";
 import { executeComment } from "@/services/comments.service";
 import { useComments } from "@/store/useComments";

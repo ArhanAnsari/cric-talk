@@ -1,4 +1,4 @@
-import { CommentType } from "@/interfaces/Post";
+import { CommentType } from "@/interfaces/CommentType";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
