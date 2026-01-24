@@ -3,27 +3,27 @@ import { showToast } from "@/libs/showToast";
 import { executeComment } from "@/services/comments.service";
 import { useComments } from "@/store/useComments";
 import { Ionicons } from "@expo/vector-icons";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { Modal, Pressable, Text, TextInput, View } from "react-native";
 
 type Props = {
   isVisible: boolean;
   onClose: () => void;
   selectedCommentId: string;
-  newComment: string;
-  setNewComment: Dispatch<SetStateAction<string>>;
-  isNewComment: boolean;
+  initialComment: string;
 };
 
 const EditCommentModal = ({
   isVisible,
   onClose,
   selectedCommentId,
-  newComment,
-  setNewComment,
-  isNewComment,
+  initialComment,
 }: Props) => {
   const updateCommentState = useComments((s) => s.updateComment);
+
+  const [newComment, setNewComment] = useState<string>("");
+  const isNewComment: boolean =
+    initialComment.trim() !== newComment.trim() && newComment.trim() !== "";
 
   async function handleUpdateComment(commentId: string) {
     try {

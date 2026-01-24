@@ -48,9 +48,6 @@ const PostDetails = () => {
 
   const [comment, setComment] = useState<string>("");
   const [oldComment, setOldComment] = useState<string>("");
-  const [newComment, setNewComment] = useState<string>("");
-  const isNewComment: boolean =
-    oldComment.trim() !== newComment.trim() && newComment.trim() !== "";
 
   const [selectedCommentId, setSelectedCommentId] = useState<string>("");
 
@@ -221,7 +218,6 @@ const PostDetails = () => {
                       onEditPress={() => {
                         setSelectedCommentId(item.$id);
                         setOldComment(item.content);
-                        setNewComment(item.content);
                         setIsEditCommentVisible(true);
                       }}
                       onDeletePress={() => handleDeleteComment(item.$id)}
@@ -263,9 +259,7 @@ const PostDetails = () => {
         isVisible={isEditCommentVisible}
         onClose={() => setIsEditCommentVisible(false)}
         selectedCommentId={selectedCommentId}
-        newComment={newComment}
-        setNewComment={setNewComment}
-        isNewComment={isNewComment}
+        initialComment={oldComment}
       />
     </View>
   );
