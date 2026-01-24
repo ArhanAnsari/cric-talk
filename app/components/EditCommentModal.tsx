@@ -21,7 +21,7 @@ const EditCommentModal = ({
 }: Props) => {
   const updateCommentState = useComments((s) => s.updateComment);
 
-  const [newComment, setNewComment] = useState<string>("");
+  const [newComment, setNewComment] = useState<string>(initialComment);
   const isCommentModified: boolean =
     initialComment.trim() !== newComment.trim() && newComment.trim() !== "";
 
