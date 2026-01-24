@@ -40,7 +40,6 @@ const PostDetails = () => {
   }
 
   const updatePostState = usePosts((s) => s.updatePost);
-  const updateCommentState = useComments((s) => s.updateComment);
 
   const commentList = useComments((s) => s.commentList);
   const setCommentList = useComments((s) => s.setComments);
@@ -170,29 +169,6 @@ const PostDetails = () => {
     ]);
   }
 
-  async function handleUpdateComment(commentId: string) {
-    try {
-      const execution = await executeComment({
-        action: "update",
-        commentId,
-        content: newComment,
-      });
-      const parsed = JSON.parse(execution.responseBody);
-
-      const comment: CommentType = parsed.data;
-
-      updateCommentState({ ...comment });
-      setIsEditCommentVisible(false);
-      showToast({ type: "success", text1: "Comment edited successfully" });
-    } catch (error) {
-      showToast({
-        type: "error",
-        text1: "Error",
-        text2: "Could not edit comment. Please try again later.",
-      });
-    }
-  }
-
   return (
     <View className="flex-1 bg-white">
       <View className="flex-1">
@@ -286,10 +262,10 @@ const PostDetails = () => {
       <EditCommentModal
         isVisible={isEditCommentVisible}
         onClose={() => setIsEditCommentVisible(false)}
+        selectedCommentId={selectedCommentId}
         newComment={newComment}
         setNewComment={setNewComment}
         isNewComment={isNewComment}
-        onUpdatePress={() => handleUpdateComment(selectedCommentId)}
       />
     </View>
   );

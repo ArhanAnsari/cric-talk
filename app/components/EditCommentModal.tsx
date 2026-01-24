@@ -1,3 +1,7 @@
+import { CommentType } from "@/interfaces/Post";
+import { showToast } from "@/libs/showToast";
+import { executeComment } from "@/services/comments.service";
+import { useComments } from "@/store/useComments";
 import { Ionicons } from "@expo/vector-icons";
 import React, { Dispatch, SetStateAction } from "react";
 import { Modal, Pressable, Text, TextInput, View } from "react-native";
@@ -5,20 +9,44 @@ import { Modal, Pressable, Text, TextInput, View } from "react-native";
 type Props = {
   isVisible: boolean;
   onClose: () => void;
+  selectedCommentId: string;
   newComment: string;
   setNewComment: Dispatch<SetStateAction<string>>;
   isNewComment: boolean;
-  onUpdatePress: () => void;
 };
 
 const EditCommentModal = ({
   isVisible,
   onClose,
+  selectedCommentId,
   newComment,
   setNewComment,
   isNewComment,
-  onUpdatePress,
 }: Props) => {
+  const updateCommentState = useComments((s) => s.updateComment);
+
+  async function handleUpdateComment(commentId: string) {
+    try {
+      const execution = await executeComment({
+        action: "update",
+        commentId,
+        content: newComment,
+      });
+      const parsed = JSON.parse(execution.responseBody);
+
+      const comment: CommentType = parsed.data;
+
+      updateCommentState({ ...comment });
+      onClose();
+      showToast({ type: "success", text1: "Comment edited successfully" });
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error",
+        text2: "Could not edit comment. Please try again later.",
+      });
+    }
+  }
   return (
     // EDIT COMMENT MODAL
     <Modal visible={isVisible} transparent animationType="slide">
@@ -60,7 +88,7 @@ const EditCommentModal = ({
             <Pressable
               disabled={!isNewComment}
               className={`${isNewComment ? "bg-orange-500" : "bg-slate-500"} px-4 py-2 rounded-lg transition-all duration-300 active:scale-[0.95] active:opacity-85`}
-              onPress={onUpdatePress}
+              onPress={() => handleUpdateComment(selectedCommentId)}
             >
               <Text className="font-medium text-white">Save</Text>
             </Pressable>
