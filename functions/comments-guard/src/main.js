@@ -63,11 +63,12 @@ export default async ({ req, res }) => {
         );
 
       // increase activity count
-      await tablesDB.updateRow({
+      await tablesDB.incrementRowColumn({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: RATE_LIMIT_TABLE_ID,
         rowId: userActivity.rows[0].$id,
-        data: { count: userActivity.rows[0].count + 1 },
+        column: 'activityCount',
+        value: 1,
       });
     }
 
