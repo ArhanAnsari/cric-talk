@@ -71,6 +71,9 @@ export default async ({ req, res }) => {
     }
 
     async function addComment() {
+      // implement rate limit check
+      await rateLimitCheck('add_comment');
+
       if (typeof content !== 'string' || !content.trim())
         throw new Error("Error: Comment can't be empty");
       if (typeof postId !== 'string' || !postId.trim())
@@ -93,6 +96,9 @@ export default async ({ req, res }) => {
     }
 
     async function updateComment() {
+      // implement rate limit check
+      await rateLimitCheck('update_comment');
+
       if (typeof content !== 'string' || !content.trim())
         throw new Error("Error: Comment can't be empty to update");
       if (typeof commentId !== 'string' || !commentId.trim())
@@ -124,6 +130,9 @@ export default async ({ req, res }) => {
     }
 
     async function deleteComment() {
+      // implement rate limit check
+      await rateLimitCheck('delete_comment');
+
       if (typeof commentId !== 'string' || !commentId.trim())
         throw new Error('Error: Comment ID is required to delete a comment');
       const cleanedCommentId = commentId.trim();
