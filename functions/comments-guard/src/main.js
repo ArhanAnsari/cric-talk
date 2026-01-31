@@ -41,7 +41,7 @@ export default async ({ req, res }) => {
       });
 
       // if user activity doesn't exits create one
-      if (!userActivity.rows.length === 0) {
+      if (userActivity.rows.length === 0) {
         await tablesDB.createRow({
           databaseId: CRIC_TALK_DATABASE_ID,
           tableId: RATE_LIMIT_TABLE_ID,
@@ -53,6 +53,7 @@ export default async ({ req, res }) => {
             count: 1,
           },
         });
+        return;
       }
 
       // if user exceeds the limit block the request
