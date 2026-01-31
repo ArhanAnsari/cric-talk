@@ -59,7 +59,7 @@ export default async ({ req, res }) => {
       // if user exceeds the limit block the request
       if (userActivity.rows[0].activityCount >= 60)
         throw new Error(
-          'Rate limit exceeded: Too many comments added. Please try again later.'
+          'Rate limit exceeded: Too many requests. Please try again later.'
         );
 
       // increase activity count
