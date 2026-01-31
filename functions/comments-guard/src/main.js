@@ -50,14 +50,14 @@ export default async ({ req, res }) => {
             userId,
             activity,
             windowKey,
-            count: 1,
+            activityCount: 1,
           },
         });
         return;
       }
 
       // if user exceeds the limit block the request
-      if (userActivity.rows[0].count >= 60)
+      if (userActivity.rows[0].activityCount >= 60)
         throw new Error(
           'Rate limit exceeded: Too many comments added. Please try again later.'
         );
