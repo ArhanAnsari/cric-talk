@@ -81,6 +81,9 @@ export default async ({ req, res }) => {
     }
 
     async function createRoomMessage() {
+      // implement rate limit check
+      await rateLimitCheck('create_room_message');
+
       const room = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOMS_TABLE_ID,
@@ -180,6 +183,9 @@ export default async ({ req, res }) => {
     }
 
     async function updateRoomMessage() {
+      // implement rate limit check
+      await rateLimitCheck('update_room_message');
+
       const room = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOMS_TABLE_ID,
@@ -201,6 +207,9 @@ export default async ({ req, res }) => {
     }
 
     async function deleteRoomMessage() {
+      // implement rate limit check
+      await rateLimitCheck('delete_room_message');
+
       const room = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOMS_TABLE_ID,
