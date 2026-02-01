@@ -78,6 +78,9 @@ export default async ({ req, res }) => {
     }
 
     async function createPost() {
+      // implement rate limit check
+      await rateLimtiCheck('create_post');
+
       return await tablesDB.createRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: POSTS_TABLE_ID,
@@ -97,6 +100,9 @@ export default async ({ req, res }) => {
     }
 
     async function updatePost() {
+      // implement rate limit check
+      await rateLimtiCheck('update_post');
+
       const post = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: POSTS_TABLE_ID,
@@ -119,6 +125,9 @@ export default async ({ req, res }) => {
     }
 
     async function deletePost() {
+      // implement rate limit check
+      await rateLimtiCheck('delete_post');
+
       const post = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: POSTS_TABLE_ID,
