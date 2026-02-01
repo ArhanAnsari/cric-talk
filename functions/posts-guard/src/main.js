@@ -1,8 +1,9 @@
-import { Client, ID, TablesDB, Users } from "node-appwrite";
+import { Client, ID, TablesDB, Users } from 'node-appwrite';
+import { Query } from 'react-native-appwrite';
 
 export default async ({ req, res }) => {
   try {
-    const userId = req.headers["x-appwrite-user-id"];
+    const userId = req.headers['x-appwrite-user-id'];
 
     if (!userId) {
       throw new Error(`Unauthorized: User is not authorized`);
@@ -13,16 +14,68 @@ export default async ({ req, res }) => {
     const client = new Client()
       .setEndpoint(process.env.APPWRITE_ENDPOINT)
       .setProject(process.env.APPWRITE_PROJECT_ID)
-      .setKey(req.headers["x-appwrite-key"]);
+      .setKey(req.headers['x-appwrite-key']);
 
     const tablesDB = new TablesDB(client);
     const users = new Users(client);
 
     const CRIC_TALK_DATABASE_ID = process.env.APPWRITE_CRIC_TALK_DATABASE_ID;
     const POSTS_TABLE_ID = process.env.APPWRITE_POSTS_TABLE_ID;
+    const RATE_LIMIT_TABLE_ID = process.env.APPWRITE_RATE_LIMIT_TABLE_ID;
 
     const user = await users.get(userId);
-    const authorName = user.name || user.email.split("@")[0];
+    const authorName = user.name || user.email.split('@')[0];
+
+    async function rateLimtiCheck(activity) {
+      // implement rate limit
+      // 10 request per minute per user
+
+      // get windowKey and userActivity
+      const windowKey = Math.floor(Date.now() / 60000);
+      const userActivity = await tablesDB.listRows({
+        databaseId: CRIC_TALK_DATABASE_ID,
+        tableId: RATE_LIMIT_TABLE_ID,
+        queries: [
+          Query.equal('userId', userId),
+          Query.equal('activity', activity),
+          Query.equal('windowKey', windowKey),
+          Query.limit(1),
+        ],
+      });
+
+      // if userActivity doesn't exists create one
+      if (userActivity.rows.length === 0) {
+        await tablesDB.createRow({
+          databaseId: CRIC_TALK_DATABASE_ID,
+          tableId: RATE_LIMIT_TABLE_ID,
+          rowId: ID.unique(),
+          data: {
+            userId,
+            activity,
+            windowKey,
+            activityCount: 1,
+          },
+        });
+        return;
+      }
+
+      // check rate limit of the user
+      const row = userActivity.rows[0];
+      if (row.activityCount >= 60) {
+        throw new Error(
+          'Rate limit exceeded: Too many requests in a short period.'
+        );
+      }
+
+      // increase activityCount if limit not exceeded
+      await tablesDB.incrementRowColumn({
+        databaseId: CRIC_TALK_DATABASE_ID,
+        tableId: RATE_LIMIT_TABLE_ID,
+        rowId: row.$id,
+        column: 'activityCount',
+        value: 1,
+      });
+    }
 
     async function createPost() {
       return await tablesDB.createRow({
@@ -133,23 +186,23 @@ export default async ({ req, res }) => {
     let result;
 
     switch (action) {
-      case "create":
+      case 'create':
         result = await createPost();
         break;
-      case "update":
+      case 'update':
         result = await updatePost();
         break;
-      case "delete":
+      case 'delete':
         result = await deletePost();
         break;
-      case "like":
+      case 'like':
         result = await likePost();
         break;
-      case "view":
+      case 'view':
         result = await viewPost();
         break;
       default:
-        throw new Error("Invalid action");
+        throw new Error('Invalid action');
     }
 
     return res.json({ success: true, data: result });
