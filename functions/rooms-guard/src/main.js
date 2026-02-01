@@ -79,6 +79,9 @@ export default async ({ req, res }) => {
     }
 
     async function createRoom() {
+      // implement rate limit check
+      await rateLimitCheck('create_room');
+
       let status;
 
       const now = Date.now();
@@ -111,6 +114,9 @@ export default async ({ req, res }) => {
     }
 
     async function updateRoom() {
+      // implement rate limit check
+      await rateLimitCheck('update_room');
+
       const room = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOMS_TABLE_ID,
@@ -152,6 +158,9 @@ export default async ({ req, res }) => {
     }
 
     async function deleteRoom() {
+      // implement rate limit check
+      await rateLimitCheck('delete_room');
+
       const room = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOMS_TABLE_ID,
