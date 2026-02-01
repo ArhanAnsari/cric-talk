@@ -55,7 +55,7 @@ export default async ({ req, res }) => {
             userId,
             activity,
             windowKey,
-            activityCount: 60,
+            activityCount: 1,
           },
         });
         return;
