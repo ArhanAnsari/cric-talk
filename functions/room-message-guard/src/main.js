@@ -42,6 +42,7 @@ export default async ({ req, res }) => {
           Query.equal('userId', userId),
           Query.equal('activity', activity),
           Query.equal('windowKey', windowKey),
+          Query.limit(1),
         ],
       });
 
