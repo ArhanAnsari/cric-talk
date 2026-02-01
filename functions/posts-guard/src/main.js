@@ -26,7 +26,7 @@ export default async ({ req, res }) => {
     const user = await users.get(userId);
     const authorName = user.name || user.email.split('@')[0];
 
-    async function rateLimtiCheck(activity) {
+    async function rateLimitCheck(activity) {
       // implement rate limit
       // 10 request per minute per user
 
@@ -79,7 +79,7 @@ export default async ({ req, res }) => {
 
     async function createPost() {
       // implement rate limit check
-      await rateLimtiCheck('create_post');
+      await rateLimitCheck('create_post');
 
       return await tablesDB.createRow({
         databaseId: CRIC_TALK_DATABASE_ID,
@@ -101,7 +101,7 @@ export default async ({ req, res }) => {
 
     async function updatePost() {
       // implement rate limit check
-      await rateLimtiCheck('update_post');
+      await rateLimitCheck('update_post');
 
       const post = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
@@ -126,7 +126,7 @@ export default async ({ req, res }) => {
 
     async function deletePost() {
       // implement rate limit check
-      await rateLimtiCheck('delete_post');
+      await rateLimitCheck('delete_post');
 
       const post = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
