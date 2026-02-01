@@ -76,7 +76,7 @@ export default async ({ req, res }) => {
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: RATE_LIMIT_TABLE_ID,
         rowId: row.$id,
-        column: activityCount,
+        column: 'activityCount',
         value: 1,
       });
     }
