@@ -61,7 +61,7 @@ export default async ({ req, res }) => {
 
       // check rate limit of the user
       const row = userActivity.rows[0];
-      if (row.activityCount >= 60) {
+      if (row.activityCount >= 10) {
         throw new Error(
           'Rate limit exceeded: Too many requests in a short period.'
         );
