@@ -293,7 +293,7 @@
           "type": "string",
           "required": true,
           "array": false,
-          "size": 36,
+          "size": 128,
           "default": null,
           "encrypt": false
         }
