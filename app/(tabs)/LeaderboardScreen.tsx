@@ -4,10 +4,11 @@ import { showToast } from "@/libs/showToast";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FlatList, Pressable, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LeaderboardPodiumUser from "../components/LeaderboardPodiumUser";
 import LeaderboardUserRow from "../components/LeaderboardUserRow";
+import { LegendList } from "@legendapp/list";
 
 const LeaderboardScreen = () => {
   const [userStatsLeaderboard, setUserStatsLeaderboard] = useState<UserStats[]>(
@@ -89,7 +90,7 @@ const LeaderboardScreen = () => {
 
       {/* LEADERBOARD LIST */}
 
-      <FlatList
+      <LegendList
         data={userStatsLeaderboard.slice(3, 3 + 7)}
         keyExtractor={(item) => item.$id}
         contentContainerStyle={{
@@ -101,6 +102,7 @@ const LeaderboardScreen = () => {
         renderItem={({ item, index }) => (
           <LeaderboardUserRow user={item} rank={index + 1} />
         )}
+        recycleItems
       />
     </View>
   );

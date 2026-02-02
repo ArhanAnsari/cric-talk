@@ -6,11 +6,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { ViewToken } from "react-native";
-import { FlatList, Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CreatePostModal from "../components/CreatePostModal";
 import PostCard from "../components/PostCard";
 import ProfileDrawer from "../components/ProfileDrawer";
+import { LegendList } from "@legendapp/list";
 
 const HomeScreen = () => {
   const [userId, setUserId] = useState<string>("");
@@ -143,7 +144,7 @@ const HomeScreen = () => {
 
         {/* POSTS */}
         <View className="mt-6">
-          <FlatList
+          <LegendList
             data={posts}
             keyExtractor={(item) => item.$id}
             contentContainerStyle={{ paddingBottom: 200 }}
@@ -151,6 +152,7 @@ const HomeScreen = () => {
             onViewableItemsChanged={onViewableItemsChanged}
             viewabilityConfig={{ itemVisiblePercentThreshold: 60 }}
             renderItem={({ item }) => <PostCard userId={userId} post={item} />}
+            recycleItems
           />
         </View>
       </View>

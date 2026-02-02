@@ -11,7 +11,6 @@ import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
-  FlatList,
   Pressable,
   ScrollView,
   Text,
@@ -22,6 +21,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CommentCard from "../components/CommentCard";
 import EditCommentModal from "../components/EditCommentModal";
 import PostCard from "../components/PostCard";
+import { LegendList } from "@legendapp/list";
 
 const PostDetails = () => {
   const { postId } = useLocalSearchParams();
@@ -207,7 +207,7 @@ const PostDetails = () => {
                 </Text>
 
                 {/* COMMENT LIST */}
-                <FlatList
+                <LegendList
                   data={commentList}
                   keyExtractor={(item) => item.$id}
                   contentContainerStyle={{ paddingBottom: 20 }}
@@ -223,6 +223,7 @@ const PostDetails = () => {
                       onDeletePress={() => handleDeleteComment(item.$id)}
                     />
                   )}
+                  recycleItems
                 />
               </View>
             </View>

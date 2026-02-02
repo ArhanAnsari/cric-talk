@@ -6,9 +6,10 @@ import { Ionicons } from "@expo/vector-icons";
 import * as Notifications from "expo-notifications";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FlatList, Pressable, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import NotificationCard from "../components/NotificationCard";
+import { LegendList } from "@legendapp/list";
 
 const NotificationsScreen = () => {
   const [expoPushToken, setExpoPushToken] = useState<string>("");
@@ -92,11 +93,12 @@ const NotificationsScreen = () => {
         </Text>
 
         {/* NOTIFICATION CARD */}
-        <FlatList
+        <LegendList
           data={notificationsList}
           keyExtractor={(item) => item.$id}
           contentContainerStyle={{ paddingBottom: 80, marginTop: 16 }}
           renderItem={({ item }) => <NotificationCard notification={item} />}
+          recycleItems
         />
       </View>
     </View>
