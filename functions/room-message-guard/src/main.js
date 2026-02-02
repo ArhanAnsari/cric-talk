@@ -63,7 +63,7 @@ export default async ({ req, res }) => {
       }
 
       // check activityCount
-      const row = activity.rows[0];
+      const row = userActivity.rows[0];
 
       if (row.activityCount >= 60) {
         throw new Error(
