@@ -587,7 +587,7 @@
                     "type": "string",
                     "required": true,
                     "array": false,
-                    "size": 36,
+                    "size": 16,
                     "default": null,
                     "encrypt": false
                 }
