@@ -47,7 +47,13 @@
       "enabled": true,
       "logging": true,
       "runtime": "node-22",
-      "scopes": ["users.read"],
+      "scopes": [
+        "users.read",
+        "tables.read",
+        "tables.write",
+        "rows.read",
+        "rows.write"
+      ],
       "events": [],
       "schedule": "",
       "timeout": 15,
@@ -63,7 +69,13 @@
       "specification": "s-0.5vcpu-512mb",
       "execute": ["any"],
       "events": [],
-      "scopes": ["users.read"],
+      "scopes": [
+        "users.read",
+        "tables.read",
+        "tables.write",
+        "rows.read",
+        "rows.write"
+      ],
       "schedule": "",
       "timeout": 15,
       "enabled": true,
@@ -79,7 +91,13 @@
       "specification": "s-0.5vcpu-512mb",
       "execute": ["any"],
       "events": [],
-      "scopes": ["users.read"],
+      "scopes": [
+        "users.read",
+        "tables.read",
+        "tables.write",
+        "rows.read",
+        "rows.write"
+      ],
       "schedule": "",
       "timeout": 15,
       "enabled": true,
@@ -95,7 +113,13 @@
       "specification": "s-0.5vcpu-512mb",
       "execute": ["any"],
       "events": [],
-      "scopes": ["users.read"],
+      "scopes": [
+        "users.read",
+        "tables.read",
+        "tables.write",
+        "rows.read",
+        "rows.write"
+      ],
       "schedule": "",
       "timeout": 15,
       "enabled": true,
@@ -111,7 +135,13 @@
       "specification": "s-0.5vcpu-512mb",
       "execute": ["any"],
       "events": [],
-      "scopes": ["users.read"],
+      "scopes": [
+        "users.read",
+        "tables.read",
+        "tables.write",
+        "rows.read",
+        "rows.write"
+      ],
       "schedule": "",
       "timeout": 15,
       "enabled": true,
@@ -127,7 +157,13 @@
       "specification": "s-0.5vcpu-512mb",
       "execute": ["any"],
       "events": [],
-      "scopes": ["users.read"],
+      "scopes": [
+        "users.read",
+        "tables.read",
+        "tables.write",
+        "rows.read",
+        "rows.write"
+      ],
       "schedule": "",
       "timeout": 15,
       "enabled": true,
@@ -143,7 +179,13 @@
       "specification": "s-0.5vcpu-512mb",
       "execute": ["any"],
       "events": [],
-      "scopes": ["users.read"],
+      "scopes": [
+        "users.read",
+        "tables.read",
+        "tables.write",
+        "rows.read",
+        "rows.write"
+      ],
       "schedule": "",
       "timeout": 15,
       "enabled": true,
