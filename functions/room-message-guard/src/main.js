@@ -1,4 +1,4 @@
-import { Client, ID, TablesDB, Users } from 'node-appwrite';
+import { Client, ID, TablesDB, Users, Query } from 'node-appwrite';
 
 export default async ({ req, res }) => {
   try {
@@ -21,13 +21,70 @@ export default async ({ req, res }) => {
     const USERS_TABLE_ID = process.env.USERS_TABLE_ID;
     const NOTIFICATIONS_TABLE_ID = process.env.APPWRITE_NOTIFICATIONS_TABLE_ID;
 
+    const RATE_LIMIT_TABLE_ID = process.env.APPWRITE_RATE_LIMIT_TABLE_ID;
+
     const tablesDB = new TablesDB(client);
     const users = new Users(client);
 
     const user = await users.get(userId);
     const username = user.name || user.email.split('@')[0];
 
+    async function rateLimitCheck(activity) {
+      // implement rate limit
+      // 60 requests per minute per user
+
+      // get windowKey and userActivity
+      const windowKey = Math.floor(Date.now() / 60000);
+      const userActivity = await tablesDB.listRows({
+        databaseId: CRIC_TALK_DATABASE_ID,
+        tableId: RATE_LIMIT_TABLE_ID,
+        queries: [
+          Query.equal('userId', userId),
+          Query.equal('activity', activity),
+          Query.equal('windowKey', windowKey),
+          Query.limit(1),
+        ],
+      });
+
+      // if userActivity doesn't exist create one
+      if (userActivity.rows.length === 0) {
+        await tablesDB.createRow({
+          databaseId: CRIC_TALK_DATABASE_ID,
+          tableId: RATE_LIMIT_TABLE_ID,
+          rowId: ID.unique(),
+          data: {
+            userId,
+            activity,
+            windowKey,
+            activityCount: 1,
+          },
+        });
+        return;
+      }
+
+      // check activityCount
+      const row = userActivity.rows[0];
+
+      if (row.activityCount >= 60) {
+        throw new Error(
+          'Rate limit exceeded: Too many requests in a short period'
+        );
+      }
+
+      // increase if limit not exceeded
+      await tablesDB.incrementRowColumn({
+        databaseId: CRIC_TALK_DATABASE_ID,
+        tableId: RATE_LIMIT_TABLE_ID,
+        rowId: row.$id,
+        column: 'activityCount',
+        value: 1,
+      });
+    }
+
     async function createRoomMessage() {
+      // implement rate limit check
+      await rateLimitCheck('create_room_message');
+
       const room = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOMS_TABLE_ID,
@@ -127,6 +184,9 @@ export default async ({ req, res }) => {
     }
 
     async function updateRoomMessage() {
+      // implement rate limit check
+      await rateLimitCheck('update_room_message');
+
       const room = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOMS_TABLE_ID,
@@ -148,6 +208,9 @@ export default async ({ req, res }) => {
     }
 
     async function deleteRoomMessage() {
+      // implement rate limit check
+      await rateLimitCheck('delete_room_message');
+
       const room = await tablesDB.getRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOMS_TABLE_ID,
