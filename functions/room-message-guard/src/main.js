@@ -46,7 +46,7 @@ export default async ({ req, res }) => {
         ],
       });
 
-      // if userActiity doesn't exist create one
+      // if userActivity doesn't exist create one
       if (userActivity.rows.length === 0) {
         await tablesDB.createRow({
           databaseId: CRIC_TALK_DATABASE_ID,
