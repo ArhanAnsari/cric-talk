@@ -856,6 +856,42 @@
                     "orders": [
                         "DESC"
                     ]
+                },
+                {
+                    "$id": "4716_8_activity_index",
+                    "$createdAt": "2026-02-02T03:32:32.892+00:00",
+                    "$updatedAt": "2026-02-02T03:32:32.956+00:00",
+                    "key": "activity_index",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "activity"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                },
+                {
+                    "$id": "4716_8_windowKey_index",
+                    "$createdAt": "2026-02-02T03:32:41.276+00:00",
+                    "$updatedAt": "2026-02-02T03:32:41.347+00:00",
+                    "key": "windowKey_index",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "windowKey"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
                 }
             ]
         }
