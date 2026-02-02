@@ -7,9 +7,10 @@ import { useUser } from "@/store/useUser";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FlatList, Pressable, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PostCard from "../components/PostCard";
+import { LegendList } from "@legendapp/list";
 
 const ProfileScreen = () => {
   const [userId, setUserId] = useState<string>("");
@@ -132,12 +133,13 @@ const ProfileScreen = () => {
 
       {/* ACTIVE TAB DATA */}
       {activeTab === "posts" ? (
-        <FlatList
+        <LegendList
           data={userPosts}
           keyExtractor={(item) => item.$id}
           contentContainerClassName="px-6 mt-4 pb-40"
           style={{ flex: 1 }}
           renderItem={({ item }) => <PostCard userId={userId} post={item} />}
+          recycleItems
         />
       ) : activeTab === "stats" ? (
         <View className="px-6 py-4">

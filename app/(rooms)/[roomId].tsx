@@ -9,17 +9,11 @@ import { fetchRooms } from "@/services/rooms.service";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  Modal,
-  Pressable,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { Modal, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RoomDetailsCard from "../components/RoomDetailsCard";
 import RoomMessageCard from "../components/RoomMessageCard";
+import { LegendList } from "@legendapp/list";
 
 const RoomDiscussion = () => {
   const CRIC_TALK_DATABASE_ID =
@@ -213,7 +207,7 @@ const RoomDiscussion = () => {
 
         <View className="flex-1 -mt-18">
           {/* DISCUSSION AREA */}
-          <FlatList
+          <LegendList
             data={roomMessages}
             keyExtractor={(item) => item.$id}
             contentContainerStyle={{
@@ -222,7 +216,7 @@ const RoomDiscussion = () => {
               paddingBottom: 24,
             }}
             showsVerticalScrollIndicator={false}
-            inverted
+            alignItemsAtEnd
             renderItem={({ item }) => (
               // DISCUSSION MESSAGE CARD
 

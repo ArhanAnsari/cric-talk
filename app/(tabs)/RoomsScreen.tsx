@@ -4,11 +4,12 @@ import { useRooms } from "@/store/useRooms";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
-import { FlatList, Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CreateRoomModal from "../components/CreateRoomModal";
 import FilterChip from "../components/FilterChip";
 import MatchRoomCard from "../components/MatchRoomCard";
+import { LegendList } from "@legendapp/list";
 
 const RoomsScreen = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -93,11 +94,12 @@ const RoomsScreen = () => {
         </ScrollView>
 
         {/* MATCH ROOM CARD */}
-        <FlatList
+        <LegendList
           data={filteredRooms}
           keyExtractor={(item) => item.$id}
           contentContainerStyle={{ paddingTop: 20, paddingBottom: 140 }}
           renderItem={({ item }) => <MatchRoomCard room={item} />}
+          recycleItems
         />
       </SafeAreaView>
 
