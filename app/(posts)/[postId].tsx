@@ -1,5 +1,4 @@
 import useKeyboardHeight from "@/hooks/useKeyboardHeight";
-import { CommentType } from "@/interfaces/CommentType";
 import { account } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
 import { executeComment, fetchComments } from "@/services/comments.service";
@@ -22,6 +21,7 @@ import CommentCard from "../components/CommentCard";
 import EditCommentModal from "../components/EditCommentModal";
 import PostCard from "../components/PostCard";
 import { LegendList } from "@legendapp/list";
+import { CommentType } from "@/schemas/CommentSchema";
 
 const PostDetails = () => {
   const { postId } = useLocalSearchParams();
