@@ -12,7 +12,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import PostCard from "../components/PostCard";
 import { LegendList } from "@legendapp/list";
 import { fetchRooms } from "@/services/rooms.service";
-import { RoomMessage } from "@/interfaces/RoomMessage";
 import { Room } from "@/interfaces/Room";
 import MatchRoomCard from "../components/MatchRoomCard";
 
