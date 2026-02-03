@@ -1,5 +1,14 @@
 import { Models } from "react-native-appwrite";
+import * as z from "zod";
 
+export const PostSchema = z.object({
+  content: z.string().min(1, "Post can not be empty."),
+  image: z.array(z.string()).min(1, "Invalid image."),
+});
+
+export type PostInput = z.infer<typeof PostSchema>;
+
+// Post received from db
 export interface Post extends Models.Row {
   content: string;
   image?: string[];
