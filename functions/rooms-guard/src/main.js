@@ -1,4 +1,12 @@
-import { Client, ID, TablesDB, Users, Query } from 'node-appwrite';
+import {
+  Client,
+  ID,
+  TablesDB,
+  Users,
+  Query,
+  Permission,
+  Role,
+} from 'node-appwrite';
 
 export default async ({ req, res }) => {
   try {
@@ -110,6 +118,11 @@ export default async ({ req, res }) => {
           matchType,
           isLocked,
         },
+        permissions: [
+          Permission.read(Role.users()),
+          Permission.update(Role.user(userId)),
+          Permission.delete(Role.user(userId)),
+        ],
       });
     }
 
