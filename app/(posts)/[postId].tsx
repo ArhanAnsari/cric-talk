@@ -21,7 +21,7 @@ import CommentCard from "../components/CommentCard";
 import EditCommentModal from "../components/EditCommentModal";
 import PostCard from "../components/PostCard";
 import { LegendList } from "@legendapp/list";
-import { CommentType } from "@/schemas/CommentSchema";
+import { CommentType, CreateCommentSchema } from "@/schemas/CommentSchema";
 
 const PostDetails = () => {
   const { postId } = useLocalSearchParams();
@@ -89,15 +89,21 @@ const PostDetails = () => {
   }, []);
 
   async function handleAddComment() {
-    if (comment.trim().length === 0) {
-      showToast({
-        type: "error",
-        text1: "Comment cannot be empty.",
-      });
-      return;
-    }
-
     try {
+      const result = CreateCommentSchema.safeParse({
+        postId,
+        content: comment,
+      });
+
+      if (!result.success) {
+        showToast({
+          type: "error",
+          text1: "Error",
+          text2: result.error.issues[0].message,
+        });
+        return;
+      }
+
       const execution = await executeComment({
         action: "add",
         postId: postId as string,
