@@ -164,6 +164,7 @@ const ProfileScreen = () => {
         <LegendList
           data={userRooms}
           keyExtractor={(item) => item.$id}
+          contentContainerClassName="px-6 mt-4 pb-40"
           renderItem={({ item }) => <MatchRoomCard room={item} />}
           recycleItems
         />
