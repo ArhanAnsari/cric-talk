@@ -1,4 +1,4 @@
-import { Post } from "@/interfaces/Post";
+import { Post } from "@/schemas/PostSchema";
 import { functions, tablesDB } from "@/libs/appwrite";
 import { ID, Query } from "react-native-appwrite";
 

@@ -1,4 +1,4 @@
-import { Post } from "@/interfaces/Post";
+import { Post } from "@/schemas/PostSchema";
 import { UserStats } from "@/interfaces/UserStats";
 import { account } from "@/libs/appwrite";
 import { fetchPostsByUserId } from "@/services/posts.service";

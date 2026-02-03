@@ -1,5 +1,5 @@
 import useLikePost from "@/hooks/useLikePost";
-import { Post } from "@/interfaces/Post";
+import { Post } from "@/schemas/PostSchema";
 import { showToast } from "@/libs/showToast";
 import { executePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";

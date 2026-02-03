@@ -1,4 +1,4 @@
-import { Post } from "@/interfaces/Post";
+import { Post } from "@/schemas/PostSchema";
 import { create } from "zustand";
 
 type PostsType = {
@@ -14,7 +14,7 @@ export const usePosts = create<PostsType>((set) => ({
   setPosts: (posts) => {
     const sortedPosts = posts.sort(
       (a, b) =>
-        new Date(b.$createdAt).getTime() - new Date(a.$createdAt).getTime()
+        new Date(b.$createdAt).getTime() - new Date(a.$createdAt).getTime(),
     );
 
     set({ posts: sortedPosts });
@@ -23,7 +23,7 @@ export const usePosts = create<PostsType>((set) => ({
   updatePost: (postData) =>
     set((s) => ({
       posts: s.posts.map((p) =>
-        p.$id === postData.$id ? { ...p, ...postData } : p
+        p.$id === postData.$id ? { ...p, ...postData } : p,
       ),
     })),
   deletePost: (postId) =>
