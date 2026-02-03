@@ -11,6 +11,9 @@ export const BaseCommentSchema = z.object({
 });
 
 export const CreateCommentSchema = BaseCommentSchema;
+export const UpdateCommentSchema = BaseCommentSchema.extend({
+  postId: BaseCommentSchema.shape.postId.optional(),
+});
 
 export const CommentSchema = BaseCommentSchema.extend({
   authorId: z.string(),
