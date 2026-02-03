@@ -12,7 +12,7 @@ export async function fetchRooms(userId?: string) {
   try {
     const queries = [Query.orderDesc("startTime"), Query.limit(20)];
 
-    if (userId) queries.push(Query.equal("userId", userId));
+    if (userId) queries.push(Query.equal("authorId", userId));
 
     const data = await tablesDB.listRows<Room>({
       databaseId: CRIC_TALK_DATABASE_ID,
