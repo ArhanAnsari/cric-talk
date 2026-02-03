@@ -2,7 +2,10 @@ import { Models } from "react-native-appwrite";
 import * as z from "zod";
 
 export const PostSchema = z.object({
-  content: z.string().min(1, "Post can not be empty."),
+  content: z
+    .string()
+    .min(1, "Post can not be empty.")
+    .max(512, "Post can not be more than 500 characters"),
   image: z.array(z.string()).min(1, "Invalid image."),
 });
 
