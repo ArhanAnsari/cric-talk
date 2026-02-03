@@ -8,12 +8,16 @@ const ROOMS_TABLE_ID = process.env.EXPO_PUBLIC_APPWRITE_ROOMS_TABLE_ID!;
 const ROOMS_GUARD_FUNCTION_ID =
   process.env.EXPO_PUBLIC_APPWRITE_ROOMS_GUARD_FUNCTION_ID!;
 
-export async function fetchRooms() {
+export async function fetchRooms(userId?: string) {
   try {
+    const queries = [Query.orderDesc("startTime"), Query.limit(20)];
+
+    if (userId) queries.push(Query.equal("authorId", userId));
+
     const data = await tablesDB.listRows<Room>({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: ROOMS_TABLE_ID,
-      queries: [Query.orderDesc("startTime"), Query.limit(20)],
+      queries,
     });
 
     const rooms: Room[] = data.rows;
