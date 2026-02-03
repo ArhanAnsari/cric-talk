@@ -1,4 +1,5 @@
 import { showToast } from "@/libs/showToast";
+import { AuthSchema } from "@/schemas/AuthSchema";
 import { loginUserWithEmailAndPassword } from "@/services/auth.service";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -21,6 +22,17 @@ const LoginScreen = () => {
 
   async function handleLogin() {
     try {
+      const result = AuthSchema.safeParse({ email, password });
+
+      if (!result.success) {
+        showToast({
+          type: "error",
+          text1: "Login failed",
+          text2: result.error.issues[0].message,
+        });
+        return;
+      }
+
       await loginUserWithEmailAndPassword(email, password);
       router.replace("/(tabs)/HomeScreen");
     } catch (error) {
