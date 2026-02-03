@@ -1,801 +1,899 @@
 {
-  "projectId": "69573ba80028dfdc5aef",
-  "projectName": "Cric Talk",
-  "endpoint": "https://sgp.cloud.appwrite.io/v1",
-  "settings": {
-    "services": {
-      "account": true,
-      "avatars": true,
-      "databases": true,
-      "locale": true,
-      "health": true,
-      "storage": true,
-      "teams": true,
-      "users": true,
-      "sites": true,
-      "functions": true,
-      "graphql": true,
-      "messaging": true
-    },
-    "auth": {
-      "methods": {
-        "jwt": true,
-        "phone": true,
-        "invites": true,
-        "anonymous": true,
-        "email-otp": true,
-        "magic-url": true,
-        "email-password": true
-      },
-      "security": {
-        "duration": 31536000,
-        "limit": 0,
-        "sessionsLimit": 10,
-        "passwordHistory": 0,
-        "passwordDictionary": false,
-        "personalDataCheck": false,
-        "sessionAlerts": false,
-        "mockNumbers": []
-      }
-    }
-  },
-  "functions": [
-    {
-      "$id": "695e8e91000d6c2bde1f",
-      "execute": ["any"],
-      "name": "room-message-guard",
-      "enabled": true,
-      "logging": true,
-      "runtime": "node-22",
-      "scopes": [
-        "users.read",
-        "tables.read",
-        "tables.write",
-        "rows.read",
-        "rows.write"
-      ],
-      "events": [],
-      "schedule": "",
-      "timeout": 15,
-      "entrypoint": "src/main.js",
-      "commands": "npm install",
-      "specification": "s-0.5vcpu-512mb",
-      "path": "functions/room-message-guard"
-    },
-    {
-      "$id": "6963302c0021374fee8d",
-      "name": "leaderboard-guard",
-      "runtime": "node-22",
-      "specification": "s-0.5vcpu-512mb",
-      "execute": ["any"],
-      "events": [],
-      "scopes": [
-        "users.read",
-        "tables.read",
-        "tables.write",
-        "rows.read",
-        "rows.write"
-      ],
-      "schedule": "",
-      "timeout": 15,
-      "enabled": true,
-      "logging": true,
-      "entrypoint": "src/main.js",
-      "commands": "npm install",
-      "path": "functions/leaderboard-guard"
-    },
-    {
-      "$id": "6966ec4f00039df360a0",
-      "name": "rooms-guard",
-      "runtime": "node-22",
-      "specification": "s-0.5vcpu-512mb",
-      "execute": ["any"],
-      "events": [],
-      "scopes": [
-        "users.read",
-        "tables.read",
-        "tables.write",
-        "rows.read",
-        "rows.write"
-      ],
-      "schedule": "",
-      "timeout": 15,
-      "enabled": true,
-      "logging": true,
-      "entrypoint": "src/main.js",
-      "commands": "npm install",
-      "path": "functions/rooms-guard"
-    },
-    {
-      "$id": "6967383500111e42ec97",
-      "name": "posts-guard",
-      "runtime": "node-22",
-      "specification": "s-0.5vcpu-512mb",
-      "execute": ["any"],
-      "events": [],
-      "scopes": [
-        "users.read",
-        "tables.read",
-        "tables.write",
-        "rows.read",
-        "rows.write"
-      ],
-      "schedule": "",
-      "timeout": 15,
-      "enabled": true,
-      "logging": true,
-      "entrypoint": "src/main.js",
-      "commands": "npm install",
-      "path": "functions/posts-guard"
-    },
-    {
-      "$id": "69704fe8001df0792591",
-      "name": "user-push-token-guard",
-      "runtime": "node-22",
-      "specification": "s-0.5vcpu-512mb",
-      "execute": ["any"],
-      "events": [],
-      "scopes": [
-        "users.read",
-        "tables.read",
-        "tables.write",
-        "rows.read",
-        "rows.write"
-      ],
-      "schedule": "",
-      "timeout": 15,
-      "enabled": true,
-      "logging": true,
-      "entrypoint": "src/main.js",
-      "commands": "npm install",
-      "path": "functions/user-push-token-guard"
-    },
-    {
-      "$id": "6970a9c400040f0cb857",
-      "name": "notifications-guard",
-      "runtime": "node-22",
-      "specification": "s-0.5vcpu-512mb",
-      "execute": ["any"],
-      "events": [],
-      "scopes": [
-        "users.read",
-        "tables.read",
-        "tables.write",
-        "rows.read",
-        "rows.write"
-      ],
-      "schedule": "",
-      "timeout": 15,
-      "enabled": true,
-      "logging": true,
-      "entrypoint": "src/main.js",
-      "commands": "npm install",
-      "path": "functions/notifications-guard"
-    },
-    {
-      "$id": "697231ae0003e880b55b",
-      "name": "comments-guard",
-      "runtime": "node-22",
-      "specification": "s-0.5vcpu-512mb",
-      "execute": ["any"],
-      "events": [],
-      "scopes": [
-        "users.read",
-        "tables.read",
-        "tables.write",
-        "rows.read",
-        "rows.write"
-      ],
-      "schedule": "",
-      "timeout": 15,
-      "enabled": true,
-      "logging": true,
-      "entrypoint": "src/main.js",
-      "commands": "npm install",
-      "path": "functions/comments-guard"
-    }
-  ],
-  "tablesDB": [
-    {
-      "$id": "695761d00008fd927f78",
-      "name": "cric_talk",
-      "enabled": true
-    }
-  ],
-  "tables": [
-    {
-      "$id": "posts",
-      "$permissions": [
-        "create(\"any\")",
-        "read(\"any\")",
-        "update(\"any\")",
-        "delete(\"any\")"
-      ],
-      "databaseId": "695761d00008fd927f78",
-      "name": "posts",
-      "enabled": true,
-      "rowSecurity": false,
-      "columns": [
-        {
-          "key": "image",
-          "type": "string",
-          "required": false,
-          "array": true,
-          "size": 4,
-          "default": null,
-          "encrypt": false
+    "projectId": "69573ba80028dfdc5aef",
+    "projectName": "Cric Talk",
+    "endpoint": "https://sgp.cloud.appwrite.io/v1",
+    "settings": {
+        "services": {
+            "account": true,
+            "avatars": true,
+            "databases": true,
+            "locale": true,
+            "health": true,
+            "storage": true,
+            "teams": true,
+            "users": true,
+            "sites": true,
+            "functions": true,
+            "graphql": true,
+            "messaging": true
         },
-        {
-          "key": "authorId",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 36,
-          "default": null,
-          "encrypt": false
-        },
-        {
-          "key": "likes",
-          "type": "integer",
-          "required": true,
-          "array": false,
-          "default": null,
-          "min": -9223372036854775808,
-          "max": 9223372036854775807
-        },
-        {
-          "key": "likedBy",
-          "type": "string",
-          "required": false,
-          "array": true,
-          "size": 1024,
-          "default": null,
-          "encrypt": false
-        },
-        {
-          "key": "views",
-          "type": "integer",
-          "required": true,
-          "array": false,
-          "default": null,
-          "min": -9223372036854775808,
-          "max": 9223372036854775807
-        },
-        {
-          "key": "viewedBy",
-          "type": "string",
-          "required": false,
-          "array": true,
-          "size": 1024,
-          "default": null,
-          "encrypt": false
-        },
-        {
-          "key": "commentCount",
-          "type": "integer",
-          "required": true,
-          "array": false,
-          "default": null,
-          "min": -9223372036854775808,
-          "max": 9223372036854775807
-        },
-        {
-          "key": "content",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 512,
-          "default": null,
-          "encrypt": false
-        },
-        {
-          "key": "authorName",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 128,
-          "default": null,
-          "encrypt": false
+        "auth": {
+            "methods": {
+                "jwt": true,
+                "phone": true,
+                "invites": true,
+                "anonymous": true,
+                "email-otp": true,
+                "magic-url": true,
+                "email-password": true
+            },
+            "security": {
+                "duration": 31536000,
+                "limit": 0,
+                "sessionsLimit": 10,
+                "passwordHistory": 0,
+                "passwordDictionary": false,
+                "personalDataCheck": false,
+                "sessionAlerts": false,
+                "mockNumbers": []
+            }
         }
-      ],
-      "indexes": [
-        {
-          "$id": "4716_2_authorId_index",
-          "$createdAt": "2026-01-02T07:17:00.274+00:00",
-          "$updatedAt": "2026-01-02T07:17:00.327+00:00",
-          "key": "authorId_index",
-          "type": "key",
-          "status": "available",
-          "error": "",
-          "columns": ["authorId"],
-          "lengths": [0],
-          "orders": ["ASC"]
-        },
-        {
-          "$id": "4716_2_likes_index",
-          "$createdAt": "2026-01-02T07:17:38.534+00:00",
-          "$updatedAt": "2026-01-02T07:17:38.611+00:00",
-          "key": "likes_index",
-          "type": "key",
-          "status": "available",
-          "error": "",
-          "columns": ["likes"],
-          "lengths": [0],
-          "orders": ["DESC"]
-        },
-        {
-          "$id": "4716_2_views_index",
-          "$createdAt": "2026-01-02T07:17:50.480+00:00",
-          "$updatedAt": "2026-01-02T07:17:50.547+00:00",
-          "key": "views_index",
-          "type": "key",
-          "status": "available",
-          "error": "",
-          "columns": ["views"],
-          "lengths": [0],
-          "orders": ["DESC"]
-        },
-        {
-          "$id": "4716_2_createdAt_index",
-          "$createdAt": "2026-01-02T07:18:06.311+00:00",
-          "$updatedAt": "2026-01-02T07:18:06.379+00:00",
-          "key": "createdAt_index",
-          "type": "key",
-          "status": "available",
-          "error": "",
-          "columns": ["$createdAt"],
-          "lengths": [0],
-          "orders": ["DESC"]
-        },
-        {
-          "$id": "4716_2_updatedAt_index",
-          "$createdAt": "2026-01-02T07:18:20.075+00:00",
-          "$updatedAt": "2026-01-02T07:18:20.147+00:00",
-          "key": "updatedAt_index",
-          "type": "key",
-          "status": "available",
-          "error": "",
-          "columns": ["$updatedAt"],
-          "lengths": [0],
-          "orders": ["DESC"]
-        },
-        {
-          "$id": "4716_2_commentCount_index",
-          "$createdAt": "2026-01-04T06:48:01.687+00:00",
-          "$updatedAt": "2026-01-04T06:48:01.767+00:00",
-          "key": "commentCount_index",
-          "type": "key",
-          "status": "available",
-          "error": "",
-          "columns": ["commentCount"],
-          "lengths": [0],
-          "orders": ["ASC"]
-        }
-      ]
     },
-    {
-      "$id": "comments",
-      "$permissions": [
-        "create(\"any\")",
-        "read(\"any\")",
-        "update(\"any\")",
-        "delete(\"any\")"
-      ],
-      "databaseId": "695761d00008fd927f78",
-      "name": "comments",
-      "enabled": true,
-      "rowSecurity": false,
-      "columns": [
+    "functions": [
         {
-          "key": "postId",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 36,
-          "default": null,
-          "encrypt": false
+            "$id": "695e8e91000d6c2bde1f",
+            "execute": [
+                "any"
+            ],
+            "name": "room-message-guard",
+            "enabled": true,
+            "logging": true,
+            "runtime": "node-22",
+            "scopes": [
+                "users.read",
+                "tables.read",
+                "tables.write",
+                "rows.read",
+                "rows.write"
+            ],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "specification": "s-0.5vcpu-512mb",
+            "path": "functions/room-message-guard"
         },
         {
-          "key": "authorId",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 36,
-          "default": null,
-          "encrypt": false
+            "$id": "6963302c0021374fee8d",
+            "name": "leaderboard-guard",
+            "runtime": "node-22",
+            "specification": "s-0.5vcpu-512mb",
+            "execute": [
+                "any"
+            ],
+            "events": [],
+            "scopes": [
+                "users.read",
+                "tables.read",
+                "tables.write",
+                "rows.read",
+                "rows.write"
+            ],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "path": "functions/leaderboard-guard"
         },
         {
-          "key": "content",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 512,
-          "default": null,
-          "encrypt": false
+            "$id": "6966ec4f00039df360a0",
+            "name": "rooms-guard",
+            "runtime": "node-22",
+            "specification": "s-0.5vcpu-512mb",
+            "execute": [
+                "any"
+            ],
+            "events": [],
+            "scopes": [
+                "users.read",
+                "tables.read",
+                "tables.write",
+                "rows.read",
+                "rows.write"
+            ],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "path": "functions/rooms-guard"
         },
         {
-          "key": "isEdited",
-          "type": "boolean",
-          "required": true,
-          "array": false,
-          "default": null
+            "$id": "6967383500111e42ec97",
+            "name": "posts-guard",
+            "runtime": "node-22",
+            "specification": "s-0.5vcpu-512mb",
+            "execute": [
+                "any"
+            ],
+            "events": [],
+            "scopes": [
+                "users.read",
+                "tables.read",
+                "tables.write",
+                "rows.read",
+                "rows.write"
+            ],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "path": "functions/posts-guard"
+        },
+        {
+            "$id": "69704fe8001df0792591",
+            "name": "user-push-token-guard",
+            "runtime": "node-22",
+            "specification": "s-0.5vcpu-512mb",
+            "execute": [
+                "any"
+            ],
+            "events": [],
+            "scopes": [
+                "users.read",
+                "tables.read",
+                "tables.write",
+                "rows.read",
+                "rows.write"
+            ],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "path": "functions/user-push-token-guard"
+        },
+        {
+            "$id": "6970a9c400040f0cb857",
+            "name": "notifications-guard",
+            "runtime": "node-22",
+            "specification": "s-0.5vcpu-512mb",
+            "execute": [
+                "any"
+            ],
+            "events": [],
+            "scopes": [
+                "users.read",
+                "tables.read",
+                "tables.write",
+                "rows.read",
+                "rows.write"
+            ],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "path": "functions/notifications-guard"
+        },
+        {
+            "$id": "697231ae0003e880b55b",
+            "name": "comments-guard",
+            "runtime": "node-22",
+            "specification": "s-0.5vcpu-512mb",
+            "execute": [
+                "any"
+            ],
+            "events": [],
+            "scopes": [
+                "users.read",
+                "tables.read",
+                "tables.write",
+                "rows.read",
+                "rows.write"
+            ],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "path": "functions/comments-guard"
         }
-      ],
-      "indexes": [
+    ],
+    "tablesDB": [
         {
-          "$id": "4716_3_index_postId",
-          "$createdAt": "2026-01-04T07:19:23.000+00:00",
-          "$updatedAt": "2026-01-04T07:19:23.076+00:00",
-          "key": "index_postId",
-          "type": "key",
-          "status": "available",
-          "error": "",
-          "columns": ["postId"],
-          "lengths": [0],
-          "orders": ["ASC"]
-        },
-        {
-          "$id": "4716_3_index_createdAt",
-          "$createdAt": "2026-01-04T07:19:43.154+00:00",
-          "$updatedAt": "2026-01-04T07:19:43.272+00:00",
-          "key": "index_createdAt",
-          "type": "key",
-          "status": "available",
-          "error": "",
-          "columns": ["$createdAt"],
-          "lengths": [0],
-          "orders": ["DESC"]
+            "$id": "695761d00008fd927f78",
+            "name": "cric_talk",
+            "enabled": true
         }
-      ]
-    },
-    {
-      "$id": "rooms",
-      "$permissions": [
-        "create(\"any\")",
-        "read(\"any\")",
-        "update(\"any\")",
-        "delete(\"any\")"
-      ],
-      "databaseId": "695761d00008fd927f78",
-      "name": "rooms",
-      "enabled": true,
-      "rowSecurity": false,
-      "columns": [
+    ],
+    "tables": [
         {
-          "key": "teams",
-          "type": "string",
-          "required": false,
-          "array": true,
-          "size": 36,
-          "default": null,
-          "encrypt": false
+            "$id": "posts",
+            "$permissions": [
+                "create(\"any\")",
+                "read(\"any\")",
+                "update(\"any\")",
+                "delete(\"any\")"
+            ],
+            "databaseId": "695761d00008fd927f78",
+            "name": "posts",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "image",
+                    "type": "string",
+                    "required": false,
+                    "array": true,
+                    "size": 4,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "authorId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "likes",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": -9223372036854775808,
+                    "max": 9223372036854775807
+                },
+                {
+                    "key": "likedBy",
+                    "type": "string",
+                    "required": false,
+                    "array": true,
+                    "size": 1024,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "views",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": -9223372036854775808,
+                    "max": 9223372036854775807
+                },
+                {
+                    "key": "viewedBy",
+                    "type": "string",
+                    "required": false,
+                    "array": true,
+                    "size": 1024,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "commentCount",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": -9223372036854775808,
+                    "max": 9223372036854775807
+                },
+                {
+                    "key": "content",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 512,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "authorName",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 128,
+                    "default": null,
+                    "encrypt": false
+                }
+            ],
+            "indexes": [
+                {
+                    "$id": "4716_2_authorId_index",
+                    "$createdAt": "2026-01-02T07:17:00.274+00:00",
+                    "$updatedAt": "2026-01-02T07:17:00.327+00:00",
+                    "key": "authorId_index",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "authorId"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                },
+                {
+                    "$id": "4716_2_likes_index",
+                    "$createdAt": "2026-01-02T07:17:38.534+00:00",
+                    "$updatedAt": "2026-01-02T07:17:38.611+00:00",
+                    "key": "likes_index",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "likes"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "DESC"
+                    ]
+                },
+                {
+                    "$id": "4716_2_views_index",
+                    "$createdAt": "2026-01-02T07:17:50.480+00:00",
+                    "$updatedAt": "2026-01-02T07:17:50.547+00:00",
+                    "key": "views_index",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "views"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "DESC"
+                    ]
+                },
+                {
+                    "$id": "4716_2_createdAt_index",
+                    "$createdAt": "2026-01-02T07:18:06.311+00:00",
+                    "$updatedAt": "2026-01-02T07:18:06.379+00:00",
+                    "key": "createdAt_index",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "$createdAt"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "DESC"
+                    ]
+                },
+                {
+                    "$id": "4716_2_updatedAt_index",
+                    "$createdAt": "2026-01-02T07:18:20.075+00:00",
+                    "$updatedAt": "2026-01-02T07:18:20.147+00:00",
+                    "key": "updatedAt_index",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "$updatedAt"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "DESC"
+                    ]
+                },
+                {
+                    "$id": "4716_2_commentCount_index",
+                    "$createdAt": "2026-01-04T06:48:01.687+00:00",
+                    "$updatedAt": "2026-01-04T06:48:01.767+00:00",
+                    "key": "commentCount_index",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "commentCount"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                }
+            ]
         },
         {
-          "key": "startTime",
-          "type": "datetime",
-          "required": true,
-          "array": false,
-          "default": null,
-          "format": ""
+            "$id": "comments",
+            "$permissions": [
+                "create(\"any\")",
+                "read(\"any\")",
+                "update(\"any\")",
+                "delete(\"any\")"
+            ],
+            "databaseId": "695761d00008fd927f78",
+            "name": "comments",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "postId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "authorId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "content",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 512,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "isEdited",
+                    "type": "boolean",
+                    "required": true,
+                    "array": false,
+                    "default": null
+                }
+            ],
+            "indexes": [
+                {
+                    "$id": "4716_3_index_postId",
+                    "$createdAt": "2026-01-04T07:19:23.000+00:00",
+                    "$updatedAt": "2026-01-04T07:19:23.076+00:00",
+                    "key": "index_postId",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "postId"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                },
+                {
+                    "$id": "4716_3_index_createdAt",
+                    "$createdAt": "2026-01-04T07:19:43.154+00:00",
+                    "$updatedAt": "2026-01-04T07:19:43.272+00:00",
+                    "key": "index_createdAt",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "$createdAt"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "DESC"
+                    ]
+                }
+            ]
         },
         {
-          "key": "endTime",
-          "type": "datetime",
-          "required": false,
-          "array": false,
-          "default": null,
-          "format": ""
+            "$id": "rooms",
+            "$permissions": [
+                "create(\"any\")",
+                "read(\"any\")",
+                "update(\"any\")",
+                "delete(\"any\")"
+            ],
+            "databaseId": "695761d00008fd927f78",
+            "name": "rooms",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "teams",
+                    "type": "string",
+                    "required": false,
+                    "array": true,
+                    "size": 36,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "startTime",
+                    "type": "datetime",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": ""
+                },
+                {
+                    "key": "endTime",
+                    "type": "datetime",
+                    "required": false,
+                    "array": false,
+                    "default": null,
+                    "format": ""
+                },
+                {
+                    "key": "matchType",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 32,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "isLocked",
+                    "type": "boolean",
+                    "required": true,
+                    "array": false,
+                    "default": null
+                },
+                {
+                    "key": "authorName",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "authorId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "status",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 16,
+                    "default": null,
+                    "encrypt": false
+                }
+            ],
+            "indexes": []
         },
         {
-          "key": "matchType",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 32,
-          "default": null,
-          "encrypt": false
+            "$id": "roommessaage",
+            "$permissions": [
+                "create(\"any\")",
+                "read(\"any\")",
+                "update(\"any\")",
+                "delete(\"any\")"
+            ],
+            "databaseId": "695761d00008fd927f78",
+            "name": "roomMessaage",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "roomId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "authorId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "content",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 512,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "authorName",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "isEdited",
+                    "type": "boolean",
+                    "required": true,
+                    "array": false,
+                    "default": null
+                }
+            ],
+            "indexes": []
         },
         {
-          "key": "isLocked",
-          "type": "boolean",
-          "required": true,
-          "array": false,
-          "default": null
+            "$id": "users",
+            "$permissions": [
+                "create(\"any\")",
+                "read(\"any\")",
+                "update(\"any\")",
+                "delete(\"any\")",
+                "create(\"guests\")",
+                "read(\"guests\")",
+                "update(\"guests\")",
+                "delete(\"guests\")"
+            ],
+            "databaseId": "695761d00008fd927f78",
+            "name": "users",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "messageCount",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": -9223372036854775808,
+                    "max": 9223372036854775807
+                },
+                {
+                    "key": "username",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "pushTokens",
+                    "type": "string",
+                    "required": false,
+                    "array": true,
+                    "size": 120,
+                    "default": null,
+                    "encrypt": false
+                }
+            ],
+            "indexes": []
         },
         {
-          "key": "authorName",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 36,
-          "default": null,
-          "encrypt": false
+            "$id": "notifications",
+            "$permissions": [],
+            "databaseId": "695761d00008fd927f78",
+            "name": "notifications",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "userId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "title",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 32,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "content",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 512,
+                    "default": null,
+                    "encrypt": false
+                }
+            ],
+            "indexes": [
+                {
+                    "$id": "4716_7_userId_index",
+                    "$createdAt": "2026-01-21T08:51:16.598+00:00",
+                    "$updatedAt": "2026-01-21T08:51:16.662+00:00",
+                    "key": "userId_index",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "userId"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                },
+                {
+                    "$id": "4716_7_createdAt_index",
+                    "$createdAt": "2026-01-21T08:51:35.394+00:00",
+                    "$updatedAt": "2026-01-21T08:51:35.467+00:00",
+                    "key": "createdAt_index",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "$createdAt"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "DESC"
+                    ]
+                }
+            ]
         },
         {
-          "key": "authorId",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 36,
-          "default": null,
-          "encrypt": false
-        },
-        {
-          "key": "status",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 16,
-          "default": null,
-          "encrypt": false
+            "$id": "ratelimit",
+            "$permissions": [],
+            "databaseId": "695761d00008fd927f78",
+            "name": "rateLimit",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "userId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "activity",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "windowKey",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": -9223372036854775808,
+                    "max": 9223372036854775807
+                },
+                {
+                    "key": "activityCount",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": 1,
+                    "max": 60
+                }
+            ],
+            "indexes": [
+                {
+                    "$id": "4716_8_userid_index",
+                    "$createdAt": "2026-01-31T05:21:49.296+00:00",
+                    "$updatedAt": "2026-01-31T05:21:49.350+00:00",
+                    "key": "userid_index",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "userId"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                },
+                {
+                    "$id": "4716_8_createdAt_index",
+                    "$createdAt": "2026-01-31T05:22:02.272+00:00",
+                    "$updatedAt": "2026-01-31T05:22:02.339+00:00",
+                    "key": "createdAt_index",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "$createdAt"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "DESC"
+                    ]
+                },
+                {
+                    "$id": "4716_8_activity_index",
+                    "$createdAt": "2026-02-02T03:32:32.892+00:00",
+                    "$updatedAt": "2026-02-02T03:32:32.956+00:00",
+                    "key": "activity_index",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "activity"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                },
+                {
+                    "$id": "4716_8_windowKey_index",
+                    "$createdAt": "2026-02-02T03:32:41.276+00:00",
+                    "$updatedAt": "2026-02-02T03:32:41.347+00:00",
+                    "key": "windowKey_index",
+                    "type": "key",
+                    "status": "available",
+                    "error": "",
+                    "columns": [
+                        "windowKey"
+                    ],
+                    "lengths": [
+                        0
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                }
+            ]
         }
-      ],
-      "indexes": []
-    },
-    {
-      "$id": "roommessaage",
-      "$permissions": [
-        "create(\"any\")",
-        "read(\"any\")",
-        "update(\"any\")",
-        "delete(\"any\")"
-      ],
-      "databaseId": "695761d00008fd927f78",
-      "name": "roomMessaage",
-      "enabled": true,
-      "rowSecurity": false,
-      "columns": [
-        {
-          "key": "roomId",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 36,
-          "default": null,
-          "encrypt": false
-        },
-        {
-          "key": "authorId",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 36,
-          "default": null,
-          "encrypt": false
-        },
-        {
-          "key": "content",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 512,
-          "default": null,
-          "encrypt": false
-        },
-        {
-          "key": "authorName",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 36,
-          "default": null,
-          "encrypt": false
-        },
-        {
-          "key": "isEdited",
-          "type": "boolean",
-          "required": true,
-          "array": false,
-          "default": null
-        }
-      ],
-      "indexes": []
-    },
-    {
-      "$id": "users",
-      "$permissions": [
-        "create(\"any\")",
-        "read(\"any\")",
-        "update(\"any\")",
-        "delete(\"any\")",
-        "create(\"guests\")",
-        "read(\"guests\")",
-        "update(\"guests\")",
-        "delete(\"guests\")"
-      ],
-      "databaseId": "695761d00008fd927f78",
-      "name": "users",
-      "enabled": true,
-      "rowSecurity": false,
-      "columns": [
-        {
-          "key": "messageCount",
-          "type": "integer",
-          "required": true,
-          "array": false,
-          "default": null,
-          "min": -9223372036854775808,
-          "max": 9223372036854775807
-        },
-        {
-          "key": "username",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 36,
-          "default": null,
-          "encrypt": false
-        },
-        {
-          "key": "pushTokens",
-          "type": "string",
-          "required": false,
-          "array": true,
-          "size": 120,
-          "default": null,
-          "encrypt": false
-        }
-      ],
-      "indexes": []
-    },
-    {
-      "$id": "notifications",
-      "$permissions": [],
-      "databaseId": "695761d00008fd927f78",
-      "name": "notifications",
-      "enabled": true,
-      "rowSecurity": false,
-      "columns": [
-        {
-          "key": "userId",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 36,
-          "default": null,
-          "encrypt": false
-        },
-        {
-          "key": "title",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 32,
-          "default": null,
-          "encrypt": false
-        },
-        {
-          "key": "content",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 512,
-          "default": null,
-          "encrypt": false
-        }
-      ],
-      "indexes": [
-        {
-          "$id": "4716_7_userId_index",
-          "$createdAt": "2026-01-21T08:51:16.598+00:00",
-          "$updatedAt": "2026-01-21T08:51:16.662+00:00",
-          "key": "userId_index",
-          "type": "key",
-          "status": "available",
-          "error": "",
-          "columns": ["userId"],
-          "lengths": [0],
-          "orders": ["ASC"]
-        },
-        {
-          "$id": "4716_7_createdAt_index",
-          "$createdAt": "2026-01-21T08:51:35.394+00:00",
-          "$updatedAt": "2026-01-21T08:51:35.467+00:00",
-          "key": "createdAt_index",
-          "type": "key",
-          "status": "available",
-          "error": "",
-          "columns": ["$createdAt"],
-          "lengths": [0],
-          "orders": ["DESC"]
-        }
-      ]
-    },
-    {
-      "$id": "ratelimit",
-      "$permissions": [],
-      "databaseId": "695761d00008fd927f78",
-      "name": "rateLimit",
-      "enabled": true,
-      "rowSecurity": false,
-      "columns": [
-        {
-          "key": "userId",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 36,
-          "default": null,
-          "encrypt": false
-        },
-        {
-          "key": "activity",
-          "type": "string",
-          "required": true,
-          "array": false,
-          "size": 36,
-          "default": null,
-          "encrypt": false
-        },
-        {
-          "key": "windowKey",
-          "type": "integer",
-          "required": true,
-          "array": false,
-          "default": null,
-          "min": -9223372036854775808,
-          "max": 9223372036854775807
-        },
-        {
-          "key": "activityCount",
-          "type": "integer",
-          "required": true,
-          "array": false,
-          "default": null,
-          "min": 1,
-          "max": 60
-        }
-      ],
-      "indexes": [
-        {
-          "$id": "4716_8_userid_index",
-          "$createdAt": "2026-01-31T05:21:49.296+00:00",
-          "$updatedAt": "2026-01-31T05:21:49.350+00:00",
-          "key": "userid_index",
-          "type": "key",
-          "status": "available",
-          "error": "",
-          "columns": ["userId"],
-          "lengths": [0],
-          "orders": ["ASC"]
-        },
-        {
-          "$id": "4716_8_createdAt_index",
-          "$createdAt": "2026-01-31T05:22:02.272+00:00",
-          "$updatedAt": "2026-01-31T05:22:02.339+00:00",
-          "key": "createdAt_index",
-          "type": "key",
-          "status": "available",
-          "error": "",
-          "columns": ["$createdAt"],
-          "lengths": [0],
-          "orders": ["DESC"]
-        },
-        {
-          "$id": "4716_8_activity_index",
-          "$createdAt": "2026-02-02T03:32:32.892+00:00",
-          "$updatedAt": "2026-02-02T03:32:32.956+00:00",
-          "key": "activity_index",
-          "type": "key",
-          "status": "available",
-          "error": "",
-          "columns": ["activity"],
-          "lengths": [0],
-          "orders": ["ASC"]
-        },
-        {
-          "$id": "4716_8_windowKey_index",
-          "$createdAt": "2026-02-02T03:32:41.276+00:00",
-          "$updatedAt": "2026-02-02T03:32:41.347+00:00",
-          "key": "windowKey_index",
-          "type": "key",
-          "status": "available",
-          "error": "",
-          "columns": ["windowKey"],
-          "lengths": [0],
-          "orders": ["ASC"]
-        }
-      ]
-    }
-  ]
+    ]
 }
