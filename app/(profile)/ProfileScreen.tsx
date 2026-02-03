@@ -11,6 +11,10 @@ import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PostCard from "../components/PostCard";
 import { LegendList } from "@legendapp/list";
+import { fetchRooms } from "@/services/rooms.service";
+import { RoomMessage } from "@/interfaces/RoomMessage";
+import { Room } from "@/interfaces/Room";
+import MatchRoomCard from "../components/MatchRoomCard";
 
 const ProfileScreen = () => {
   const [userId, setUserId] = useState<string>("");
@@ -25,6 +29,7 @@ const ProfileScreen = () => {
   );
 
   const [userPosts, setUserPosts] = useState<Post[]>([]);
+  const [userRooms, setUserRooms] = useState<Room[]>([]);
   const [userStats, setUserStats] = useState<UserStats[]>([]);
 
   const messageCount = userStats.reduce(
@@ -45,9 +50,11 @@ const ProfileScreen = () => {
 
     async function loadData() {
       const posts = await fetchPostsByUserId(userId);
+      const rooms = await fetchRooms(userId);
       const stats = await fetchUserStatsByUserId(userId);
 
       setUserPosts(posts.rows);
+      setUserRooms(rooms);
       setUserStats(stats.rows);
     }
     loadData();
@@ -154,6 +161,13 @@ const ProfileScreen = () => {
             </Text>
           </View>
         </View>
+      ) : activeTab === "rooms" ? (
+        <LegendList
+          data={userRooms}
+          keyExtractor={(item) => item.$id}
+          renderItem={({ item }) => <MatchRoomCard room={item} />}
+          recycleItems
+        />
       ) : (
         ""
       )}
