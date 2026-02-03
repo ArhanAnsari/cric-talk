@@ -121,7 +121,7 @@ export default async ({ req, res }) => {
         permissions: [
           Permission.read(Role.users()),
           Permission.update(Role.user(userId)),
-          Permission.delete(Role.user(userid)),
+          Permission.delete(Role.user(userId)),
         ],
       });
     }
