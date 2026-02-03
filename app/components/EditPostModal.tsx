@@ -1,4 +1,4 @@
-import { Post } from "@/schemas/PostSchema";
+import { Post, PostSchema } from "@/schemas/PostSchema";
 import { showToast } from "@/libs/showToast";
 import { executePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
@@ -27,27 +27,14 @@ const EditPostModal = ({
   async function handleEditPost() {
     const trimmedContent: string = content.trim();
 
-    if (trimmedContent.length === 0) {
-      onClose();
+    const result = PostSchema.safeParse({ content: trimmedContent });
 
+    if (!result.success) {
       showToast({
         type: "error",
-        text1: "Your post is empty",
-        text2: "Try writing something for community.",
+        text1: "Error",
+        text2: result.error.issues[0].message,
       });
-
-      return;
-    }
-
-    if (trimmedContent.length > 512) {
-      onClose();
-
-      showToast({
-        type: "error",
-        text1: "Character limit reached",
-        text2: "Content can't be longer than 512 characters.",
-      });
-
       return;
     }
 

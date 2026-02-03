@@ -1,5 +1,6 @@
 import useCreatePost from "@/hooks/useCreatePost";
 import { showToast } from "@/libs/showToast";
+import { PostSchema } from "@/schemas/PostSchema";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Modal, Pressable, Text, TextInput, View } from "react-native";
@@ -17,6 +18,17 @@ const CreatePostModal = ({ isVisible, onClose }: Props) => {
 
   async function handleCreatePost() {
     try {
+      const result = PostSchema.safeParse({ content });
+
+      if (!result.success) {
+        showToast({
+          type: "error",
+          text1: "Error",
+          text2: result.error.issues[0].message,
+        });
+        return;
+      }
+
       await createNewPost({ content });
       onClose();
       setContent("");
