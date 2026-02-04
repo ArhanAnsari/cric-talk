@@ -6,7 +6,7 @@ export const PostSchema = z.object({
     .string()
     .min(1, "Post can not be empty.")
     .max(512, "Post can not be more than 512 characters"),
-  image: z.array(z.string()).min(1, "Invalid image."),
+  image: z.array(z.string()).optional(),
 });
 
 export type PostInput = z.infer<typeof PostSchema>;
