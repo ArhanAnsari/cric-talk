@@ -1,6 +1,12 @@
 import { showToast } from "@/libs/showToast";
+import { UpdateCommentSchema } from "@/schemas/CommentSchema";
+import {
+  CreateRoomMessageSchema,
+  UpdateRoomMessageSchema,
+} from "@/schemas/RoomMessageSchema";
 import { executeRoomMessage } from "@/services/roomMessage.service";
 import { Alert } from "react-native";
+import { safeParse } from "zod";
 
 const useRoomMessage = (roomId: string) => {
   async function handleCreateRoomMessage({
@@ -14,16 +20,21 @@ const useRoomMessage = (roomId: string) => {
     username: string;
     setMessageContent: (content: string) => void;
   }) {
-    if (messageContent.trim().length > 512) {
-      showToast({
-        type: "error",
-        text1: "Message too long",
-        text2: "Please limit your message to 512 characters.",
-      });
-      return;
-    }
-
     try {
+      const result = CreateRoomMessageSchema.safeParse({
+        roomId,
+        content: messageContent,
+      });
+
+      if (!result.success) {
+        showToast({
+          type: "error",
+          text1: "Error sending message",
+          text2: result.error.issues[0].message,
+        });
+        return;
+      }
+
       await executeRoomMessage({
         action: "create",
         roomId,
@@ -53,12 +64,21 @@ const useRoomMessage = (roomId: string) => {
     setEditMessageContent: (content: string) => void;
     setEditRoomMessageId: (id: string) => void;
   }) {
-    if (editMessageContent.trim().length > 512) {
-      alert("Message too long. Please limit to 512 characters.");
-      return;
-    }
-
     try {
+      const result = UpdateRoomMessageSchema.safeParse({
+        roomId,
+        roomMessageId: editRoomMessageId,
+        content: editMessageContent,
+      });
+
+      if (!result.success) {
+        showToast({
+          type: "error",
+          text1: "Error updating message",
+          text2: result.error.issues[0].message,
+        });
+      }
+
       await executeRoomMessage({
         action: "update",
         roomId,
@@ -111,7 +131,7 @@ const useRoomMessage = (roomId: string) => {
             }
           },
         },
-      ]
+      ],
     );
   }
 
