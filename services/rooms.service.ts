@@ -1,4 +1,4 @@
-import { Room } from "@/interfaces/Room";
+import { Room } from "@/schemas/RoomSchema";
 import { functions, tablesDB } from "@/libs/appwrite";
 import { Query } from "react-native-appwrite";
 

@@ -1,7 +1,7 @@
 import useKeyboardHeight from "@/hooks/useKeyboardHeight";
 import useRoomMessage from "@/hooks/useRoomMessage";
-import { Room } from "@/interfaces/Room";
-import { RoomMessage } from "@/interfaces/RoomMessage";
+import { Room } from "@/schemas/RoomSchema";
+import { RoomMessage } from "@/schemas/RoomMessageSchema";
 import { account, client } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
 import { fetchRoomMessages } from "@/services/roomMessage.service";

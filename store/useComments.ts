@@ -1,4 +1,4 @@
-import { CommentType } from "@/interfaces/CommentType";
+import { CommentType } from "@/schemas/CommentSchema";
 import { create } from "zustand";
 
 type CommentsStateType = {

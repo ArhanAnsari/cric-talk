@@ -1,4 +1,5 @@
 import { showToast } from "@/libs/showToast";
+import { AuthSchema } from "@/schemas/AuthSchema";
 import {
   createUserWithEmailAndPassword,
   loginUserWithEmailAndPassword,
@@ -24,6 +25,17 @@ const SignupScreen = () => {
 
   async function handleGetStarted() {
     try {
+      const result = AuthSchema.safeParse({ email, password });
+
+      if (!result.success) {
+        showToast({
+          type: "error",
+          text1: "Signup Failed",
+          text2: result.error.issues[0].message,
+        });
+        return;
+      }
+
       await createUserWithEmailAndPassword(email, password);
       await loginUserWithEmailAndPassword(email, password);
       router.replace("/(tabs)/HomeScreen");

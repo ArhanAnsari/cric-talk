@@ -1,4 +1,4 @@
-import { CommentType } from "@/interfaces/CommentType";
+import { CommentType, UpdateCommentSchema } from "@/schemas/CommentSchema";
 import { showToast } from "@/libs/showToast";
 import { executeComment } from "@/services/comments.service";
 import { useComments } from "@/store/useComments";
@@ -27,6 +27,17 @@ const EditCommentModal = ({
 
   async function handleUpdateComment(commentId: string) {
     try {
+      const result = UpdateCommentSchema.safeParse({ content: newComment });
+
+      if (!result.success) {
+        showToast({
+          type: "error",
+          text1: "Error",
+          text2: result.error.issues[0].message,
+        });
+        return;
+      }
+
       const execution = await executeComment({
         action: "update",
         commentId,

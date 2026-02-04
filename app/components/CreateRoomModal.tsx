@@ -1,4 +1,4 @@
-import { Room } from "@/interfaces/Room";
+import { Room, RoomSchema } from "@/schemas/RoomSchema";
 import { account } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
 import { executeRoom } from "@/services/rooms.service";
@@ -101,9 +101,26 @@ const CreateRoomModal = ({
   }
 
   async function handleCreateRoom() {
-    if (!startDate || !endDate) return;
-
     try {
+      const result = RoomSchema.safeParse({
+        teams: [team1, team2],
+        startTime: startDate?.toISOString(),
+        endTime: endDate?.toISOString(),
+        matchType,
+        isLocked,
+      });
+
+      if (!result.success) {
+        showToast({
+          type: "error",
+          text1: "Room Creation failed",
+          text2: result.error.issues[0].message,
+        });
+        return;
+      }
+
+      if (!startDate || !endDate) return;
+
       const execution = await executeRoom({
         action: "create",
         teams: [team1.trim(), team2.trim()],

@@ -1,4 +1,4 @@
-import { Post } from "@/interfaces/Post";
+import { Post } from "@/schemas/PostSchema";
 import { UserStats } from "@/interfaces/UserStats";
 import { account } from "@/libs/appwrite";
 import { fetchPostsByUserId } from "@/services/posts.service";
@@ -12,7 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import PostCard from "../components/PostCard";
 import { LegendList } from "@legendapp/list";
 import { fetchRooms } from "@/services/rooms.service";
-import { Room } from "@/interfaces/Room";
+import { Room } from "@/schemas/RoomSchema";
 import MatchRoomCard from "../components/MatchRoomCard";
 
 const ProfileScreen = () => {

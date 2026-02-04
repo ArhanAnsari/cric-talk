@@ -210,6 +210,9 @@ export default async ({ req, res }) => {
         throw new Error('Unauthorized: room is not live');
       }
 
+      if (room.authorId !== userId)
+        throw new Error("Forbidden: You aren't the owner of this room");
+
       await tablesDB.updateRow({
         databaseId: CRIC_TALK_DATABASE_ID,
         tableId: ROOM_MESSAGE_TABLE_ID,
@@ -233,6 +236,9 @@ export default async ({ req, res }) => {
       if (room.status !== 'live') {
         throw new Error('Unauthorized: room is not live');
       }
+
+      if (room.authorId !== userId)
+        throw new Error("Forbidden: You aren't the owner of this room");
 
       await tablesDB.deleteRow({
         databaseId: CRIC_TALK_DATABASE_ID,

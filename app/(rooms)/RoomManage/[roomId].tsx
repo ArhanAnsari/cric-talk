@@ -1,4 +1,4 @@
-import { Room } from "@/interfaces/Room";
+import { Room } from "@/schemas/RoomSchema";
 import { showToast } from "@/libs/showToast";
 import { executeRoom } from "@/services/rooms.service";
 import { useRooms } from "@/store/useRooms";
