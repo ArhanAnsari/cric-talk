@@ -11,7 +11,6 @@ export const BaseRoomMessageSchema = z.object({
 
 export const CreateRoomMessageSchema = BaseRoomMessageSchema;
 export const UpdateRoomMessageSchema = BaseRoomMessageSchema.extend({
-  roomId: BaseRoomMessageSchema.shape.roomId.optional(),
   roomMessageId: z.string().min(1, "Invalid message."),
 });
 
