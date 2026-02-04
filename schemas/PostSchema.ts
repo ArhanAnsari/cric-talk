@@ -5,7 +5,7 @@ export const PostSchema = z.object({
   content: z
     .string()
     .min(1, "Post can not be empty.")
-    .max(512, "Post can not be more than 500 characters"),
+    .max(512, "Post can not be more than 512 characters"),
   image: z.array(z.string()).min(1, "Invalid image."),
 });
 
