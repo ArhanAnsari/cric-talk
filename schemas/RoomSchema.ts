@@ -8,7 +8,6 @@ export const RoomSchema = z.object({
       .min(3, "Team name must be at least 3 characters.")
       .max(8, "Team name can not be more than 8 characters"),
   ),
-  status: z.string().min(1, "Invalid room status."),
 
   startTime: z.string().min(1, "Invalid room start time."),
   endTime: z.string().min(1, "Invalid room end time.").optional(),
