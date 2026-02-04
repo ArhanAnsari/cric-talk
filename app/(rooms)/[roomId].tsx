@@ -1,6 +1,6 @@
 import useKeyboardHeight from "@/hooks/useKeyboardHeight";
 import useRoomMessage from "@/hooks/useRoomMessage";
-import { Room } from "@/interfaces/Room";
+import { Room } from "@/schemas/RoomSchema";
 import { RoomMessage } from "@/interfaces/RoomMessage";
 import { account, client } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";

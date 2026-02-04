@@ -1,4 +1,4 @@
-import { Room } from "@/interfaces/Room";
+import { Room } from "@/schemas/RoomSchema";
 import { create } from "zustand";
 
 type RoomsStateType = {
@@ -17,7 +17,7 @@ export const useRooms = create<RoomsStateType>((set) => ({
       const updateRooms: Room[] = [...s.rooms, room];
       const sortedRooms: Room[] = updateRooms.sort(
         (a, b) =>
-          new Date(b.startTime).getTime() - new Date(a.startTime).getTime()
+          new Date(b.startTime).getTime() - new Date(a.startTime).getTime(),
       );
 
       return { rooms: sortedRooms };
@@ -25,13 +25,13 @@ export const useRooms = create<RoomsStateType>((set) => ({
   updateRoom: (roomData) =>
     set((s) => {
       const updatedRooms = s.rooms.map((r) =>
-        r.$id === roomData.$id ? { ...r, ...roomData } : r
+        r.$id === roomData.$id ? { ...r, ...roomData } : r,
       );
 
       const sortedRooms = updatedRooms.sort(
         (a, b) =>
           new Date(b.startTime || "").getTime() -
-          new Date(a.startTime || "").getTime()
+          new Date(a.startTime || "").getTime(),
       );
 
       return { rooms: sortedRooms };

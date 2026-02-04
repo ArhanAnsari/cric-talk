@@ -1,4 +1,4 @@
-import { Room } from "@/interfaces/Room";
+import { Room } from "@/schemas/RoomSchema";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Modal, Pressable, Text, View } from "react-native";

@@ -1,4 +1,4 @@
-import { Room } from "@/interfaces/Room";
+import { Room } from "@/schemas/RoomSchema";
 import { router } from "expo-router";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
