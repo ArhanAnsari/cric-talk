@@ -4,7 +4,7 @@ import { showToast } from "@/libs/showToast";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LeaderboardPodiumUser from "../components/LeaderboardPodiumUser";
 import LeaderboardUserRow from "../components/LeaderboardUserRow";
@@ -14,6 +14,7 @@ const LeaderboardScreen = () => {
   const [userStatsLeaderboard, setUserStatsLeaderboard] = useState<UserStats[]>(
     [],
   );
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     let mounted = true;
@@ -30,6 +31,7 @@ const LeaderboardScreen = () => {
         const leaderboardData = JSON.parse(data.responseBody).rows;
 
         setUserStatsLeaderboard(leaderboardData);
+        setLoading(false);
       } catch (error) {
         showToast({
           type: "error",
@@ -90,20 +92,26 @@ const LeaderboardScreen = () => {
 
       {/* LEADERBOARD LIST */}
 
-      <LegendList
-        data={userStatsLeaderboard.slice(3, 3 + 7)}
-        keyExtractor={(item) => item.$id}
-        contentContainerStyle={{
-          paddingBottom: 40,
-          paddingHorizontal: 24,
-          paddingVertical: 16,
-        }}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item, index }) => (
-          <LeaderboardUserRow user={item} rank={index + 1} />
-        )}
-        recycleItems
-      />
+      {loading ? (
+        <View className="flex items-center mt-45">
+          <ActivityIndicator color="#ff6900" size="large" />
+        </View>
+      ) : (
+        <LegendList
+          data={userStatsLeaderboard.slice(3, 3 + 7)}
+          keyExtractor={(item) => item.$id}
+          contentContainerStyle={{
+            paddingBottom: 40,
+            paddingHorizontal: 24,
+            paddingVertical: 16,
+          }}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item, index }) => (
+            <LeaderboardUserRow user={item} rank={index + 1} />
+          )}
+          recycleItems
+        />
+      )}
     </View>
   );
 };
