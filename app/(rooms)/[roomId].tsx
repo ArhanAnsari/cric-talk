@@ -8,7 +8,7 @@ import { fetchRoomMessages } from "@/services/roomMessage.service";
 import { fetchRooms } from "@/services/rooms.service";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Modal, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RoomDetailsCard from "../components/RoomDetailsCard";
@@ -30,6 +30,7 @@ const RoomDiscussion = () => {
   const [roomMessages, setRoomMessages] = useState<RoomMessage[]>([]);
 
   const [messageContent, setMessageContent] = useState<string>("");
+
   const [editMessageContent, setEditMessageContent] = useState<string>("");
   const [editRoomMessageId, setEditRoomMessageId] = useState<string>("");
   const canSendMessage = messageContent.trim().length > 0;
@@ -38,6 +39,8 @@ const RoomDiscussion = () => {
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
   const [isRoomDetailsVisible, setIsRoomDetailsVisible] =
     useState<boolean>(false);
+
+  const messageInputRef = useRef<TextInput | null>(null);
 
   const {
     handleCreateRoomMessage,
@@ -245,7 +248,13 @@ const RoomDiscussion = () => {
                   Be the first to send message and start the conversation!
                 </Text>
 
-                <Pressable className="flex-row items-center gap-2 mt-2 bg-orange-500 px-6 py-3 rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85">
+                <Pressable
+                  className="flex-row items-center gap-2 mt-2 bg-orange-500 px-6 py-3 rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85"
+                  onPress={() => {
+                    messageInputRef.current?.blur();
+                    messageInputRef.current?.focus();
+                  }}
+                >
                   <Ionicons name="rocket-outline" size={18} color="white" />
                   <Text className="text-white font-medium">Message now!</Text>
                 </Pressable>
@@ -266,6 +275,7 @@ const RoomDiscussion = () => {
             <TextInput
               value={messageContent}
               onChangeText={setMessageContent}
+              ref={messageInputRef}
               placeholder="Comment"
               placeholderTextColor="gray"
               className="border border-gray-300 rounded-lg pl-4 h-12 flex-1 mr-4 text-slate-900"
