@@ -245,7 +245,7 @@ const PostDetails = () => {
                       </Text>
 
                       <Text className="max-w-[80%] text-center text-slate-600 text-sm">
-                        Be the first one to comment and start discussion!
+                        Be the first one to comment and start a discussion!
                       </Text>
 
                       <Pressable
