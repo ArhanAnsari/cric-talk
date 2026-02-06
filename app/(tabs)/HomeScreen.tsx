@@ -170,7 +170,7 @@ const HomeScreen = () => {
                   onPress={() => setIsVisible(true)}
                 >
                   <Ionicons name="rocket-outline" size={18} color="white" />
-                  <Text className="text-white">Create one!</Text>
+                  <Text className="text-white font-medium">Create one!</Text>
                 </Pressable>
               </View>
             )}

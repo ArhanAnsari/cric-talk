@@ -244,7 +244,7 @@ const RoomDiscussion = () => {
                   No messages yet!
                 </Text>
 
-                <Text className="text-slate-600 max-w-[98%] text-center">
+                <Text className="text-slate-600 max-w-[98%] text-center text-sm">
                   Be the first to send message and start the conversation!
                 </Text>
 

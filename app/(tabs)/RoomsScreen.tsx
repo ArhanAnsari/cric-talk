@@ -112,7 +112,7 @@ const RoomsScreen = () => {
                 No rooms yet!
               </Text>
 
-              <Text className="text-gray-600 text-center max-w-[80%]">
+              <Text className="text-gray-600 text-center max-w-[80%] text-sm">
                 Be the first one to start a room and create the legacy!
               </Text>
 
