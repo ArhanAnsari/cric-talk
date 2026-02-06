@@ -100,6 +100,32 @@ const RoomsScreen = () => {
           contentContainerStyle={{ paddingTop: 20, paddingBottom: 140 }}
           renderItem={({ item }) => <MatchRoomCard room={item} />}
           recycleItems
+          ListEmptyComponent={() => (
+            <View className="flex-1 items-center gap-2">
+              <Ionicons
+                name="chatbubble-ellipses-outline"
+                size={48}
+                color="gray"
+              />
+
+              <Text className="text-slate-900 font-medium text-xl">
+                No rooms yet!
+              </Text>
+
+              <Text className="text-gray-600 text-center max-w-[80%] text-sm">
+                Be the first one to start a room and create the legacy!
+              </Text>
+
+              <Pressable
+                className="flex-row items-center gap-2 mt-2 bg-orange-500 px-6 py-3 rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85"
+                onPress={() => setIsVisible(true)}
+              >
+                <Ionicons name="rocket-outline" size={18} color="white" />
+
+                <Text className="text-white font-medium">Start legacy!</Text>
+              </Pressable>
+            </View>
+          )}
         />
       </SafeAreaView>
 

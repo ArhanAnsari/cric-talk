@@ -7,7 +7,7 @@ import { useComments } from "@/store/useComments";
 import { usePosts } from "@/store/usePosts";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Alert,
   Pressable,
@@ -48,6 +48,8 @@ const PostDetails = () => {
 
   const [comment, setComment] = useState<string>("");
   const [oldComment, setOldComment] = useState<string>("");
+
+  const commentInputRef = useRef<TextInput | null>(null);
 
   const [selectedCommentId, setSelectedCommentId] = useState<string>("");
 
@@ -230,6 +232,41 @@ const PostDetails = () => {
                     />
                   )}
                   recycleItems
+                  ListEmptyComponent={() => (
+                    <View className="flex-1 items-center gap-2">
+                      <Ionicons
+                        name="chatbox-ellipses-outline"
+                        size={48}
+                        color="gray"
+                      />
+
+                      <Text className="text-slate-900 text-xl font-medium">
+                        No comments yet!
+                      </Text>
+
+                      <Text className="max-w-[80%] text-center text-slate-600 text-sm">
+                        Be the first one to comment and start a discussion!
+                      </Text>
+
+                      <Pressable
+                        className="flex-row items-center gap-2 mt-2 bg-orange-500 px-6 py-3 rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85"
+                        onPress={() => {
+                          commentInputRef.current?.blur();
+                          commentInputRef.current?.focus();
+                        }}
+                      >
+                        <Ionicons
+                          name="rocket-outline"
+                          size={18}
+                          color="white"
+                        />
+
+                        <Text className="font-medium text-white">
+                          Comment now!
+                        </Text>
+                      </Pressable>
+                    </View>
+                  )}
                 />
               </View>
             </View>
@@ -247,6 +284,7 @@ const PostDetails = () => {
           <TextInput
             value={comment}
             onChangeText={setComment}
+            ref={commentInputRef}
             placeholder="Comment"
             placeholderTextColor="gray"
             className="border border-gray-300 rounded-lg pl-4 h-12 flex-1 mr-4 text-slate-900"
