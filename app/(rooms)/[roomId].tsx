@@ -66,6 +66,7 @@ const RoomDiscussion = () => {
 
   async function onRefresh() {
     setRefreshing(true);
+    setLoading(true);
 
     // fetch room discussion messages
     try {
@@ -79,6 +80,7 @@ const RoomDiscussion = () => {
       });
     } finally {
       setRefreshing(false);
+      setLoading(false);
     }
   }
 

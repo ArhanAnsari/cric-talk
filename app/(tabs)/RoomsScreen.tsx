@@ -41,6 +41,7 @@ const RoomsScreen = () => {
 
   async function onRefresh() {
     setRefreshing(true);
+    setLoading(true);
 
     // fetch rooms
     try {
@@ -54,6 +55,7 @@ const RoomsScreen = () => {
       });
     } finally {
       setRefreshing(false);
+      setLoading(false);
     }
   }
 

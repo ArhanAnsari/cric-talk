@@ -86,6 +86,7 @@ const HomeScreen = () => {
 
   async function onRefresh() {
     setRefreshing(true);
+    setLoading(true);
 
     // fetch posts
     try {
@@ -99,6 +100,7 @@ const HomeScreen = () => {
       });
     } finally {
       setRefreshing(false);
+      setLoading(false);
     }
   }
 

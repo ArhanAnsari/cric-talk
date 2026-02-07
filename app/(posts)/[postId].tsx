@@ -186,6 +186,7 @@ const PostDetails = () => {
 
   async function onRefresh() {
     setRefreshing(true);
+    setLoading(true);
 
     // fetch comments
     try {
@@ -199,6 +200,7 @@ const PostDetails = () => {
       });
     } finally {
       setRefreshing(false);
+      setLoading(false);
     }
   }
 
