@@ -6,15 +6,27 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { ViewToken } from "react-native";
-import { Pressable, Text, TextInput, View } from "react-native";
+import {
+  ActivityIndicator,
+  Dimensions,
+  Pressable,
+  RefreshControl,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CreatePostModal from "../components/CreatePostModal";
 import PostCard from "../components/PostCard";
 import ProfileDrawer from "../components/ProfileDrawer";
 import { LegendList } from "@legendapp/list";
+import { showToast } from "@/libs/showToast";
 
 const HomeScreen = () => {
   const [userId, setUserId] = useState<string>("");
+
+  const [loading, setLoading] = useState<boolean>(true);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const seacrhQueryRef = useRef<TextInput>(null);
@@ -26,6 +38,8 @@ const HomeScreen = () => {
   const updatePostState = usePosts((s) => s.updatePost);
 
   const username = useUser((s) => s.username);
+
+  const screenHeight = Dimensions.get("screen").height;
 
   async function increamentView(postId: string) {
     const post = posts.find((p) => p.$id === postId);
@@ -70,6 +84,26 @@ const HomeScreen = () => {
     [posts],
   );
 
+  async function onRefresh() {
+    setRefreshing(true);
+    setLoading(true);
+
+    // fetch posts
+    try {
+      const data = await fetchPosts();
+      setPosts(data.rows);
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error refreshing posts",
+        text2: "Please try again later.",
+      });
+    } finally {
+      setRefreshing(false);
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     let mounted = true;
 
@@ -85,6 +119,7 @@ const HomeScreen = () => {
       if (!mounted) return;
       const data = await fetchPosts();
       setPosts(data.rows);
+      setLoading(false);
     }
     fetchAllPosts();
 
@@ -144,37 +179,54 @@ const HomeScreen = () => {
 
         {/* POSTS */}
         <View className="mt-6">
-          <LegendList
-            data={posts}
-            keyExtractor={(item) => item.$id}
-            contentContainerStyle={{ paddingBottom: 200 }}
-            showsVerticalScrollIndicator={false}
-            onViewableItemsChanged={onViewableItemsChanged}
-            viewabilityConfig={{ itemVisiblePercentThreshold: 60 }}
-            renderItem={({ item }) => <PostCard userId={userId} post={item} />}
-            recycleItems
-            ListEmptyComponent={() => (
-              <View className="flex-1 items-center justify-center gap-2">
-                <Ionicons name="chatbubble-outline" size={48} color="gray" />
+          {loading ? (
+            <ActivityIndicator
+              size="large"
+              color="#ff6900"
+              style={{ marginTop: screenHeight * 0.25 }}
+            />
+          ) : (
+            <LegendList
+              data={posts}
+              keyExtractor={(item) => item.$id}
+              contentContainerStyle={{ paddingBottom: 200 }}
+              showsVerticalScrollIndicator={false}
+              onViewableItemsChanged={onViewableItemsChanged}
+              viewabilityConfig={{ itemVisiblePercentThreshold: 60 }}
+              renderItem={({ item }) => (
+                <PostCard userId={userId} post={item} />
+              )}
+              recycleItems
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                  colors={["#ff6900"]}
+                />
+              }
+              ListEmptyComponent={() => (
+                <View className="flex-1 items-center justify-center gap-2">
+                  <Ionicons name="chatbubble-outline" size={48} color="gray" />
 
-                <Text className="text-slate-900 font-medium text-xl">
-                  No posts yet!
-                </Text>
+                  <Text className="text-slate-900 font-medium text-xl">
+                    No posts yet!
+                  </Text>
 
-                <Text className="max-w-[80%] text-center text-slate-600 text-sm">
-                  Be the first one to start the legacy conversation!
-                </Text>
+                  <Text className="max-w-[80%] text-center text-slate-600 text-sm">
+                    Be the first one to start the legacy conversation!
+                  </Text>
 
-                <Pressable
-                  className="flex-row items-center gap-2 mt-2 bg-orange-500 px-6 py-3 rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85"
-                  onPress={() => setIsVisible(true)}
-                >
-                  <Ionicons name="rocket-outline" size={18} color="white" />
-                  <Text className="text-white font-medium">Create one!</Text>
-                </Pressable>
-              </View>
-            )}
-          />
+                  <Pressable
+                    className="flex-row items-center gap-2 mt-2 bg-orange-500 px-6 py-3 rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85"
+                    onPress={() => setIsVisible(true)}
+                  >
+                    <Ionicons name="rocket-outline" size={18} color="white" />
+                    <Text className="text-white font-medium">Create one!</Text>
+                  </Pressable>
+                </View>
+              )}
+            />
+          )}
         </View>
       </View>
 
