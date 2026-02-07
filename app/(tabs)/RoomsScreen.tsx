@@ -4,7 +4,13 @@ import { useRooms } from "@/store/useRooms";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import {
+  Pressable,
+  RefreshControl,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CreateRoomModal from "../components/CreateRoomModal";
 import FilterChip from "../components/FilterChip";
@@ -17,6 +23,8 @@ const RoomsScreen = () => {
   const rooms = useRooms((s) => s.rooms);
   const setRooms = useRooms((s) => s.setRooms);
 
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+
   const [selectedFilter, setSelectedFilter] = useState<
     "all" | "live" | "upcoming" | "finished"
   >("all");
@@ -25,6 +33,24 @@ const RoomsScreen = () => {
     if (selectedFilter === "all") return rooms;
     else return rooms.filter((room) => room.status === selectedFilter);
   }, [rooms, selectedFilter]);
+
+  async function onRefresh() {
+    setRefreshing(true);
+
+    // fetch rooms
+    try {
+      const data = await fetchRooms();
+      setRooms(data);
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error refreshing rooms",
+        text2: "Please try again later.",
+      });
+    } finally {
+      setRefreshing(false);
+    }
+  }
 
   useEffect(() => {
     let mounted = true;
@@ -100,6 +126,13 @@ const RoomsScreen = () => {
           contentContainerStyle={{ paddingTop: 20, paddingBottom: 140 }}
           renderItem={({ item }) => <MatchRoomCard room={item} />}
           recycleItems
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={["#ff6900"]}
+            />
+          }
           ListEmptyComponent={() => (
             <View className="flex-1 items-center gap-2">
               <Ionicons
