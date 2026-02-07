@@ -15,7 +15,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import LeaderboardPodiumUser from "../components/LeaderboardPodiumUser";
 import LeaderboardUserRow from "../components/LeaderboardUserRow";
 import { LegendList } from "@legendapp/list";
-import { set } from "zod";
 
 const LeaderboardScreen = () => {
   const [userStatsLeaderboard, setUserStatsLeaderboard] = useState<UserStats[]>(
