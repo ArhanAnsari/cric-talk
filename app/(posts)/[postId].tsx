@@ -11,6 +11,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   Alert,
   Pressable,
+  RefreshControl,
   ScrollView,
   Text,
   TextInput,
@@ -27,6 +28,8 @@ const PostDetails = () => {
   const { postId } = useLocalSearchParams();
 
   const [userId, setUserId] = useState<string>("");
+
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const posts = usePosts((s) => s.posts);
   const post = posts.find((post) => post.$id === postId);
@@ -174,6 +177,24 @@ const PostDetails = () => {
     ]);
   }
 
+  async function onRefresh() {
+    setRefreshing(true);
+
+    // fetch comments
+    try {
+      const data = await fetchComments(postId as string);
+      setCommentList(data.rows);
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error",
+        text2: "Could not refresh comments. Please try again later.",
+      });
+    } finally {
+      setRefreshing(false);
+    }
+  }
+
   return (
     <View className="flex-1 bg-white">
       <View className="flex-1">
@@ -232,6 +253,13 @@ const PostDetails = () => {
                     />
                   )}
                   recycleItems
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                      colors={["#ff6900"]}
+                    />
+                  }
                   ListEmptyComponent={() => (
                     <View className="flex-1 items-center gap-2">
                       <Ionicons
