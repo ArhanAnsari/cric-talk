@@ -9,7 +9,14 @@ import { fetchRooms } from "@/services/rooms.service";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
-import { Modal, Pressable, Text, TextInput, View } from "react-native";
+import {
+  Modal,
+  Pressable,
+  RefreshControl,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RoomDetailsCard from "../components/RoomDetailsCard";
 import RoomMessageCard from "../components/RoomMessageCard";
@@ -25,6 +32,8 @@ const RoomDiscussion = () => {
 
   const [userId, setUserId] = useState<string>("");
   const [username, setUsername] = useState<string>("");
+
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const [room, setRoom] = React.useState<Room | null>(null);
   const [roomMessages, setRoomMessages] = useState<RoomMessage[]>([]);
@@ -49,6 +58,24 @@ const RoomDiscussion = () => {
   } = useRoomMessage(roomId as string);
 
   const keyboardHeight = useKeyboardHeight();
+
+  async function onRefresh() {
+    setRefreshing(true);
+
+    // fetch room discussion messages
+    try {
+      const data = await fetchRoomMessages(roomId as string);
+      setRoomMessages(data.rows as any);
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error refreshing messages",
+        text2: "Please try again later.",
+      });
+    } finally {
+      setRefreshing(false);
+    }
+  }
 
   useEffect(() => {
     let mounted = true;
@@ -232,6 +259,13 @@ const RoomDiscussion = () => {
                 handleDeleteRoomMessage={handleDeleteRoomMessage}
               />
             )}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={["#ff6900"]}
+              />
+            }
             ListEmptyComponent={() => (
               <View className="flex-1 items-center gap-2">
                 <Ionicons
