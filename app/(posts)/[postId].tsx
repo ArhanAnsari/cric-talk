@@ -9,7 +9,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import {
+  ActivityIndicator,
   Alert,
+  Dimensions,
   Pressable,
   RefreshControl,
   ScrollView,
@@ -29,6 +31,7 @@ const PostDetails = () => {
 
   const [userId, setUserId] = useState<string>("");
 
+  const [loading, setLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const posts = usePosts((s) => s.posts);
@@ -61,6 +64,8 @@ const PostDetails = () => {
 
   const keyboardHeight = useKeyboardHeight();
 
+  const screenHeight = Dimensions.get("screen").height;
+
   useEffect(() => {
     async function fetchUserId() {
       const user = await account.get();
@@ -84,6 +89,8 @@ const PostDetails = () => {
           text1: "Error",
           text2: "Could not load comments. Please try again later.",
         });
+      } finally {
+        setLoading(false);
       }
     }
     loadComments();
@@ -236,66 +243,74 @@ const PostDetails = () => {
                 </Text>
 
                 {/* COMMENT LIST */}
-                <LegendList
-                  data={commentList}
-                  keyExtractor={(item) => item.$id}
-                  contentContainerStyle={{ paddingBottom: 20 }}
-                  renderItem={({ item }) => (
-                    <CommentCard
-                      userId={userId}
-                      comment={item}
-                      onEditPress={() => {
-                        setSelectedCommentId(item.$id);
-                        setOldComment(item.content);
-                        setIsEditCommentVisible(true);
-                      }}
-                      onDeletePress={() => handleDeleteComment(item.$id)}
-                    />
-                  )}
-                  recycleItems
-                  refreshControl={
-                    <RefreshControl
-                      refreshing={refreshing}
-                      onRefresh={onRefresh}
-                      colors={["#ff6900"]}
-                    />
-                  }
-                  ListEmptyComponent={() => (
-                    <View className="flex-1 items-center gap-2">
-                      <Ionicons
-                        name="chatbox-ellipses-outline"
-                        size={48}
-                        color="gray"
-                      />
-
-                      <Text className="text-slate-900 text-xl font-medium">
-                        No comments yet!
-                      </Text>
-
-                      <Text className="max-w-[80%] text-center text-slate-600 text-sm">
-                        Be the first one to comment and start a discussion!
-                      </Text>
-
-                      <Pressable
-                        className="flex-row items-center gap-2 mt-2 bg-orange-500 px-6 py-3 rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85"
-                        onPress={() => {
-                          commentInputRef.current?.blur();
-                          commentInputRef.current?.focus();
+                {loading ? (
+                  <ActivityIndicator
+                    size="large"
+                    color="#ff6900"
+                    style={{ marginTop: screenHeight * 0.2 }}
+                  />
+                ) : (
+                  <LegendList
+                    data={commentList}
+                    keyExtractor={(item) => item.$id}
+                    contentContainerStyle={{ paddingBottom: 20 }}
+                    renderItem={({ item }) => (
+                      <CommentCard
+                        userId={userId}
+                        comment={item}
+                        onEditPress={() => {
+                          setSelectedCommentId(item.$id);
+                          setOldComment(item.content);
+                          setIsEditCommentVisible(true);
                         }}
-                      >
+                        onDeletePress={() => handleDeleteComment(item.$id)}
+                      />
+                    )}
+                    recycleItems
+                    refreshControl={
+                      <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                        colors={["#ff6900"]}
+                      />
+                    }
+                    ListEmptyComponent={() => (
+                      <View className="flex-1 items-center gap-2">
                         <Ionicons
-                          name="rocket-outline"
-                          size={18}
-                          color="white"
+                          name="chatbox-ellipses-outline"
+                          size={48}
+                          color="gray"
                         />
 
-                        <Text className="font-medium text-white">
-                          Comment now!
+                        <Text className="text-slate-900 text-xl font-medium">
+                          No comments yet!
                         </Text>
-                      </Pressable>
-                    </View>
-                  )}
-                />
+
+                        <Text className="max-w-[80%] text-center text-slate-600 text-sm">
+                          Be the first one to comment and start a discussion!
+                        </Text>
+
+                        <Pressable
+                          className="flex-row items-center gap-2 mt-2 bg-orange-500 px-6 py-3 rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85"
+                          onPress={() => {
+                            commentInputRef.current?.blur();
+                            commentInputRef.current?.focus();
+                          }}
+                        >
+                          <Ionicons
+                            name="rocket-outline"
+                            size={18}
+                            color="white"
+                          />
+
+                          <Text className="font-medium text-white">
+                            Comment now!
+                          </Text>
+                        </Pressable>
+                      </View>
+                    )}
+                  />
+                )}
               </View>
             </View>
           </SafeAreaView>
