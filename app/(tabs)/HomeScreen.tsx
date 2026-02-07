@@ -6,15 +6,18 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { ViewToken } from "react-native";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, RefreshControl, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CreatePostModal from "../components/CreatePostModal";
 import PostCard from "../components/PostCard";
 import ProfileDrawer from "../components/ProfileDrawer";
 import { LegendList } from "@legendapp/list";
+import { showToast } from "@/libs/showToast";
 
 const HomeScreen = () => {
   const [userId, setUserId] = useState<string>("");
+
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const seacrhQueryRef = useRef<TextInput>(null);
@@ -69,6 +72,24 @@ const HomeScreen = () => {
     },
     [posts],
   );
+
+  async function onRefresh() {
+    setRefreshing(true);
+
+    // fetch posts
+    try {
+      const data = await fetchPosts();
+      setPosts(data.rows);
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error refreshing posts",
+        text2: "Please try again later.",
+      });
+    } finally {
+      setRefreshing(false);
+    }
+  }
 
   useEffect(() => {
     let mounted = true;
@@ -153,6 +174,13 @@ const HomeScreen = () => {
             viewabilityConfig={{ itemVisiblePercentThreshold: 60 }}
             renderItem={({ item }) => <PostCard userId={userId} post={item} />}
             recycleItems
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={["#ff6900"]}
+              />
+            }
             ListEmptyComponent={() => (
               <View className="flex-1 items-center justify-center gap-2">
                 <Ionicons name="chatbubble-outline" size={48} color="gray" />
