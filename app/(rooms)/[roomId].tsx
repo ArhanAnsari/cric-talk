@@ -10,6 +10,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import {
+  ActivityIndicator,
+  Dimensions,
   Modal,
   Pressable,
   RefreshControl,
@@ -33,6 +35,7 @@ const RoomDiscussion = () => {
   const [userId, setUserId] = useState<string>("");
   const [username, setUsername] = useState<string>("");
 
+  const [loading, setLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const [room, setRoom] = React.useState<Room | null>(null);
@@ -50,6 +53,8 @@ const RoomDiscussion = () => {
     useState<boolean>(false);
 
   const messageInputRef = useRef<TextInput | null>(null);
+
+  const screenHeight = Dimensions.get("screen").height;
 
   const {
     handleCreateRoomMessage,
@@ -99,6 +104,8 @@ const RoomDiscussion = () => {
           text1: "Error fetching user details",
           text2: "Please try again later.",
         });
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -235,67 +242,75 @@ const RoomDiscussion = () => {
           )}
         </SafeAreaView>
 
-        <View className="flex-1 -mt-18">
-          {/* DISCUSSION AREA */}
-          <LegendList
-            data={roomMessages}
-            keyExtractor={(item) => item.$id}
-            contentContainerStyle={{
-              paddingTop: 40,
-              paddingHorizontal: 24,
-              paddingBottom: 24,
-            }}
-            showsVerticalScrollIndicator={false}
-            alignItemsAtEnd
-            renderItem={({ item }) => (
-              // DISCUSSION MESSAGE CARD
-
-              <RoomMessageCard
-                item={item}
-                userId={userId}
-                setIsEditModalVisible={setIsEditModalVisible}
-                setEditMessageContent={setEditMessageContent}
-                setEditRoomMessageId={setEditRoomMessageId}
-                handleDeleteRoomMessage={handleDeleteRoomMessage}
-              />
-            )}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-                colors={["#ff6900"]}
-              />
-            }
-            ListEmptyComponent={() => (
-              <View className="flex-1 items-center gap-2">
-                <Ionicons
-                  name="chatbubble-ellipses-outline"
-                  size={48}
-                  color="gray"
-                />
-
-                <Text className="text-slate-900 text-xl font-medium">
-                  No messages yet!
-                </Text>
-
-                <Text className="text-slate-600 max-w-[98%] text-center text-sm">
-                  Be the first to send a message and start the conversation!
-                </Text>
-
-                <Pressable
-                  className="flex-row items-center gap-2 mt-2 bg-orange-500 px-6 py-3 rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85"
-                  onPress={() => {
-                    messageInputRef.current?.blur();
-                    messageInputRef.current?.focus();
-                  }}
-                >
-                  <Ionicons name="rocket-outline" size={18} color="white" />
-                  <Text className="text-white font-medium">Message now!</Text>
-                </Pressable>
-              </View>
-            )}
+        {loading ? (
+          <ActivityIndicator
+            size="large"
+            color="#ff6900"
+            style={{ marginTop: screenHeight * 0.25 }}
           />
-        </View>
+        ) : (
+          <View className="flex-1 -mt-18">
+            {/* DISCUSSION AREA */}
+            <LegendList
+              data={roomMessages}
+              keyExtractor={(item) => item.$id}
+              contentContainerStyle={{
+                paddingTop: 40,
+                paddingHorizontal: 24,
+                paddingBottom: 24,
+              }}
+              showsVerticalScrollIndicator={false}
+              alignItemsAtEnd
+              renderItem={({ item }) => (
+                // DISCUSSION MESSAGE CARD
+
+                <RoomMessageCard
+                  item={item}
+                  userId={userId}
+                  setIsEditModalVisible={setIsEditModalVisible}
+                  setEditMessageContent={setEditMessageContent}
+                  setEditRoomMessageId={setEditRoomMessageId}
+                  handleDeleteRoomMessage={handleDeleteRoomMessage}
+                />
+              )}
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                  colors={["#ff6900"]}
+                />
+              }
+              ListEmptyComponent={() => (
+                <View className="flex-1 items-center gap-2">
+                  <Ionicons
+                    name="chatbubble-ellipses-outline"
+                    size={48}
+                    color="gray"
+                  />
+
+                  <Text className="text-slate-900 text-xl font-medium">
+                    No messages yet!
+                  </Text>
+
+                  <Text className="text-slate-600 max-w-[98%] text-center text-sm">
+                    Be the first to send a message and start the conversation!
+                  </Text>
+
+                  <Pressable
+                    className="flex-row items-center gap-2 mt-2 bg-orange-500 px-6 py-3 rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85"
+                    onPress={() => {
+                      messageInputRef.current?.blur();
+                      messageInputRef.current?.focus();
+                    }}
+                  >
+                    <Ionicons name="rocket-outline" size={18} color="white" />
+                    <Text className="text-white font-medium">Message now!</Text>
+                  </Pressable>
+                </View>
+              )}
+            />
+          </View>
+        )}
       </View>
 
       <SafeAreaView
