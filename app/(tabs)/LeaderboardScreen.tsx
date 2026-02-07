@@ -4,17 +4,52 @@ import { showToast } from "@/libs/showToast";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Pressable, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  RefreshControl,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LeaderboardPodiumUser from "../components/LeaderboardPodiumUser";
 import LeaderboardUserRow from "../components/LeaderboardUserRow";
 import { LegendList } from "@legendapp/list";
+import { set } from "zod";
 
 const LeaderboardScreen = () => {
   const [userStatsLeaderboard, setUserStatsLeaderboard] = useState<UserStats[]>(
     [],
   );
   const [loading, setLoading] = useState<boolean>(true);
+
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+
+  async function onRefresh() {
+    setRefreshing(true);
+    setLoading(true);
+
+    // fetch leaderboard data
+    try {
+      const data = await functions.createExecution({
+        functionId:
+          process.env.EXPO_PUBLIC_APPWRITE_LEADERBOARD_GUARD_FUNCTION_ID!,
+        async: false,
+      });
+      const leaderboardData = JSON.parse(data.responseBody).rows;
+
+      setUserStatsLeaderboard(leaderboardData);
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error refreshing leaderboard",
+        text2: "Please try again later.",
+      });
+    } finally {
+      setRefreshing(false);
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     let mounted = true;
@@ -110,6 +145,13 @@ const LeaderboardScreen = () => {
             <LeaderboardUserRow user={item} rank={index + 1} />
           )}
           recycleItems
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={["#ff6900"]}
+            />
+          }
         />
       )}
     </View>
