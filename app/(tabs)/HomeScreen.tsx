@@ -116,8 +116,6 @@ const HomeScreen = () => {
     fetchUserId();
 
     async function fetchAllPosts() {
-      if (!mounted) return;
-
       try {
         const data = await fetchPosts();
         setPosts(data.rows);
@@ -132,10 +130,6 @@ const HomeScreen = () => {
       }
     }
     fetchAllPosts();
-
-    return () => {
-      mounted = false;
-    };
   }, []);
 
   return (
