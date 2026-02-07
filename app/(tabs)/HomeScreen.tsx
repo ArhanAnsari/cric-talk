@@ -117,9 +117,19 @@ const HomeScreen = () => {
 
     async function fetchAllPosts() {
       if (!mounted) return;
-      const data = await fetchPosts();
-      setPosts(data.rows);
-      setLoading(false);
+
+      try {
+        const data = await fetchPosts();
+        setPosts(data.rows);
+      } catch (error) {
+        showToast({
+          type: "error",
+          text1: "Error fetching posts",
+          text2: "Please try again later.",
+        });
+      } finally {
+        setLoading(false);
+      }
     }
     fetchAllPosts();
 
