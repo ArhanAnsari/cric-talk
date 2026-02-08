@@ -26,6 +26,7 @@ import PostCard from "../components/PostCard";
 import { LegendList } from "@legendapp/list";
 import { CommentType, CreateCommentSchema } from "@/schemas/CommentSchema";
 import { EmptyState } from "../components/EmptyState";
+import useComment from "@/hooks/useComment";
 
 const PostDetails = () => {
   const { postId } = useLocalSearchParams();
@@ -46,15 +47,13 @@ const PostDetails = () => {
     throw new Error("Post not found");
   }
 
-  const updatePostState = usePosts((s) => s.updatePost);
-
   const commentList = useComments((s) => s.commentList);
   const setCommentList = useComments((s) => s.setComments);
-  const addCommentState = useComments((s) => s.addComment);
-  const deleteCommentState = useComments((s) => s.deleteComment);
 
   const [comment, setComment] = useState<string>("");
   const [oldComment, setOldComment] = useState<string>("");
+
+  const { handleAddComment, handleDeleteComment } = useComment({ post });
 
   const commentInputRef = useRef<TextInput | null>(null);
 
@@ -100,90 +99,6 @@ const PostDetails = () => {
       mounted = false;
     };
   }, []);
-
-  async function handleAddComment() {
-    try {
-      const result = CreateCommentSchema.safeParse({
-        postId,
-        content: comment,
-      });
-
-      if (!result.success) {
-        showToast({
-          type: "error",
-          text1: "Error",
-          text2: result.error.issues[0].message,
-        });
-        return;
-      }
-
-      const execution = await executeComment({
-        action: "add",
-        postId: postId as string,
-        content: comment,
-      });
-      const parsed = JSON.parse(execution?.responseBody || "");
-      if (!parsed) throw new Error("Error while executing add comment");
-
-      const newComment: CommentType = parsed.data;
-      addCommentState(newComment);
-
-      await updatePost(postId as string, {
-        commentCount: (post?.commentCount || 0) + 1,
-      });
-      updatePostState({
-        $id: postId as string,
-        commentCount: (post?.commentCount || 0) + 1,
-      });
-
-      setComment("");
-    } catch (error) {
-      showToast({
-        type: "error",
-        text1: "Error",
-        text2: "Could not add comment. Please try again later.",
-      });
-    }
-  }
-
-  async function handleDeleteComment(commentId: string) {
-    Alert.alert("Are you sure?", "Do you want to delete this comment?", [
-      {
-        text: "Cancel",
-        style: "cancel",
-      },
-      {
-        text: "Delete",
-        style: "destructive",
-        onPress: async () => {
-          try {
-            const execution = await executeComment({
-              action: "delete",
-              commentId,
-            });
-            const parsed = JSON.parse(execution?.responseBody || "");
-
-            const deletedCommentId = parsed.data.commentId;
-            deleteCommentState(deletedCommentId);
-
-            await updatePost(postId as string, {
-              commentCount: (post?.commentCount || 0) - 1,
-            });
-            updatePostState({
-              $id: postId as string,
-              commentCount: (post?.commentCount || 0) - 1,
-            });
-          } catch (error) {
-            showToast({
-              type: "error",
-              text1: "Error",
-              text2: "Could not delete comment. Please try again later.",
-            });
-          }
-        },
-      },
-    ]);
-  }
 
   async function onRefresh() {
     setRefreshing(true);
@@ -313,7 +228,9 @@ const PostDetails = () => {
           {/* COMMENT ADD BUTTON */}
           <Pressable
             className="h-12 w-12 bg-orange-500 rounded-lg items-center justify-center"
-            onPress={handleAddComment}
+            onPress={() =>
+              handleAddComment({ comment, setComment: () => setComment("") })
+            }
           >
             <Ionicons name="send-outline" size={18} color="white" />
           </Pressable>
