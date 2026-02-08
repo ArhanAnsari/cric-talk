@@ -1,6 +1,34 @@
 import { Ionicons } from "@expo/vector-icons";
 import { View, Text, Pressable } from "react-native";
 
+const EmptyStateIcon = {
+  post: "chatbubble-outline",
+  comment: "chatbox-ellipses-outline",
+  room: "chatbubble-ellipses-outline",
+  roomMessage: "chatbubble-ellipses-outline",
+};
+
+const EmptyStateTitle = {
+  post: "No posts yet!",
+  comment: "No comments yet!",
+  room: "No rooms yet!",
+  roomMessage: "No messages yet!",
+};
+
+const EmptyStateDescription = {
+  post: "Be the first one to start the legacy conversation!",
+  comment: "Be the first one to comment and start a discussion!",
+  room: "Be the first one to start a room and create the legacy!",
+  roomMessage: "Be the first to send a message and start the conversation!",
+};
+
+const EmptyStateButtonText = {
+  post: "Create one!",
+  comment: "Comment now!",
+  room: "Start legacy!",
+  roomMessage: "Message now!",
+};
+
 export const PostListEmptyComponent = ({
   onPress,
 }: {
