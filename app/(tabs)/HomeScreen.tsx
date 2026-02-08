@@ -21,7 +21,7 @@ import PostCard from "../components/PostCard";
 import ProfileDrawer from "../components/ProfileDrawer";
 import { LegendList } from "@legendapp/list";
 import { showToast } from "@/libs/showToast";
-import { EmptyState } from "../components/EmptyStates";
+import { EmptyState } from "../components/EmptyState";
 
 const HomeScreen = () => {
   const [userId, setUserId] = useState<string>("");

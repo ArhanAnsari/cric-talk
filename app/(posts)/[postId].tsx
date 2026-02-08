@@ -25,7 +25,7 @@ import EditCommentModal from "../components/EditCommentModal";
 import PostCard from "../components/PostCard";
 import { LegendList } from "@legendapp/list";
 import { CommentType, CreateCommentSchema } from "@/schemas/CommentSchema";
-import { EmptyState } from "../components/EmptyStates";
+import { EmptyState } from "../components/EmptyState";
 
 const PostDetails = () => {
   const { postId } = useLocalSearchParams();
