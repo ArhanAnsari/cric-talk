@@ -26,3 +26,32 @@ export const PostListEmptyComponent = ({
     </View>
   );
 };
+
+export const CommentListEmptyComponent = ({
+  onPress,
+}: {
+  onPress: () => void;
+}) => {
+  return (
+    <View className="flex-1 items-center gap-2">
+      <Ionicons name="chatbox-ellipses-outline" size={48} color="gray" />
+
+      <Text className="text-slate-900 text-xl font-medium">
+        No comments yet!
+      </Text>
+
+      <Text className="max-w-[80%] text-center text-slate-600 text-sm">
+        Be the first one to comment and start a discussion!
+      </Text>
+
+      <Pressable
+        className="flex-row items-center gap-2 mt-2 bg-orange-500 px-6 py-3 rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85"
+        onPress={onPress}
+      >
+        <Ionicons name="rocket-outline" size={18} color="white" />
+
+        <Text className="font-medium text-white">Comment now!</Text>
+      </Pressable>
+    </View>
+  );
+};

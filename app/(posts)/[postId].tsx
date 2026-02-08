@@ -25,6 +25,7 @@ import EditCommentModal from "../components/EditCommentModal";
 import PostCard from "../components/PostCard";
 import { LegendList } from "@legendapp/list";
 import { CommentType, CreateCommentSchema } from "@/schemas/CommentSchema";
+import { CommentListEmptyComponent } from "../components/EmptyStates";
 
 const PostDetails = () => {
   const { postId } = useLocalSearchParams();
@@ -276,41 +277,14 @@ const PostDetails = () => {
                         colors={["#ff6900"]}
                       />
                     }
-                    ListEmptyComponent={() => (
-                      <View className="flex-1 items-center gap-2">
-                        <Ionicons
-                          name="chatbox-ellipses-outline"
-                          size={48}
-                          color="gray"
-                        />
-
-                        <Text className="text-slate-900 text-xl font-medium">
-                          No comments yet!
-                        </Text>
-
-                        <Text className="max-w-[80%] text-center text-slate-600 text-sm">
-                          Be the first one to comment and start a discussion!
-                        </Text>
-
-                        <Pressable
-                          className="flex-row items-center gap-2 mt-2 bg-orange-500 px-6 py-3 rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85"
-                          onPress={() => {
-                            commentInputRef.current?.blur();
-                            commentInputRef.current?.focus();
-                          }}
-                        >
-                          <Ionicons
-                            name="rocket-outline"
-                            size={18}
-                            color="white"
-                          />
-
-                          <Text className="font-medium text-white">
-                            Comment now!
-                          </Text>
-                        </Pressable>
-                      </View>
-                    )}
+                    ListEmptyComponent={
+                      <CommentListEmptyComponent
+                        onPress={() => {
+                          commentInputRef.current?.blur();
+                          commentInputRef.current?.focus();
+                        }}
+                      />
+                    }
                   />
                 )}
               </View>
