@@ -71,7 +71,7 @@ const RoomDiscussion = () => {
     // fetch room discussion messages
     try {
       const data = await fetchRoomMessages(roomId as string);
-      setRoomMessages(data.rows as any);
+      setRoomMessages(data.rows);
     } catch (error) {
       showToast({
         type: "error",
@@ -114,7 +114,7 @@ const RoomDiscussion = () => {
     async function loadRoomMessages() {
       try {
         const data = await fetchRoomMessages(roomId as string);
-        setRoomMessages(data.rows as any);
+        setRoomMessages(data.rows);
       } catch (error) {
         showToast({
           type: "error",

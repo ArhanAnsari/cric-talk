@@ -1,4 +1,5 @@
 import { functions, tablesDB } from "@/libs/appwrite";
+import { RoomMessage } from "@/schemas/RoomMessageSchema";
 import { Query } from "react-native-appwrite";
 
 const CRIC_TALK_DATABASE_ID =
@@ -10,7 +11,7 @@ const ROOM_MESSAGE_GUARD_FUNCTION_ID =
 
 export async function fetchRoomMessages(roomId: string) {
   try {
-    return await tablesDB.listRows({
+    return await tablesDB.listRows<RoomMessage>({
       databaseId: CRIC_TALK_DATABASE_ID,
       tableId: ROOM_MESSAGE_TABLE_ID,
       queries: [
