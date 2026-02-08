@@ -23,7 +23,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import RoomDetailsCard from "../components/RoomDetailsCard";
 import RoomMessageCard from "../components/RoomMessageCard";
 import { LegendList } from "@legendapp/list";
-import { RoomMessageListEmptyComponent } from "../components/EmptyStates";
+import { EmptyState } from "../components/EmptyStates";
 
 const RoomDiscussion = () => {
   const CRIC_TALK_DATABASE_ID =
@@ -284,7 +284,8 @@ const RoomDiscussion = () => {
                 />
               }
               ListEmptyComponent={
-                <RoomMessageListEmptyComponent
+                <EmptyState
+                  type="roomMessage"
                   onPress={() => {
                     messageInputRef.current?.blur();
                     messageInputRef.current?.focus();

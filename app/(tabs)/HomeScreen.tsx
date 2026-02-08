@@ -21,7 +21,7 @@ import PostCard from "../components/PostCard";
 import ProfileDrawer from "../components/ProfileDrawer";
 import { LegendList } from "@legendapp/list";
 import { showToast } from "@/libs/showToast";
-import { PostListEmptyComponent } from "../components/EmptyStates";
+import { EmptyState } from "../components/EmptyStates";
 
 const HomeScreen = () => {
   const [userId, setUserId] = useState<string>("");
@@ -210,7 +210,7 @@ const HomeScreen = () => {
                 />
               }
               ListEmptyComponent={
-                <PostListEmptyComponent onPress={() => setIsVisible(true)} />
+                <EmptyState type="post" onPress={() => setIsVisible(true)} />
               }
             />
           )}

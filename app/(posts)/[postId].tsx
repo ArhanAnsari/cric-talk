@@ -25,7 +25,7 @@ import EditCommentModal from "../components/EditCommentModal";
 import PostCard from "../components/PostCard";
 import { LegendList } from "@legendapp/list";
 import { CommentType, CreateCommentSchema } from "@/schemas/CommentSchema";
-import { CommentListEmptyComponent } from "../components/EmptyStates";
+import { EmptyState } from "../components/EmptyStates";
 
 const PostDetails = () => {
   const { postId } = useLocalSearchParams();
@@ -278,7 +278,8 @@ const PostDetails = () => {
                       />
                     }
                     ListEmptyComponent={
-                      <CommentListEmptyComponent
+                      <EmptyState
+                        type="comment"
                         onPress={() => {
                           commentInputRef.current?.blur();
                           commentInputRef.current?.focus();

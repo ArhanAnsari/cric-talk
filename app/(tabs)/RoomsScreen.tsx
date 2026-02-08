@@ -18,7 +18,7 @@ import CreateRoomModal from "../components/CreateRoomModal";
 import FilterChip from "../components/FilterChip";
 import MatchRoomCard from "../components/MatchRoomCard";
 import { LegendList } from "@legendapp/list";
-import { RoomListEmptyComponent } from "../components/EmptyStates";
+import { EmptyState } from "../components/EmptyStates";
 
 const RoomsScreen = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -151,7 +151,7 @@ const RoomsScreen = () => {
               />
             }
             ListEmptyComponent={
-              <RoomListEmptyComponent onPress={() => setIsVisible(true)} />
+              <EmptyState type="room" onPress={() => setIsVisible(true)} />
             }
           />
         )}
