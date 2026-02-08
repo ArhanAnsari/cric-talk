@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Modal, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import useEditPost from "@/hooks/useEditPost";
 
 type Props = {
   isVisible: boolean;
@@ -22,55 +23,7 @@ const EditPostModal = ({
 }: Props) => {
   const [content, setContent] = useState<string>(initialContent);
 
-  const updatePostState = usePosts((s) => s.updatePost);
-
-  async function handleEditPost() {
-    const trimmedContent: string = content.trim();
-
-    const result = PostSchema.safeParse({ content: trimmedContent });
-
-    if (!result.success) {
-      showToast({
-        type: "error",
-        text1: "Error",
-        text2: result.error.issues[0].message,
-      });
-      return;
-    }
-
-    if (initialContent.trim() === trimmedContent) {
-      onClose();
-
-      showToast({
-        type: "info",
-        text1: "Nothing to edit",
-        text2: "You haven't made any changes yet.",
-      });
-
-      return;
-    }
-
-    try {
-      const execution = await executePost({
-        action: "update",
-        postId,
-        content,
-      });
-      const parsed = JSON.parse(execution.responseBody);
-
-      const post: Post = parsed.data;
-      updatePostState(post);
-      onClose();
-      showToast({ type: "success", text1: "Post edited successfully" });
-    } catch (error) {
-      onClose();
-      showToast({
-        type: "error",
-        text1: "Failed editing the post",
-        text2: "Please try again later.",
-      });
-    }
-  }
+  const { handleEditPost } = useEditPost({ postId });
 
   return (
     <Modal visible={isVisible} transparent animationType="slide">
@@ -85,7 +38,11 @@ const EditPostModal = ({
               onPress={onClose}
             />
 
-            <Pressable onPress={handleEditPost}>
+            <Pressable
+              onPress={() =>
+                handleEditPost({ content, initialContent, onClose })
+              }
+            >
               <Ionicons name="checkmark" size={24} color="#0f172b" />
             </Pressable>
           </View>
