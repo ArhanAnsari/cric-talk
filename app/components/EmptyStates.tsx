@@ -6,7 +6,7 @@ const EmptyStateIcon = {
   comment: "chatbox-ellipses-outline",
   room: "chatbubble-ellipses-outline",
   roomMessage: "chatbubble-ellipses-outline",
-};
+} as const;
 
 const EmptyStateTitle = {
   post: "No posts yet!",
