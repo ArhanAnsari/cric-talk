@@ -22,6 +22,7 @@ import ProfileDrawer from "../components/ProfileDrawer";
 import { LegendList } from "@legendapp/list";
 import { showToast } from "@/libs/showToast";
 import { EmptyState } from "../components/EmptyState";
+import useViewPost from "@/hooks/useViewPost";
 
 const HomeScreen = () => {
   const [userId, setUserId] = useState<string>("");
@@ -36,39 +37,12 @@ const HomeScreen = () => {
 
   const posts = usePosts((s) => s.posts);
   const setPosts = usePosts((s) => s.setPosts);
-  const updatePostState = usePosts((s) => s.updatePost);
 
   const username = useUser((s) => s.username);
 
   const screenHeight = Dimensions.get("screen").height;
 
-  async function increamentView(postId: string) {
-    const post = posts.find((p) => p.$id === postId);
-    if (!post) return;
-
-    if (post.viewedBy.includes(userId)) return;
-
-    const optimisticPost = {
-      ...post,
-      views: post.views + 1,
-      viewedBy: [...post.viewedBy, userId],
-    };
-
-    updatePostState(optimisticPost);
-
-    try {
-      const execution = await executePost({
-        action: "view",
-        postId: postId,
-      });
-      const parsed = JSON.parse(execution.responseBody);
-
-      const updatedPost = parsed.data;
-      updatePostState(updatedPost);
-    } catch (error) {
-      updatePostState(post);
-    }
-  }
+  const { increamentView } = useViewPost();
 
   const viewedPostsRef = useRef<Set<string>>(new Set());
   const onViewableItemsChanged = useCallback(
@@ -79,7 +53,7 @@ const HomeScreen = () => {
 
         viewedPostsRef.current.add(item.$id);
 
-        increamentView(item.$id);
+        increamentView({ postId: item.$id, userId });
       });
     },
     [posts],
