@@ -1,7 +1,3 @@
-import { Post, PostSchema } from "@/schemas/PostSchema";
-import { showToast } from "@/libs/showToast";
-import { executePost } from "@/services/posts.service";
-import { usePosts } from "@/store/usePosts";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Modal, Pressable, Text, TextInput, View } from "react-native";
