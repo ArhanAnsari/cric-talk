@@ -1,5 +1,5 @@
 import { account } from "@/libs/appwrite";
-import { executePost, fetchPosts } from "@/services/posts.service";
+import { fetchPosts } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { useUser } from "@/store/useUser";
 import { Ionicons } from "@expo/vector-icons";
