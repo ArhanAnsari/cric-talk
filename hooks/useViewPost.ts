@@ -5,7 +5,7 @@ const useViewPost = () => {
   const posts = usePosts((s) => s.posts);
   const updatePostState = usePosts((s) => s.updatePost);
 
-  async function increamentView({
+  async function incrementView({
     postId,
     userId,
   }: {
@@ -39,7 +39,7 @@ const useViewPost = () => {
     }
   }
 
-  return { increamentView };
+  return { incrementView };
 };
 
 export default useViewPost;

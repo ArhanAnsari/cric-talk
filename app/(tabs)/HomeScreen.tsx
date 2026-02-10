@@ -42,7 +42,7 @@ const HomeScreen = () => {
 
   const screenHeight = Dimensions.get("screen").height;
 
-  const { increamentView } = useViewPost();
+  const { incrementView } = useViewPost();
 
   const viewedPostsRef = useRef<Set<string>>(new Set());
   const onViewableItemsChanged = useCallback(
@@ -53,7 +53,7 @@ const HomeScreen = () => {
 
         viewedPostsRef.current.add(item.$id);
 
-        increamentView({ postId: item.$id, userId });
+        incrementView({ postId: item.$id, userId });
       });
     },
     [posts],
