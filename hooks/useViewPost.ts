@@ -1,5 +1,3 @@
-import { View, Text } from "react-native";
-import React from "react";
 import { usePosts } from "@/store/usePosts";
 import { executePost } from "@/services/posts.service";
 
