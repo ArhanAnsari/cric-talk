@@ -43,7 +43,8 @@ const useComment = ({ post }: { post: Post }) => {
         content: comment,
       });
       const parsed = JSON.parse(execution?.responseBody || "");
-      if (!parsed) throw new Error("Error while executing add comment");
+      if (!execution.responseBody)
+        throw new Error("Error while executing add comment");
 
       const newComment: CommentType = parsed.data;
       addCommentState(newComment);
