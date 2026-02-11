@@ -1,12 +1,10 @@
 import useLikePost from "@/hooks/useLikePost";
 import { Post } from "@/schemas/PostSchema";
-import { showToast } from "@/libs/showToast";
-import { executePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Alert, Pressable, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import EditPostModal from "./EditPostModal";
 import useDeletePost from "@/hooks/useDeletePost";
 
