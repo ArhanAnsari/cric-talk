@@ -85,9 +85,6 @@ const HomeScreen = () => {
     try {
       const data = await searchPosts(text);
       setPosts(data.rows);
-
-      console.log("Search query:", searchQuery);
-      console.log("Fetched posts:", data.rows);
     } catch (error) {
       showToast({
         type: "error",
