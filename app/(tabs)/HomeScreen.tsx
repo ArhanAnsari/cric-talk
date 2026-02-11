@@ -59,6 +59,8 @@ const HomeScreen = () => {
     [posts],
   );
 
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   async function onRefresh() {
     setRefreshing(true);
     setLoading(true);
@@ -79,9 +81,9 @@ const HomeScreen = () => {
     }
   }
 
-  async function handleSearch() {
+  async function handleSearch(text: string) {
     try {
-      const data = await searchPosts(searchQuery);
+      const data = await searchPosts(text);
       setPosts(data.rows);
 
       console.log("Search query:", searchQuery);
@@ -163,8 +165,12 @@ const HomeScreen = () => {
             onChangeText={(text) => {
               setSearchQuery(text);
 
-              setTimeout(() => {
-                handleSearch();
+              if (debounceRef.current) {
+                clearTimeout(debounceRef.current);
+              }
+
+              debounceRef.current = setTimeout(() => {
+                handleSearch(text);
               }, 300);
             }}
             ref={seacrhQueryRef}
