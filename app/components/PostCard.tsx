@@ -1,13 +1,12 @@
 import useLikePost from "@/hooks/useLikePost";
 import { Post } from "@/schemas/PostSchema";
-import { showToast } from "@/libs/showToast";
-import { executePost } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Alert, Pressable, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import EditPostModal from "./EditPostModal";
+import useDeletePost from "@/hooks/useDeletePost";
 
 type Props = {
   userId: string;
@@ -16,41 +15,12 @@ type Props = {
 
 const PostCard = ({ userId, post }: Props) => {
   const posts = usePosts((s) => s.posts);
-  const deletePostState = usePosts((s) => s.deletePost);
 
   const { likePost } = useLikePost();
 
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
 
-  async function handleDeletePost() {
-    Alert.alert("Are you sure?", "Do you want to delete the post?", [
-      { text: "Cancel", style: "cancel" },
-      {
-        text: "Delete",
-        style: "destructive",
-        onPress: async () => {
-          try {
-            const execution = await executePost({
-              action: "delete",
-              postId: post.$id,
-            });
-            const parsed = JSON.parse(execution.responseBody);
-
-            const deletedPostId = parsed.data.postId;
-
-            deletePostState(deletedPostId);
-            showToast({ type: "success", text1: "Post deleted successfully" });
-          } catch (error) {
-            showToast({
-              type: "error",
-              text1: "Failed to delete the post",
-              text2: "Please try again later.",
-            });
-          }
-        },
-      },
-    ]);
-  }
+  const { handleDeletePost } = useDeletePost({ postId: post.$id });
 
   return (
     <>

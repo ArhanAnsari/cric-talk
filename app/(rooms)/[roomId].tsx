@@ -23,6 +23,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import RoomDetailsCard from "../components/RoomDetailsCard";
 import RoomMessageCard from "../components/RoomMessageCard";
 import { LegendList } from "@legendapp/list";
+import { EmptyState } from "../components/EmptyState";
 
 const RoomDiscussion = () => {
   const CRIC_TALK_DATABASE_ID =
@@ -282,34 +283,15 @@ const RoomDiscussion = () => {
                   colors={["#ff6900"]}
                 />
               }
-              ListEmptyComponent={() => (
-                <View className="flex-1 items-center gap-2">
-                  <Ionicons
-                    name="chatbubble-ellipses-outline"
-                    size={48}
-                    color="gray"
-                  />
-
-                  <Text className="text-slate-900 text-xl font-medium">
-                    No messages yet!
-                  </Text>
-
-                  <Text className="text-slate-600 max-w-[98%] text-center text-sm">
-                    Be the first to send a message and start the conversation!
-                  </Text>
-
-                  <Pressable
-                    className="flex-row items-center gap-2 mt-2 bg-orange-500 px-6 py-3 rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85"
-                    onPress={() => {
-                      messageInputRef.current?.blur();
-                      messageInputRef.current?.focus();
-                    }}
-                  >
-                    <Ionicons name="rocket-outline" size={18} color="white" />
-                    <Text className="text-white font-medium">Message now!</Text>
-                  </Pressable>
-                </View>
-              )}
+              ListEmptyComponent={
+                <EmptyState
+                  type="roomMessage"
+                  onPress={() => {
+                    messageInputRef.current?.blur();
+                    messageInputRef.current?.focus();
+                  }}
+                />
+              }
             />
           </View>
         )}

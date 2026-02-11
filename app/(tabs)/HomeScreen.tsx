@@ -1,5 +1,5 @@
 import { account } from "@/libs/appwrite";
-import { executePost, fetchPosts } from "@/services/posts.service";
+import { fetchPosts } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { useUser } from "@/store/useUser";
 import { Ionicons } from "@expo/vector-icons";
@@ -21,6 +21,8 @@ import PostCard from "../components/PostCard";
 import ProfileDrawer from "../components/ProfileDrawer";
 import { LegendList } from "@legendapp/list";
 import { showToast } from "@/libs/showToast";
+import { EmptyState } from "../components/EmptyState";
+import useViewPost from "@/hooks/useViewPost";
 
 const HomeScreen = () => {
   const [userId, setUserId] = useState<string>("");
@@ -35,39 +37,12 @@ const HomeScreen = () => {
 
   const posts = usePosts((s) => s.posts);
   const setPosts = usePosts((s) => s.setPosts);
-  const updatePostState = usePosts((s) => s.updatePost);
 
   const username = useUser((s) => s.username);
 
   const screenHeight = Dimensions.get("screen").height;
 
-  async function increamentView(postId: string) {
-    const post = posts.find((p) => p.$id === postId);
-    if (!post) return;
-
-    if (post.viewedBy.includes(userId)) return;
-
-    const optimisticPost = {
-      ...post,
-      views: post.views + 1,
-      viewedBy: [...post.viewedBy, userId],
-    };
-
-    updatePostState(optimisticPost);
-
-    try {
-      const execution = await executePost({
-        action: "view",
-        postId: postId,
-      });
-      const parsed = JSON.parse(execution.responseBody);
-
-      const updatedPost = parsed.data;
-      updatePostState(updatedPost);
-    } catch (error) {
-      updatePostState(post);
-    }
-  }
+  const { incrementView } = useViewPost();
 
   const viewedPostsRef = useRef<Set<string>>(new Set());
   const onViewableItemsChanged = useCallback(
@@ -78,7 +53,7 @@ const HomeScreen = () => {
 
         viewedPostsRef.current.add(item.$id);
 
-        increamentView(item.$id);
+        incrementView({ postId: item.$id, userId });
       });
     },
     [posts],
@@ -208,27 +183,9 @@ const HomeScreen = () => {
                   colors={["#ff6900"]}
                 />
               }
-              ListEmptyComponent={() => (
-                <View className="flex-1 items-center justify-center gap-2">
-                  <Ionicons name="chatbubble-outline" size={48} color="gray" />
-
-                  <Text className="text-slate-900 font-medium text-xl">
-                    No posts yet!
-                  </Text>
-
-                  <Text className="max-w-[80%] text-center text-slate-600 text-sm">
-                    Be the first one to start the legacy conversation!
-                  </Text>
-
-                  <Pressable
-                    className="flex-row items-center gap-2 mt-2 bg-orange-500 px-6 py-3 rounded-full transition-all duration-300 ease-in-out active:scale-[0.95] active:opacity-85"
-                    onPress={() => setIsVisible(true)}
-                  >
-                    <Ionicons name="rocket-outline" size={18} color="white" />
-                    <Text className="text-white font-medium">Create one!</Text>
-                  </Pressable>
-                </View>
-              )}
+              ListEmptyComponent={
+                <EmptyState type="post" onPress={() => setIsVisible(true)} />
+              }
             />
           )}
         </View>
