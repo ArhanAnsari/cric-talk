@@ -1,5 +1,3 @@
-import { View, Text } from "react-native";
-import React from "react";
 import { Post, PostSchema } from "@/schemas/PostSchema";
 import { showToast } from "@/libs/showToast";
 import { executePost } from "@/services/posts.service";
