@@ -83,6 +83,8 @@ const HomeScreen = () => {
 
   async function handleSearch(text: string) {
     try {
+      setLoading(true);
+
       const data = await searchPosts(text);
       setPosts(data.rows);
     } catch (error) {
@@ -91,6 +93,8 @@ const HomeScreen = () => {
         text1: "Error searching posts",
         text2: "Please try again later.",
       });
+    } finally {
+      setLoading(false);
     }
   }
 
