@@ -226,9 +226,7 @@ const PostDetails = () => {
           {/* COMMENT ADD BUTTON */}
           <Pressable
             className="h-12 w-12 bg-orange-500 rounded-lg items-center justify-center"
-            onPress={() =>
-              handleAddComment({ comment, setComment: () => setComment("") })
-            }
+            onPress={() => handleAddComment({ comment, setComment })}
           >
             <Ionicons name="send-outline" size={18} color="white" />
           </Pressable>
