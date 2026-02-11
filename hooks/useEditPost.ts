@@ -46,7 +46,7 @@ const useEditPost = ({ postId }: { postId: string }) => {
       const execution = await executePost({
         action: "update",
         postId,
-        content,
+        content: trimmedContent,
       });
       const parsed = JSON.parse(execution.responseBody);
 
