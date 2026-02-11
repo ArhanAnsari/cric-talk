@@ -1,8 +1,6 @@
 import useKeyboardHeight from "@/hooks/useKeyboardHeight";
 import { account } from "@/libs/appwrite";
 import { showToast } from "@/libs/showToast";
-import { executeComment, fetchComments } from "@/services/comments.service";
-import { updatePost } from "@/services/posts.service";
 import { useComments } from "@/store/useComments";
 import { usePosts } from "@/store/usePosts";
 import { Ionicons } from "@expo/vector-icons";
@@ -24,9 +22,9 @@ import CommentCard from "../components/CommentCard";
 import EditCommentModal from "../components/EditCommentModal";
 import PostCard from "../components/PostCard";
 import { LegendList } from "@legendapp/list";
-import { CommentType, CreateCommentSchema } from "@/schemas/CommentSchema";
 import { EmptyState } from "../components/EmptyState";
 import useComment from "@/hooks/useComment";
+import { fetchComments } from "@/services/comments.service";
 
 const PostDetails = () => {
   const { postId } = useLocalSearchParams();
