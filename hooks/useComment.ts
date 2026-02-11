@@ -5,7 +5,6 @@ import { executeComment } from "@/services/comments.service";
 import { updatePost } from "@/services/posts.service";
 import { useComments } from "@/store/useComments";
 import { usePosts } from "@/store/usePosts";
-import { use, useState } from "react";
 import { Alert } from "react-native";
 
 const useComment = ({ post }: { post: Post }) => {
