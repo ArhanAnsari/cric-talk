@@ -1,5 +1,5 @@
 import { account } from "@/libs/appwrite";
-import { fetchPosts } from "@/services/posts.service";
+import { fetchPosts, searchPosts } from "@/services/posts.service";
 import { usePosts } from "@/store/usePosts";
 import { useUser } from "@/store/useUser";
 import { Ionicons } from "@expo/vector-icons";
@@ -59,6 +59,8 @@ const HomeScreen = () => {
     [posts],
   );
 
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   async function onRefresh() {
     setRefreshing(true);
     setLoading(true);
@@ -75,6 +77,23 @@ const HomeScreen = () => {
       });
     } finally {
       setRefreshing(false);
+      setLoading(false);
+    }
+  }
+
+  async function handleSearch(text: string) {
+    try {
+      setLoading(true);
+
+      const data = await searchPosts(text);
+      setPosts(data.rows);
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error searching posts",
+        text2: "Please try again later.",
+      });
+    } finally {
       setLoading(false);
     }
   }
@@ -144,7 +163,17 @@ const HomeScreen = () => {
         <View className="flex-row items-center">
           <TextInput
             value={searchQuery}
-            onChangeText={setSearchQuery}
+            onChangeText={(text) => {
+              setSearchQuery(text);
+
+              if (debounceRef.current) {
+                clearTimeout(debounceRef.current);
+              }
+
+              debounceRef.current = setTimeout(() => {
+                handleSearch(text);
+              }, 300);
+            }}
             ref={seacrhQueryRef}
             placeholder="Search anything..."
             placeholderTextColor="gray"

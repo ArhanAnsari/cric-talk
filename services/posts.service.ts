@@ -38,6 +38,26 @@ export async function fetchPostsByUserId(userId: string) {
   }
 }
 
+export async function searchPosts(query: string) {
+  try {
+    if (!query.trim()) return fetchPosts();
+
+    return await tablesDB.listRows<Post>({
+      databaseId: CRIC_TALK_DATABASE_ID,
+      tableId: POSTS_TABLES_ID,
+      queries: [
+        Query.search("content", query),
+        Query.orderDesc("views"),
+        Query.orderDesc("likes"),
+        Query.orderDesc("$createdAt"),
+      ],
+    });
+  } catch (error) {
+    console.log(`Error while searching posts ${error}`);
+    throw error;
+  }
+}
+
 export async function createPost({
   content,
   image = [],
