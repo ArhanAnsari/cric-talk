@@ -1,8 +1,7 @@
-import { View, Text, Alert } from "react-native";
-import React from "react";
 import { executePost } from "@/services/posts.service";
 import { showToast } from "@/libs/showToast";
 import { usePosts } from "@/store/usePosts";
+import { Alert } from "react-native";
 
 const useDeletePost = ({ postId }: { postId: string }) => {
   const deletePostState = usePosts((s) => s.deletePost);
