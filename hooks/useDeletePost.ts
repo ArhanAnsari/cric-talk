@@ -6,7 +6,7 @@ import { Alert } from "react-native";
 const useDeletePost = ({ postId }: { postId: string }) => {
   const deletePostState = usePosts((s) => s.deletePost);
 
-  async function handleDeletePost() {
+  function handleDeletePost() {
     Alert.alert("Are you sure?", "Do you want to delete the post?", [
       { text: "Cancel", style: "cancel" },
       {
