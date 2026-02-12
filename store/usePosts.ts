@@ -27,7 +27,12 @@ export const usePosts = create<PostsType>((set) => ({
 
       const filteredPosts = posts.filter((p) => !existingIds.has(p.$id));
 
-      return { posts: [...s.posts, ...filteredPosts] };
+      const sortedPosts = filteredPosts.sort(
+        (a, b) =>
+          new Date(b.$createdAt).getTime() - new Date(a.$createdAt).getTime(),
+      );
+
+      return { posts: [...s.posts, ...sortedPosts] };
     }),
   updatePost: (postData) =>
     set((s) => ({
