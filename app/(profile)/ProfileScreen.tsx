@@ -49,7 +49,7 @@ const ProfileScreen = () => {
 
     async function loadData() {
       const posts = await fetchPostsByUserId(userId);
-      const rooms = await fetchRooms(userId);
+      const rooms = await fetchRooms({ userId });
       const stats = await fetchUserStatsByUserId(userId);
 
       setUserPosts(posts.rows);

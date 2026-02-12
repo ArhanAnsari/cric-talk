@@ -25,6 +25,7 @@ const RoomsScreen = () => {
 
   const rooms = useRooms((s) => s.rooms);
   const setRooms = useRooms((s) => s.setRooms);
+  const addRooms = useRooms((s) => s.addRooms);
 
   const [loading, setLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -46,7 +47,7 @@ const RoomsScreen = () => {
 
     // fetch rooms
     try {
-      const data = await fetchRooms();
+      const data = await fetchRooms({});
       setRooms(data);
     } catch (error) {
       showToast({
@@ -60,6 +61,23 @@ const RoomsScreen = () => {
     }
   }
 
+  async function onEndReached() {
+    if (rooms.length === 0) return;
+
+    try {
+      const data = await fetchRooms({
+        cursorRoomId: rooms[rooms.length - 1].$id,
+      });
+      addRooms(data);
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error fetching more rooms",
+        text2: "Please try again later.",
+      });
+    }
+  }
+
   useEffect(() => {
     let mounted = true;
 
@@ -67,7 +85,7 @@ const RoomsScreen = () => {
       if (!mounted) return;
 
       try {
-        const data = await fetchRooms();
+        const data = await fetchRooms({});
         setRooms(data);
       } catch (error) {
         showToast({
@@ -153,6 +171,8 @@ const RoomsScreen = () => {
             ListEmptyComponent={
               <EmptyState type="room" onPress={() => setIsVisible(true)} />
             }
+            onEndReached={onEndReached}
+            onEndReachedThreshold={0.5}
           />
         )}
       </SafeAreaView>

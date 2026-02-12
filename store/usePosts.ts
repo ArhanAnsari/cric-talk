@@ -5,6 +5,7 @@ type PostsType = {
   posts: Post[];
   setPosts: (posts: Post[]) => void;
   addPost: (post: Post) => void;
+  addPosts: (posts: Post[]) => void;
   updatePost: (post: Partial<Post>) => void;
   deletePost: (postId: string) => void;
 };
@@ -20,6 +21,19 @@ export const usePosts = create<PostsType>((set) => ({
     set({ posts: sortedPosts });
   },
   addPost: (post) => set((s) => ({ posts: [post, ...s.posts] })),
+  addPosts: (posts) =>
+    set((s) => {
+      const existingIds = new Set(s.posts.map((p) => p.$id));
+
+      const filteredPosts = posts.filter((p) => !existingIds.has(p.$id));
+
+      const sortedPosts = filteredPosts.sort(
+        (a, b) =>
+          new Date(b.$createdAt).getTime() - new Date(a.$createdAt).getTime(),
+      );
+
+      return { posts: [...s.posts, ...sortedPosts] };
+    }),
   updatePost: (postData) =>
     set((s) => ({
       posts: s.posts.map((p) =>
