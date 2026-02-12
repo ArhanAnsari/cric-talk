@@ -62,6 +62,8 @@ const RoomsScreen = () => {
   }
 
   async function onEndReached() {
+    if (rooms.length === 0) return;
+
     try {
       const data = await fetchRooms({
         cursorRoomId: rooms[rooms.length - 1].$id,

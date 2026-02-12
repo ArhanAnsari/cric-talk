@@ -100,6 +100,8 @@ const HomeScreen = () => {
   }
 
   async function onEndReached() {
+    if (posts.length === 0) return;
+
     try {
       const data = await fetchPosts(posts[posts.length - 1].$id);
       addPosts(data.rows);
