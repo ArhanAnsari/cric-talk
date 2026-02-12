@@ -37,6 +37,7 @@ const HomeScreen = () => {
 
   const posts = usePosts((s) => s.posts);
   const setPosts = usePosts((s) => s.setPosts);
+  const addPosts = usePosts((s) => s.addPosts);
 
   const username = useUser((s) => s.username);
 
@@ -95,6 +96,19 @@ const HomeScreen = () => {
       });
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function onEndReached() {
+    try {
+      const data = await fetchPosts(posts[posts.length - 1].$id);
+      addPosts(data.rows);
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error fetching more posts",
+        text2: "Please try again later.",
+      });
     }
   }
 
@@ -215,6 +229,8 @@ const HomeScreen = () => {
               ListEmptyComponent={
                 <EmptyState type="post" onPress={() => setIsVisible(true)} />
               }
+              onEndReached={onEndReached}
+              onEndReachedThreshold={0.5}
             />
           )}
         </View>
