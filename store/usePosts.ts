@@ -21,7 +21,14 @@ export const usePosts = create<PostsType>((set) => ({
     set({ posts: sortedPosts });
   },
   addPost: (post) => set((s) => ({ posts: [post, ...s.posts] })),
-  addPosts: (posts) => set((s) => ({ posts: [...s.posts, ...posts] })),
+  addPosts: (posts) =>
+    set((s) => {
+      const existingIds = new Set(s.posts.map((p) => p.$id));
+
+      const filteredPosts = posts.filter((p) => !existingIds.has(p.$id));
+
+      return { posts: [...s.posts, ...filteredPosts] };
+    }),
   updatePost: (postData) =>
     set((s) => ({
       posts: s.posts.map((p) =>
