@@ -5,6 +5,7 @@ type RoomsStateType = {
   rooms: Room[];
   setRooms: (rooms: Room[]) => void;
   addRoom: (room: Room) => void;
+  addRooms: (rooms: Room[]) => void;
   updateRoom: (roomData: Partial<Room> & Pick<Room, "$id">) => void;
   deleteRoom: (roomId: string) => void;
 };
@@ -21,6 +22,14 @@ export const useRooms = create<RoomsStateType>((set) => ({
       );
 
       return { rooms: sortedRooms };
+    }),
+  addRooms: (rooms) =>
+    set((s) => {
+      const existingIds = new Set(s.rooms.map((r) => r.$id));
+
+      const filteredRooms = rooms.filter((r) => !existingIds.has(r.$id));
+
+      return { rooms: [...s.rooms, ...filteredRooms] };
     }),
   updateRoom: (roomData) =>
     set((s) => {
