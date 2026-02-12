@@ -13,6 +13,7 @@ export async function fetchPosts(cursorPostId?: string) {
     Query.orderDesc("views"),
     Query.orderDesc("likes"),
     Query.orderDesc("$createdAt"),
+    Query.limit(20),
   ];
 
   if (cursorPostId) queries.push(Query.cursorAfter(cursorPostId));
