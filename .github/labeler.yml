@@ -1,30 +1,13 @@
 javascript:
-  - "**/*.js"
-  - "**/*.ts"
-  - "**/*.jsx"
-  - "**/*.tsx"
+  - changed-files:
+      - any-glob-to-any-file: "**/*.js"
 
 ui/ux:
-  - "src/components/**"
-  - "src/pages/**"
-  - "src/styles/**"
-  - "assets/**"
-  - "**/*.css"
-  - "**/*.scss"
+  - changed-files:
+      - any-glob-to-any-file:
+          - "app/**"
+          - "assets/**"
 
-question:
-  - "docs/**"
-  - "**/*.md"
-
-invalid:
-  - ".env*"
-  - "**/*.log"
-
-help wanted:
-  - "help/**"
-
-good first issue:
-  - "starter/**"
-
-wontfix:
-  - "deprecated/**"
+documentation:
+  - changed-files:
+      - any-glob-to-any-file: "**/*.md"
