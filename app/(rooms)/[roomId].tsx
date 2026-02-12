@@ -91,7 +91,7 @@ const RoomDiscussion = () => {
     async function loadRoomDetails() {
       if (!mounted) return;
 
-      const data = await fetchRooms();
+      const data = await fetchRooms({});
       const roomDetails = data.find((room) => room.$id === roomId);
       setRoom(roomDetails || null);
     }
