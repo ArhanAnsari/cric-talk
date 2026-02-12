@@ -25,6 +25,7 @@ const RoomsScreen = () => {
 
   const rooms = useRooms((s) => s.rooms);
   const setRooms = useRooms((s) => s.setRooms);
+  const addRooms = useRooms((s) => s.addRooms);
 
   const [loading, setLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -57,6 +58,19 @@ const RoomsScreen = () => {
     } finally {
       setRefreshing(false);
       setLoading(false);
+    }
+  }
+
+  async function onEndReached() {
+    try {
+      const data = await fetchRooms(rooms[rooms.length - 1].$id);
+      addRooms(data);
+    } catch (error) {
+      showToast({
+        type: "error",
+        text1: "Error fetching more rooms",
+        text2: "Please try again later.",
+      });
     }
   }
 
@@ -153,6 +167,8 @@ const RoomsScreen = () => {
             ListEmptyComponent={
               <EmptyState type="room" onPress={() => setIsVisible(true)} />
             }
+            onEndReached={onEndReached}
+            onEndReachedThreshold={0.5}
           />
         )}
       </SafeAreaView>
