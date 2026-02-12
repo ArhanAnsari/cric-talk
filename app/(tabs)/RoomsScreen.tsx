@@ -47,7 +47,7 @@ const RoomsScreen = () => {
 
     // fetch rooms
     try {
-      const data = await fetchRooms();
+      const data = await fetchRooms({});
       setRooms(data);
     } catch (error) {
       showToast({
@@ -63,7 +63,9 @@ const RoomsScreen = () => {
 
   async function onEndReached() {
     try {
-      const data = await fetchRooms(rooms[rooms.length - 1].$id);
+      const data = await fetchRooms({
+        cursorRoomId: rooms[rooms.length - 1].$id,
+      });
       addRooms(data);
     } catch (error) {
       showToast({
@@ -81,7 +83,7 @@ const RoomsScreen = () => {
       if (!mounted) return;
 
       try {
-        const data = await fetchRooms();
+        const data = await fetchRooms({});
         setRooms(data);
       } catch (error) {
         showToast({

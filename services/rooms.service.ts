@@ -8,7 +8,13 @@ const ROOMS_TABLE_ID = process.env.EXPO_PUBLIC_APPWRITE_ROOMS_TABLE_ID!;
 const ROOMS_GUARD_FUNCTION_ID =
   process.env.EXPO_PUBLIC_APPWRITE_ROOMS_GUARD_FUNCTION_ID!;
 
-export async function fetchRooms(userId?: string, cursorRoomId?: string) {
+export async function fetchRooms({
+  userId,
+  cursorRoomId,
+}: {
+  userId?: string;
+  cursorRoomId?: string;
+}) {
   try {
     const queries = [Query.orderDesc("startTime"), Query.limit(20)];
 
