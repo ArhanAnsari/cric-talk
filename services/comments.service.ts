@@ -33,11 +33,17 @@ export async function executeComment({
   content?: string;
 }) {
   try {
-    return await functions.createExecution({
+    const execution = await functions.createExecution({
       functionId: COMMENTS_GUARD_FUNCTION_ID,
       body: JSON.stringify({ action, postId, commentId, content }),
       async: false,
     });
+
+    if (execution.status === "failed") {
+      throw new Error("Comment execution failed");
+    }
+
+    return execution;
   } catch (error) {
     console.log(`Error while executing comment ${action} action`);
     throw error;
