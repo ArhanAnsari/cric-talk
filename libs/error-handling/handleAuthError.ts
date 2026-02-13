@@ -26,6 +26,6 @@ export function handleAuthError({
   showToast({
     type: "error",
     text1: mainText,
-    text2: authErrors[error.type],
+    text2: authErrors[error.type] ?? "Please try again later.",
   });
 }
