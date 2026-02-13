@@ -43,7 +43,7 @@ const SignupScreen = () => {
       router.replace("/(tabs)/HomeScreen");
     } catch (e) {
       const error = e as AppwriteError;
-      handleAuthError({ mainText: "Signup failed", error });
+      handleAuthError({ mainText: "Signup Failed", error });
     }
   }
 
