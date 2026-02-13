@@ -1,5 +1,5 @@
 import { AppwriteError } from "@/interfaces/AppwriteError";
-import { showToast } from "../showToast";
+import { showToast } from "@/libs/showToast";
 
 const authErrors: Record<string, string> = {
   user_password_mismatch:
