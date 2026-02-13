@@ -45,7 +45,7 @@ export async function executeRoomMessage({
     });
 
     if (execution.status === "failed") {
-      throw new Error("Function execution failed");
+      throw new Error("Room message execution failed");
     }
   } catch (error) {
     console.log(`Error while executing room message ${action} action ${error}`);

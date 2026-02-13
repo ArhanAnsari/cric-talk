@@ -1,3 +1,5 @@
+import { AppwriteError } from "@/interfaces/AppwriteError";
+import { handleAuthError } from "@/libs/error-handling/handleAuthError";
 import { showToast } from "@/libs/showToast";
 import { AuthSchema } from "@/schemas/AuthSchema";
 import { loginUserWithEmailAndPassword } from "@/services/auth.service";
@@ -35,12 +37,9 @@ const LoginScreen = () => {
 
       await loginUserWithEmailAndPassword(email, password);
       router.replace("/(tabs)/HomeScreen");
-    } catch (error) {
-      showToast({
-        type: "error",
-        text1: "Login Failed",
-        text2: "Please try again later.",
-      });
+    } catch (e) {
+      const error = e as AppwriteError;
+      handleAuthError({ mainText: "Login failed", error });
     }
   }
 
