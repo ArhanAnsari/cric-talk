@@ -1,4 +1,4 @@
-export interface Error {
+export interface AppwriteError {
   message: string;
   type: string;
   code: number;
