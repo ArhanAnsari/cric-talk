@@ -1,3 +1,5 @@
+import { AppwriteError } from "@/interfaces/AppwriteError";
+import { handleAuthError } from "@/libs/error-handling/handleAuthError";
 import { showToast } from "@/libs/showToast";
 import { AuthSchema } from "@/schemas/AuthSchema";
 import {
@@ -39,12 +41,9 @@ const SignupScreen = () => {
       await createUserWithEmailAndPassword(email, password);
       await loginUserWithEmailAndPassword(email, password);
       router.replace("/(tabs)/HomeScreen");
-    } catch (error) {
-      showToast({
-        type: "error",
-        text1: "Signup Failed",
-        text2: "Please try again later.",
-      });
+    } catch (e) {
+      const error = e as AppwriteError;
+      handleAuthError({ mainText: "Signup failed", error });
     }
   }
 
