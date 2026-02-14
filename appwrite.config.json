@@ -205,16 +205,11 @@
   "tables": [
     {
       "$id": "posts",
-      "$permissions": [
-        "create(\"any\")",
-        "read(\"any\")",
-        "update(\"any\")",
-        "delete(\"any\")"
-      ],
+      "$permissions": [],
       "databaseId": "695761d00008fd927f78",
       "name": "posts",
       "enabled": true,
-      "rowSecurity": false,
+      "rowSecurity": true,
       "columns": [
         {
           "key": "image",
@@ -293,98 +288,70 @@
           "type": "string",
           "required": true,
           "array": false,
-          "size": 128,
+          "size": 36,
           "default": null,
           "encrypt": false
         }
       ],
       "indexes": [
         {
-          "$id": "4716_2_authorId_index",
-          "$createdAt": "2026-01-02T07:17:00.274+00:00",
-          "$updatedAt": "2026-01-02T07:17:00.327+00:00",
           "key": "authorId_index",
           "type": "key",
           "status": "available",
-          "error": "",
           "columns": ["authorId"],
-          "lengths": [0],
           "orders": ["ASC"]
         },
         {
-          "$id": "4716_2_likes_index",
-          "$createdAt": "2026-01-02T07:17:38.534+00:00",
-          "$updatedAt": "2026-01-02T07:17:38.611+00:00",
           "key": "likes_index",
           "type": "key",
           "status": "available",
-          "error": "",
           "columns": ["likes"],
-          "lengths": [0],
           "orders": ["DESC"]
         },
         {
-          "$id": "4716_2_views_index",
-          "$createdAt": "2026-01-02T07:17:50.480+00:00",
-          "$updatedAt": "2026-01-02T07:17:50.547+00:00",
           "key": "views_index",
           "type": "key",
           "status": "available",
-          "error": "",
           "columns": ["views"],
-          "lengths": [0],
           "orders": ["DESC"]
         },
         {
-          "$id": "4716_2_createdAt_index",
-          "$createdAt": "2026-01-02T07:18:06.311+00:00",
-          "$updatedAt": "2026-01-02T07:18:06.379+00:00",
           "key": "createdAt_index",
           "type": "key",
           "status": "available",
-          "error": "",
           "columns": ["$createdAt"],
-          "lengths": [0],
           "orders": ["DESC"]
         },
         {
-          "$id": "4716_2_updatedAt_index",
-          "$createdAt": "2026-01-02T07:18:20.075+00:00",
-          "$updatedAt": "2026-01-02T07:18:20.147+00:00",
           "key": "updatedAt_index",
           "type": "key",
           "status": "available",
-          "error": "",
           "columns": ["$updatedAt"],
-          "lengths": [0],
           "orders": ["DESC"]
         },
         {
-          "$id": "4716_2_commentCount_index",
-          "$createdAt": "2026-01-04T06:48:01.687+00:00",
-          "$updatedAt": "2026-01-04T06:48:01.767+00:00",
           "key": "commentCount_index",
           "type": "key",
           "status": "available",
-          "error": "",
           "columns": ["commentCount"],
-          "lengths": [0],
           "orders": ["ASC"]
+        },
+        {
+          "key": "index_7",
+          "type": "fulltext",
+          "status": "available",
+          "columns": ["content"],
+          "orders": ["asc"]
         }
       ]
     },
     {
       "$id": "comments",
-      "$permissions": [
-        "create(\"any\")",
-        "read(\"any\")",
-        "update(\"any\")",
-        "delete(\"any\")"
-      ],
+      "$permissions": [],
       "databaseId": "695761d00008fd927f78",
       "name": "comments",
       "enabled": true,
-      "rowSecurity": false,
+      "rowSecurity": true,
       "columns": [
         {
           "key": "postId",
@@ -423,43 +390,28 @@
       ],
       "indexes": [
         {
-          "$id": "4716_3_index_postId",
-          "$createdAt": "2026-01-04T07:19:23.000+00:00",
-          "$updatedAt": "2026-01-04T07:19:23.076+00:00",
           "key": "index_postId",
           "type": "key",
           "status": "available",
-          "error": "",
           "columns": ["postId"],
-          "lengths": [0],
           "orders": ["ASC"]
         },
         {
-          "$id": "4716_3_index_createdAt",
-          "$createdAt": "2026-01-04T07:19:43.154+00:00",
-          "$updatedAt": "2026-01-04T07:19:43.272+00:00",
           "key": "index_createdAt",
           "type": "key",
           "status": "available",
-          "error": "",
           "columns": ["$createdAt"],
-          "lengths": [0],
           "orders": ["DESC"]
         }
       ]
     },
     {
       "$id": "rooms",
-      "$permissions": [
-        "create(\"any\")",
-        "read(\"any\")",
-        "update(\"any\")",
-        "delete(\"any\")"
-      ],
+      "$permissions": [],
       "databaseId": "695761d00008fd927f78",
       "name": "rooms",
       "enabled": true,
-      "rowSecurity": false,
+      "rowSecurity": true,
       "columns": [
         {
           "key": "teams",
@@ -525,16 +477,11 @@
     },
     {
       "$id": "roommessaage",
-      "$permissions": [
-        "create(\"any\")",
-        "read(\"any\")",
-        "update(\"any\")",
-        "delete(\"any\")"
-      ],
+      "$permissions": [],
       "databaseId": "695761d00008fd927f78",
       "name": "roomMessaage",
       "enabled": true,
-      "rowSecurity": false,
+      "rowSecurity": true,
       "columns": [
         {
           "key": "roomId",
@@ -584,16 +531,7 @@
     },
     {
       "$id": "users",
-      "$permissions": [
-        "create(\"any\")",
-        "read(\"any\")",
-        "update(\"any\")",
-        "delete(\"any\")",
-        "create(\"guests\")",
-        "read(\"guests\")",
-        "update(\"guests\")",
-        "delete(\"guests\")"
-      ],
+      "$permissions": [],
       "databaseId": "695761d00008fd927f78",
       "name": "users",
       "enabled": true,
@@ -635,7 +573,7 @@
       "databaseId": "695761d00008fd927f78",
       "name": "notifications",
       "enabled": true,
-      "rowSecurity": false,
+      "rowSecurity": true,
       "columns": [
         {
           "key": "userId",
@@ -667,27 +605,17 @@
       ],
       "indexes": [
         {
-          "$id": "4716_7_userId_index",
-          "$createdAt": "2026-01-21T08:51:16.598+00:00",
-          "$updatedAt": "2026-01-21T08:51:16.662+00:00",
           "key": "userId_index",
           "type": "key",
           "status": "available",
-          "error": "",
           "columns": ["userId"],
-          "lengths": [0],
           "orders": ["ASC"]
         },
         {
-          "$id": "4716_7_createdAt_index",
-          "$createdAt": "2026-01-21T08:51:35.394+00:00",
-          "$updatedAt": "2026-01-21T08:51:35.467+00:00",
           "key": "createdAt_index",
           "type": "key",
           "status": "available",
-          "error": "",
           "columns": ["$createdAt"],
-          "lengths": [0],
           "orders": ["DESC"]
         }
       ]
@@ -739,51 +667,31 @@
       ],
       "indexes": [
         {
-          "$id": "4716_8_userid_index",
-          "$createdAt": "2026-01-31T05:21:49.296+00:00",
-          "$updatedAt": "2026-01-31T05:21:49.350+00:00",
           "key": "userid_index",
           "type": "key",
           "status": "available",
-          "error": "",
           "columns": ["userId"],
-          "lengths": [0],
           "orders": ["ASC"]
         },
         {
-          "$id": "4716_8_createdAt_index",
-          "$createdAt": "2026-01-31T05:22:02.272+00:00",
-          "$updatedAt": "2026-01-31T05:22:02.339+00:00",
           "key": "createdAt_index",
           "type": "key",
           "status": "available",
-          "error": "",
           "columns": ["$createdAt"],
-          "lengths": [0],
           "orders": ["DESC"]
         },
         {
-          "$id": "4716_8_activity_index",
-          "$createdAt": "2026-02-02T03:32:32.892+00:00",
-          "$updatedAt": "2026-02-02T03:32:32.956+00:00",
           "key": "activity_index",
           "type": "key",
           "status": "available",
-          "error": "",
           "columns": ["activity"],
-          "lengths": [0],
           "orders": ["ASC"]
         },
         {
-          "$id": "4716_8_windowKey_index",
-          "$createdAt": "2026-02-02T03:32:41.276+00:00",
-          "$updatedAt": "2026-02-02T03:32:41.347+00:00",
           "key": "windowKey_index",
           "type": "key",
           "status": "available",
-          "error": "",
           "columns": ["windowKey"],
-          "lengths": [0],
           "orders": ["ASC"]
         }
       ]
