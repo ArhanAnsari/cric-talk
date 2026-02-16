@@ -31,7 +31,7 @@ const HomeScreen = () => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const seacrhQueryRef = useRef<TextInput>(null);
+  const searchQueryRef = useRef<TextInput>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
@@ -190,7 +190,7 @@ const HomeScreen = () => {
                 handleSearch(text);
               }, 300);
             }}
-            ref={seacrhQueryRef}
+            ref={searchQueryRef}
             placeholder="Search anything..."
             placeholderTextColor="gray"
             className="border border-gray-300 rounded-lg pl-4 flex-1 mr-4 h-12 text-slate-900"
@@ -273,7 +273,7 @@ const HomeScreen = () => {
         username={username || ""}
         isDrawerOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
-        searchQueryRef={seacrhQueryRef}
+        searchQueryRef={searchQueryRef}
       />
     </View>
   );
