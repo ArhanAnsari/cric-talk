@@ -140,7 +140,3 @@ eas build --platform ios
 ```
 
 ---
-
-## License
-
-This project is private and not licensed for public distribution.
