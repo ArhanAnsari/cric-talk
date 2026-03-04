@@ -133,10 +133,10 @@ This project uses [EAS Build](https://docs.expo.dev/build/introduction/) for pro
 npm install -g eas-cli
 
 # Build for Android
-eas build --platform android
+eas build --platform android --profile production
 
 # Build for iOS
-eas build --platform ios
+eas build --platform ios --profile production
 ```
 
 ---
