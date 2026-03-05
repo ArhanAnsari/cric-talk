@@ -18,16 +18,15 @@ A cricket-focused social mobile application built with **React Native (Expo)** a
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | [Expo](https://expo.dev) (React Native) |
-| Language | TypeScript |
-| Navigation | [Expo Router](https://expo.github.io/router) (file-based) |
-| Styling | [NativeWind](https://www.nativewind.dev) (Tailwind CSS) |
-| State Management | [Zustand](https://zustand-demo.pmnd.rs) |
-| Validation | [Zod](https://zod.dev) |
-| Backend | [Appwrite](https://appwrite.io) (Auth, Database, Functions) |
-| List Performance | [@legendapp/list](https://github.com/LegendApp/legend-list) |
+![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white)
+![React Native](https://img.shields.io/badge/React%20Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Expo Router](https://img.shields.io/badge/Expo%20Router-000020?style=for-the-badge&logo=expo&logoColor=white)
+![NativeWind](https://img.shields.io/badge/NativeWind-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Zustand](https://img.shields.io/badge/Zustand-443E38?style=for-the-badge&logo=react&logoColor=white)
+![Zod](https://img.shields.io/badge/Zod-3E67B1?style=for-the-badge)
+![Appwrite](https://img.shields.io/badge/Appwrite-F02E65?style=for-the-badge&logo=appwrite&logoColor=white)
+![Legend List](https://img.shields.io/badge/Legend%20List-000000?style=for-the-badge)
 
 ---
 
